@@ -27,9 +27,10 @@ class EmsParent(models.Model):
     child = fields.Char()
     student_ids = fields.One2many('ems.student','parent_id')
     state = fields.Selection([
+        ('draft', 'Draft'),
         ('done', 'Done'),
         ('cancel', 'Cancel'),
-    ], string='State', default='done', track_visibility='onchange')
+    ], string='State', default='draft', track_visibility='onchange') 
 
 
  
@@ -41,6 +42,10 @@ class EmsParent(models.Model):
     def action_mark_cancel(self):
         for record in self:
             record.state = 'cancel'
+
+    def action_mark_draft(self):
+        for record in self:
+            record.state = 'draft'        
 
 
     @api.depends('dob')
