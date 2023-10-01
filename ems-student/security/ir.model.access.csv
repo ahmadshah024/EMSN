@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ems_student,ems.student,model_ems_student,base.group_user,1,1,1,1
+access_ems_parent,ems.parent,model_ems_parent,base.group_user,1,1,1,1
+access_ems_student_award,ems.student.award,model_ems_student_award,base.group_user,1,1,1,1
+access_ems_student_certificate,ems.student.certificate,model_ems_student_certificate,base.group_user,1,1,1,1
+
