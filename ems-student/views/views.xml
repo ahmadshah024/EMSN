@@ -1,0 +1,172 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="ems-student.list">
+      <field name="name">ems-student list</field>
+      <field name="model">ems.student</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="class_name"/>
+          <field name="age"/>
+          <field name="gender"/>
+          <field name="phone"/>
+          <field name="address"/>
+        </tree>
+      </field>
+    </record>
+
+
+    
+    <record id="ems_student_view_form" model="ir.ui.view">
+      <field name="name">ems.student.view.form</field>
+      <field name="model">ems.student</field>
+      <field name="arch" type="xml">
+        <form string="">
+            <header>
+                <button name="action_done" string="Done" type="object" attrs="{'invisible': [('state', 'in',('done','graduate','change','cancel'))]}"/>
+                <button name="action_draft" string="Draft" type="object" attrs="{'invisible': [('state', 'in',('done','draft','graduate','change','cancel'))]}"/>
+                <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in',('done','graduate','change','cancel'))]}"/>
+                <button name="action_graduate" string="Graduate" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                <button name="action_change" string="Change" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,graduate,change,done"/>
+            </header>
+          <sheet>
+            <field name="image" widget='image' class="oe_avatar"/>
+            <div class="oe_title">
+                <h1>
+                    <field name="reference" />
+                </h1>
+            </div>
+            <group>
+              <group name="personal_info" string="Personal Information">
+                <field name="name"/>
+                <field name="father_name"/>
+                <field name="grand_father_name"/>
+                <field name="nic"/>
+                
+            </group>
+            <group name="educational_info" string="Educatinal Information">
+                <field name="school" />
+                <field name="class_name" />
+                <field name="academic_year" />
+                <field name="date"/>
+            </group>
+           
+            <group name="contac_info" string="Contact">
+                <field name="address"/>
+                <field name="phone"/>
+                <field name="email" />
+            </group>
+            <group name="other_info" string="Other Info">
+                <field name="dob"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="parent_id"/>
+              </group>
+            </group>
+            <notebook>
+                <page name="parent_info" string="Parent">
+                    <tree>
+                        <field name="parent_name"/>
+                    </tree>
+                </page>
+                <page name="previous_school" string="Previous School">
+                    <group>
+                        <group name="name" string="string">
+                                <field name="previous_school_name" />
+                                <field name="previous_school_registration_no" />
+                            </group>
+                        <group name="name" string="string">
+                            <field name="previous_school_addmission_date" />
+                            <field name="previous_school_exit_date" />
+                        </group>
+                        <group name="name" string="string">
+                            <field name="previous_school_exit_reason" />
+                        </group>          
+                    </group>
+                </page>
+                <page name="remarks" string="Remarks">
+                    <group name="remarks" string="Remarks">
+                        <field name="remarks"/>
+                    </group>
+                </page>
+                <page name="awards_info" string="Award" attrs="{'invisible': [('state', 'in', ('draft','cancel'))]}">
+                     <field name="award_ids">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="description"/>
+                        </tree>
+                     </field>
+                </page>
+                <page name="certificate_info" string="Certificates" attrs="{'invisible': [('state', 'in', ('draft','cancel'))]}">
+                    <field name="certificate_ids">
+                       <tree editable="bottom">
+                           <field name="description"/>
+                           <field name="certificate"/>
+                       </tree>
+                    </field>
+               </page>
+               <page name="history" string="History" attrs="{'invisible': [('state', 'in', ('draft','cancel'))]}">
+                    <group name="name" string="string">
+                        <field name="academic_year"/>
+                    </group>
+               </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="ems_student_view_kanban" model="ir.ui.view">
+        <field name="name">ems.student.view.kanban</field>
+        <field name="model">ems.student</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+                            <div class="row">
+                                <div class="col-4 d-flex align-items-center">
+                                    <field name="image" widget="image" class="oe_avatar" style="{'size': [400,400]}" />
+                                </div>
+                                <div class="col-8">
+                                    <strong class="ml-2">
+                                        <field name="name" /> (<field name="reference" title="Reference"/>)
+                                    </strong>
+                                    <div class="ml-2">
+                                        <field name="gender" />,<field name="age"/>
+                                    </div>
+                                    <div class="oe_kanban_details mt-3 ml-2" name="items">
+                                        <ul>
+                                            <li><i class="fa fa-envelope p-1" title="envelope"/> <field name="email" widget="email" /></li>
+                                            <li><i class="fa fa-phone p-1" title="phone"/> <field name="phone" widget="phone" /></li> 
+                                            <li><i class="fa fa-home p-1" title="address"/> <field name="address" /></li> 
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="ems_student_action_window">
+      <field name="name">Student</field>
+      <field name="res_model">ems.student</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem name="Student" id="ems_student_menu_root"/>
+    <!-- menu categories -->
+    <menuitem name="Students" id="ems_student_menu" parent="ems_student_menu_root" action="ems_student_action_window"/>
+    <!-- <menuitem name="Menu 2" id="ems-student.menu_2" parent="ems-student.menu_root"/> -->
+  </data>
+</odoo>
