@@ -115,7 +115,7 @@
 
     <!-- Top menu item -->
 
-    <menuitem name="ems_parent" id="ems_parent_menu_root"/>
+    <menuitem name="ems_parent" id="ems_parent_menu_root" web_icon="ems_parent,static/description/icon.png"/>
 
     <!-- menu categories -->
 
