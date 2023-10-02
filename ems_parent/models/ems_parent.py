@@ -25,7 +25,6 @@ class EmsParent(models.Model):
     job = fields.Char()
     languages = fields.Many2one('res.lang')
     child = fields.Char()
-    student_ids = fields.One2many('ems.student','parent_id')
     state = fields.Selection([
         ('done', 'Done'),
         ('cancel', 'Cancel'),
@@ -55,9 +54,3 @@ class EmsParent(models.Model):
                 rec.age = today.year - dob.year - \
                     ((today.month, today.day) < (dob.month, dob.day))        
 
-class EmsStudent(models.Model):
-    _name = 'ems.student'
-
-     
-    name = fields.Char()
-    parent_id = fields.Many2one('ems.parent')

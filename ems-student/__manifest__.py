@@ -20,12 +20,20 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'ems_parent'],
 
     # always loaded
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
-        'views/views.xml',
+        'views/ems_student_view.xml',
         'data/sequences.xml',
+        'views/ems_parent_view.xml',
+        'views/ems_class_room_view.xml',
+        'views/districts.xml',
+        'wizards/change_school_wizard.xml',
+        
+
+        
     ],
 }

@@ -87,15 +87,6 @@
                     <field name="age" />
                 </group>
             </group>
-            <notebook>
-                <page name="child" string="Child">
-                    <field name="student_ids">
-                        <tree editable="top">
-                            <field name="name"/>
-                        </tree>
-                    </field>
-                </page>
-            </notebook>
           </sheet>
         </form>
       </field>
