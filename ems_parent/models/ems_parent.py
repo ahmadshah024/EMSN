@@ -6,7 +6,7 @@ from datetime import date, datetime
 
 class EmsParent(models.Model):
     _name = 'ems.parent'
-    _description = 'ems_parent'
+    _description = 'Parent'
 
     name = fields.Char()
     image = fields.Binary()
@@ -25,11 +25,11 @@ class EmsParent(models.Model):
     job = fields.Char()
     languages = fields.Many2one('res.lang')
     child = fields.Char()
-    student_ids = fields.One2many('ems.student','parent_id')
     state = fields.Selection([
+        ('draft', 'Draft'),
         ('done', 'Done'),
         ('cancel', 'Cancel'),
-    ], string='State', default='done', track_visibility='onchange')
+    ], string='State', default='draft') 
 
 
  
@@ -41,6 +41,10 @@ class EmsParent(models.Model):
     def action_mark_cancel(self):
         for record in self:
             record.state = 'cancel'
+
+    def action_mark_draft(self):
+        for record in self:
+            record.state = 'draft'        
 
 
     @api.depends('dob')
@@ -55,9 +59,3 @@ class EmsParent(models.Model):
                 rec.age = today.year - dob.year - \
                     ((today.month, today.day) < (dob.month, dob.day))        
 
-class EmsStudent(models.Model):
-    _name = 'ems.student'
-
-     
-    name = fields.Char()
-    parent_id = fields.Many2one('ems.parent')

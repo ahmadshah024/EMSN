@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "ems_parent",
+    'name': "parent",
 
     'summary': """
        Ems parent""",
@@ -23,6 +23,7 @@
 
     # always loaded
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'views/ems_parent_views.xml',
         
