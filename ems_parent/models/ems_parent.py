@@ -24,7 +24,7 @@ class EmsParent(models.Model):
     ])
     job = fields.Char()
     languages = fields.Many2one('res.lang')
-    child = fields.Char()
+    # child = fields.Char()
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done'),

@@ -10,7 +10,8 @@
                 <notebook>
                     <page name="child" string="Child">
                         <field name="student_ids">
-                            <tree editable="top">
+                            <tree editable="top" create="false">
+                                <field name="state" invisible="1"/>
                                 <field name="name"/>
                                 <field name="school"/>
                                 <field name="class_id"/>
