@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "ems_parent",
+    'name': "parent",
 
     'summary': """
        Ems parent""",

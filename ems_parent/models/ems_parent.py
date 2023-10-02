@@ -6,7 +6,7 @@ from datetime import date, datetime
 
 class EmsParent(models.Model):
     _name = 'ems.parent'
-    _description = 'ems_parent'
+    _description = 'Parent'
 
     name = fields.Char()
     image = fields.Binary()
@@ -30,7 +30,7 @@ class EmsParent(models.Model):
         ('draft', 'Draft'),
         ('done', 'Done'),
         ('cancel', 'Cancel'),
-    ], string='State', default='draft', track_visibility='onchange') 
+    ], string='State', default='draft') 
 
 
  
