@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_print_badge" model="ir.actions.report">
+        <field name="name">Print Badge</field>
+        <field name="model">ems.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ems-student.print_student_badge</field>
+        <field name="report_file">ems-student.print_student_badge</field>
+        <field name="print_report_name">'Print Badge - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" ref="model_ems_student"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="print_student_badge">
+        <t t-call="web.basic_layout">
+            <style>
+                .badge-card {
+                    border: 2px solid #ccc;
+                    border-radius: 10px;
+                    padding: 10px; /* Increase padding for better spacing */
+                    margin: 10px;
+                    width: 500px;
+                    height: 300px;
+                    display: flex; /* Use flexbox for layout control */
+                    flex-direction: row; /* Arrange items in a row */
+                    justify-content: space-between; /* Space items evenly */
+                }
+    
+                .avatar img {
+                    max-height: 100px; /* Adjust image size */
+                    max-width: 100%;
+                }
+    
+                .info {
+                    flex: 1; /* Allow info section to grow and occupy remaining space */
+                    text-align: left; /* Align text to the left */
+                    padding: 10px; /* Add padding for spacing */
+                }
+    
+                .barcode {
+                    display: flex; /* Use flexbox for barcode layout */
+                    flex-direction: column; /* Arrange barcode vertically */
+                    align-items: flex-end; /* Align barcode to the right */
+                    align-items: flex-end;
+                }
+            </style>
+            <div class="page">
+                <t t-foreach="docs" t-as="employee">
+                    <div class="col-md-4"> <!-- Adjust col-md-4 for smaller card columns -->
+                        <div class="badge-card">
+                            <div class="logo">
+                                <img t-if="employee.company_id.logo" t-att-src="image_data_uri(employee.company_id.logo)" alt="Company Logo"/>
+                            </div>
+                            <!-- <div class="avatar">
+                                <img t-att-src="image_data_uri(employee.image)" alt="Student Image"/>
+                            </div> -->
+                            <div class="info">
+                                <div class="name"><t t-esc="employee.name"/></div>
+                                <div class="class-name"><t t-esc="employee.class_id.name"/></div>
+                            </div>
+                            <div class="barcode">
+                                <div t-if="employee.barcode" t-field="employee.barcode" t-options="{'widget': 'barcode', 'width': 600, 'height': 120, 'img_style': 'max-height:30pt;max-width:100%;', 'img_align': 'center'}"/>
+                            </div>
+                            <div class="avatar">
+                                <img t-att-src="image_data_uri(employee.image)" alt="Student Image"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+    
+    
+    
+</odoo>
