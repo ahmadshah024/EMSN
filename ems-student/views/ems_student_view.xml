@@ -8,7 +8,7 @@
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-          <field name="class_name"/>
+          <field name="class_id"/>
           <field name="age"/>
           <field name="gender"/>
           <field name="phone"/>
@@ -30,6 +30,7 @@
                 <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in',('done','graduate','change','cancel'))]}"/>
                 <button name="action_graduate" string="Graduate" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
                 <button name="action_change" string="Change" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                <button name="action_change_new_flase" class="btn-info" string="Documents Done" type="object" attrs="{'invisible': [('is_new', '!=', True),('is_changed', '!=', True)]}"/>
                 <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,graduate,change,done"/>
             </header>
           <sheet>
@@ -49,7 +50,7 @@
             </group>
             <group name="educational_info" string="Educatinal Information">
                 <field name="school" />
-                <field name="class_name" />
+                <field name="class_id" options="{'no_create': True}" />
                 <field name="academic_year" />
                 <field name="date"/>
             </group>
@@ -58,12 +59,17 @@
                 <field name="address"/>
                 <field name="phone"/>
                 <field name="email" />
+                <field name="country_id" options="{'no_create': True}" />
+                <field name="province_id" options="{'no_create': True}" />
+                <field name="district_id" options="{'no_create': True}"/>
             </group>
             <group name="other_info" string="Other Info">
                 <field name="dob"/>
                 <field name="age"/>
                 <field name="gender"/>
-                <field name="parent_id"/>
+                <field name="parent_id" options="{'no_create': True}"/>
+                <field name="is_new" />
+                <field name="is_changed" />
               </group>
             </group>
             <notebook>
@@ -72,19 +78,22 @@
                         <field name="parent_name"/>
                     </tree>
                 </page>
-                <page name="previous_school" string="Previous School">
+                <page name="previous_school" string="Previous School" attrs="{'invisible': [('is_changed', '!=', True)]}">
                     <group>
-                        <group name="name" string="string">
+                        <group name="name" string="">
                                 <field name="previous_school_name" />
                                 <field name="previous_school_registration_no" />
                             </group>
-                        <group name="name" string="string">
+                        <group name="name" string="">
                             <field name="previous_school_addmission_date" />
                             <field name="previous_school_exit_date" />
                         </group>
-                        <group name="name" string="string">
+                        <group name="name" string="">
                             <field name="previous_school_exit_reason" />
-                        </group>          
+                        </group>  
+                        <group name="name" string="">
+                            <field name="previous_school_document_file" />
+                        </group>        
                     </group>
                 </page>
                 <page name="remarks" string="Remarks">
@@ -111,6 +120,19 @@
                <page name="history" string="History" attrs="{'invisible': [('state', 'in', ('draft','cancel'))]}">
                     <group name="name" string="string">
                         <field name="academic_year"/>
+                    </group>
+               </page>
+               <page name="student_documents" string="Student Documents">
+                    <group name="name" string="">
+                        <field name="student_document" />
+                    </group>
+               </page>
+               <page name="student_new_school" string="Next School Info">
+                    <group name="name" string="">
+                        <field name="new_school"/>
+                        <field name="new_reason"/>
+                        <field name="new_school_date"/>
+                        <field name="documents"/>
                     </group>
                </page>
             </notebook>
@@ -163,10 +185,36 @@
       <field name="view_mode">tree,form,kanban</field>
     </record>
 
-    <!-- Top menu item -->
-    <menuitem name="Student" id="ems_student_menu_root"/>
-    <!-- menu categories -->
-    <menuitem name="Students" id="ems_student_menu" parent="ems_student_menu_root" action="ems_student_action_window"/>
+
+    <record model="ir.actions.act_window" id="ems_class_room_action_window">
+        <field name="name">Class Room</field>
+        <field name="res_model">ems.class.room</field>
+        <field name="view_mode">tree</field>
+    </record>
+  
+    <record id="ems_district_action" model="ir.actions.act_window">
+        <field name="name">Districts</field>
+        <field name="res_model">ems.district</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No districts found. Create a district!
+            </p>
+        </field>
+    </record>
+
+      <menuitem name="Student" id="ems_student_menu_root"  web_icon="ems-student,static/description/icon.png"/>
+      <menuitem name="Students" id="ems_student_menu" parent="ems_student_menu_root" action="ems_student_action_window"/>
+      <menuitem name="Configuration" id="ems_student_menu_configuration" parent="ems_student_menu_root" />
+      <menuitem id="class_room" name="Classes" sequence="1" parent="ems_student_menu_configuration">
+         <menuitem name="Class Room" id="ems_class_room_menu"   action="ems_class_room_action_window"/>
+      </menuitem>
+      <menuitem id="country" name="County" sequence="2" parent="ems_student_menu_configuration">
+        <menuitem name="Country" id="ems_country_menu"   action="base.action_country"/>
+        <menuitem id="districts_menu" name="Districts" action="ems_district_action"/>
+     </menuitem>
+     
+ 
     <!-- <menuitem name="Menu 2" id="ems-student.menu_2" parent="ems-student.menu_root"/> -->
   </data>
 </odoo>
