@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from datetime import datetime, date
 
@@ -111,49 +111,6 @@ class EmsStudent(models.Model):
                 patient.age = today.year - dob.year - \
                     ((today.month, today.day) < (dob.month, dob.day))
 
-
-
-    @api.model
-    def create(self, vals):
-        """Method to create user when student is created"""
-        if vals.get("pid", _("New")) == _("New"):
-            vals["pid"] = self.env["ir.sequence"].next_by_code(
-                "student.student"
-            ) or _("New")
-        if vals.get("pid", False):
-            vals["login"] = vals["pid"]
-            vals["password"] = vals["pid"]
-        else:
-            raise UserError(
-                _("Error! PID not valid so record will not be saved.")
-            )
-        if vals.get("company_id", False):
-            company_vals = {"company_ids": [(4, vals.get("company_id"))]}
-            vals.update(company_vals)
-        if vals.get("email"):
-            school.emailvalidation(vals.get("email"))
-        res = super(StudentStudent, self).create(vals)
-        teacher = self.env["school.teacher"]
-        for data in res.parent_id:
-            for record in teacher.search([("stu_parent_id", "=", data.id)]):
-                record.write({"student_id": [(4, res.id, None)]})
-        # Assign group to student based on condition
-        emp_grp = self.env.ref("base.group_user")
-        if res.state == "draft":
-            admission_group = self.env.ref("school.group_is_admission")
-            new_grp_list = [admission_group.id, emp_grp.id]
-            res.user_id.write({"groups_id": [(6, 0, new_grp_list)]})
-        elif res.state == "done":
-            done_student = self.env.ref("school.group_school_student")
-            group_list = [done_student.id, emp_grp.id]
-            res.user_id.write({"groups_id": [(6, 0, group_list)]})
-        return res
-# class Parent(models.Model):
-#     _name = 'ems.parent'
-#     _description = 'ems parent description'
-
-
-#     name = fields.Char()
 
 
 class EmsStudentAward(models.Model):
