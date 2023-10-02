@@ -6,7 +6,7 @@ from datetime import date, datetime
 
 class EmsParent(models.Model):
     _name = 'ems.parent'
-    _description = 'ems_parent'
+    _description = 'Parent'
 
     name = fields.Char()
     image = fields.Binary()
@@ -26,9 +26,10 @@ class EmsParent(models.Model):
     languages = fields.Many2one('res.lang')
     child = fields.Char()
     state = fields.Selection([
+        ('draft', 'Draft'),
         ('done', 'Done'),
         ('cancel', 'Cancel'),
-    ], string='State', default='done', track_visibility='onchange')
+    ], string='State', default='draft') 
 
 
  
@@ -40,6 +41,10 @@ class EmsParent(models.Model):
     def action_mark_cancel(self):
         for record in self:
             record.state = 'cancel'
+
+    def action_mark_draft(self):
+        for record in self:
+            record.state = 'draft'        
 
 
     @api.depends('dob')
