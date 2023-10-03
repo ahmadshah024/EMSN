@@ -21,7 +21,7 @@
           <sheet>
             <group>
               <field name="reference"/>
-              <field name="name" />
+              <field name="name"/>
             </group>
             <notebook>
               <page name="book" string="Books">
@@ -30,10 +30,9 @@
                     <field name="name"/>
                     <field name="publication_date"/>
                     <field name="author"/>
-                    <field name="pages" />
+                    <field name="pages"/>
                 </tree>
             </field>
-             
               </page>
             </notebook>
           </sheet>
