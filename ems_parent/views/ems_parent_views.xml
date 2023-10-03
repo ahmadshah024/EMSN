@@ -41,8 +41,6 @@
                                                 <li><i class="fa fa-envelope p-1" title="envelope"/> <field name="email" widget="email" /></li>
                                                 <li><i class="fa fa-phone p-1" title="phone"/> <field name="phone" widget="phone" /></li> 
                                                 <li><i class="fa fa-home p-1" title="address"/> <field name="address" /></li> 
-                                                <!-- <li><i class="fa fa-child p-1" title="child"/> <field name="child"/></li> -->
-                                                <li><i class="fa fa-age p-1" title="age"/> <field name="age"/></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -71,7 +69,7 @@
           <field name="image" widget='image' class="oe_avatar"/>
           <div class="oe_title">
                 <h1>
-                    <field name="name" placeholder="Enter your name"/>
+                    <field name="name" placeholder="Name"/>
                 </h1>
             </div>
             <group>
@@ -79,7 +77,6 @@
                     <field name="relation"/>
                     <field name="job"/>
                     <field name="languages"/>
-                    <!-- <field name="child"/> -->
                     <field name="state" invisible="1"/> 
 
 
