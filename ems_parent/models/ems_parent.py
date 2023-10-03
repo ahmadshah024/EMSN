@@ -15,6 +15,10 @@ class EmsParent(models.Model):
     email = fields.Char(states={'done': [('readonly', True)]})
     dob = fields.Date(states={'done': [('readonly', True)]})
     age = fields.Char(compute='_compute_age', store=True, states={'done': [('readonly', True)]})
+    gender = fields.Selection([
+        ('male', 'Male'),
+        ('female', 'Female'),
+    ])
     relation = fields.Selection([
         ('father', 'Father'),
         ('mother', 'Mother'),

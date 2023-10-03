@@ -2,19 +2,33 @@
   <data>
     <!-- explicit list view definition -->
 
-    <record model="ir.ui.view" id="curriculum.list">
+    <record model="ir.ui.view" id="ems_curriculum_view_tree">
       <field name="name">curriculum</field>
       <field name="model">ems.curriculum</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
+          <field name="acadomic_year"/>
+          <field name="book_name"/>
         </tree>
       </field>
     </record>
 
 
+    <record id="ems_curriculum_view_search" model="ir.ui.view">
+        <field name="name">ems_curriculum_view_search</field>
+        <field name="model">ems.curriculum</field>
+        <field name="arch" type="xml">
+            <search string="">
+                <field name="name"/>
+                <field name="book_name" />
+            </search>
+        </field>
+    </record>
+
+
     <record id="ems_curriculum_view_form" model="ir.ui.view">
-      <field name="name">ems_curriculum.view.form</field>
+      <field name="name">ems_curriculum_view_form</field>
       <field name="model">ems.curriculum</field>
       <field name="arch" type="xml">
         <form string="">
@@ -35,7 +49,9 @@
               <group>
                 <field name="name" placeholder="Name"/>
               </group>
-               
+              <group>
+                <field name="acadomic_year"/>
+              </group>
             </group>
             <notebook>
               <page name="book" string="Books">
@@ -71,7 +87,7 @@
 
     <!-- menu categories -->
 
-    <menuitem name="Menu 1" id="curriculum.menu_1" parent="curriculum.menu_root" action="curriculum.action_window"/>
+    <menuitem name="Curriculum" id="curriculum.menu_1" parent="curriculum.menu_root" action="curriculum.action_window"/>
 
     <!-- actions -->
 <!--

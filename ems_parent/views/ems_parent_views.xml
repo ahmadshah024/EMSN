@@ -8,11 +8,26 @@
       <field name="arch" type="xml">
         <tree string="">
           <field name="name"/>
-          <!-- <field name="child"/> -->
           <field name="phone"/>
           <field name="address"/>
         </tree>
       </field>
+    </record>
+
+
+        <record id="ems_parent_view_search" model="ir.ui.view">
+        <field name="name">parent_view_search</field>
+        <field name="model">ems.parent</field>
+        <field name="arch" type="xml">
+            <search string="">
+                  <field name="phone"/>
+                  <field name="name"/>
+                  <field name="relation"/>
+                <group expand="0" string="Group By">
+                  <filter name="gender" string="Gender" context="{'group_by': 'gender'}" />
+                </group>
+            </search>
+        </field>
     </record>
 
 
@@ -77,7 +92,8 @@
                     <field name="relation"/>
                     <field name="job"/>
                     <field name="languages"/>
-                    <field name="state" invisible="1"/> 
+                    <field name="state" invisible="1"/>
+                    <field name="gender"/>
 
 
                 </group>
