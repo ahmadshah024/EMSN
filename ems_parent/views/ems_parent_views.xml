@@ -61,9 +61,9 @@
         <form string="">
         <header>
             <button name="action_mark_done" string="Done" type="object" class="oe_highlight"
-                    attrs="{'invisible': [('state', '=', 'cancel')]}"/>
+                    attrs="{'invisible': [('state', 'in', ('cancel','done'))]}"/>
             <button name="action_mark_cancel" string="Cancel" type="object" class="oe_highlight"
-                    attrs="{'invisible': [('state', '=', 'done')]}"/>   
+                    attrs="{'invisible': [('state', 'in', ('done','cancel'))]}"/>   
             <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel,"/>
             
         </header>
