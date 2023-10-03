@@ -1,0 +1,80 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="ems_transport_view_tree">
+      <field name="name">ems.transport.tree</field>
+      <field name="model">ems.transport</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="distanation"/>
+          <field name="car_id"/>
+          <field name="driver_id" />
+        </tree>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    
+
+    <record id="ems_transport_view_form" model="ir.ui.view">
+      <field name="name">ems.transport.view.form</field>
+      <field name="model">ems.transport</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <div class="oe_title">
+              <h1>
+                <field name="name"/>
+              </h1>
+          </div>
+            <group>
+              <group>
+                <field name="distanation" />
+                <field name="car_id" />
+                <field name="driver_id" />
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    <record model="ir.actions.act_window" id="ems_transport_action_window">
+      <field name="name">Transport</field>
+      <field name="res_model">ems.transport</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+ 
+    <record model="ir.actions.act_window" id="ems_transport__car_action_window">
+      <field name="name">Cars</field>
+      <field name="res_model">ems.transport.car</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <record model="ir.actions.act_window" id="ems_transport_driver_action_window">
+      <field name="name">Driver</field>
+      <field name="res_model">ems.transport.driver</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Top menu item -->
+
+    <menuitem name="Transport" id="ems_transport_menu_root"  web_icon="ems_transport,static/description/icon.png"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Transport" id="ems_transport_menu" parent="ems_transport_menu_root" action="ems_transport_action_window"/>
+    <menuitem name="Configuration" id="ems_transport_configuration" parent="ems_transport_menu_root"/>
+    <menuitem name="Cars" id="ems_transport_car" parent="ems_transport_configuration" action="ems_transport__car_action_window"/>
+    <menuitem name="Drivers" id="ems_transport_drivers" parent="ems_transport_configuration" action="ems_transport_driver_action_window"/>
+
+
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="ems_transport.menu_1_list" parent="ems_transport.menu_1"
+              action="ems_transport.action_window"/>
+-->
+  </data>
+</odoo>
