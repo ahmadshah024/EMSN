@@ -8,28 +8,28 @@ class EmsParent(models.Model):
     _name = 'ems.parent'
     _description = 'Parent'
 
-    name = fields.Char()
-    image = fields.Binary()
-    address = fields.Char()
-    phone = fields.Char()
-    email = fields.Char()
-    dob = fields.Date()
-    age = fields.Char(compute='_compute_age', store=True)
+    name = fields.Char(states={'done': [('readonly', True)]}, required=True)
+    image = fields.Binary(states={'done': [('readonly', True)]})
+    address = fields.Char(states={'done': [('readonly', True)]})
+    phone = fields.Char(states={'done': [('readonly', True)]}, required=True)
+    email = fields.Char(states={'done': [('readonly', True)]})
+    dob = fields.Date(states={'done': [('readonly', True)]})
+    age = fields.Char(compute='_compute_age', store=True, states={'done': [('readonly', True)]})
     relation = fields.Selection([
         ('father', 'Father'),
         ('mother', 'Mother'),
         ('brother', 'Brother'),
         ('sister', 'Sister'),
         ('uncle', 'Uncle'),   
-    ])
-    job = fields.Char()
-    languages = fields.Many2one('res.lang')
+    ], states={'done': [('readonly', True)]}, required=True)
+    job = fields.Char(states={'done': [('readonly', True)]})
+    languages = fields.Many2one('res.lang',states={'done': [('readonly', True)]})
     # child = fields.Char()
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done'),
         ('cancel', 'Cancel'),
-    ], string='State', default='draft') 
+    ], string='State', default='draft', states={'done': [('readonly', True)]}) 
 
 
  
