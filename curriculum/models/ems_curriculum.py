@@ -8,8 +8,28 @@ class EmsCurriculum(models.Model):
     _description = 'curriculum'
 
     name = fields.Char(required=True)
-    reference = fields.Char(readonly=True)
+    reference = fields.Char(readonly=True, default="New")
     book_ids = fields.One2many("ems.book", "curriculum_id")
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('done', 'Done'),
+        ('cancel', 'Cancel'),
+    ], string='State', default='draft', states={'done': [('readonly', True)]}) 
+
+
+ 
+    def action_mark_done(self):
+        for record in self:
+            record.state = 'done'
+
+    
+    def action_mark_cancel(self):
+        for record in self:
+            record.state = 'cancel'
+
+    def action_mark_draft(self):
+        for record in self:
+            record.state = 'draft'   
     
 
  
