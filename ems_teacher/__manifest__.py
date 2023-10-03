@@ -24,8 +24,10 @@
 
     # always loaded
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'report/teacher_bedge.xml',
+        'data/sequences.xml',
         'views/ems_teacher_view.xml',
     ],
 }

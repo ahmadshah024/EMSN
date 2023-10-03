@@ -1,5 +1,9 @@
 <odoo>
   <data>
+    <record id="hr.hr_employee_print_badge" model="ir.actions.report">
+        <field name="binding_model_id" ref=""/>
+    </record>
+    
     <!-- explicit list view definition -->
 
     <record id="ems_teacher_inherit" model="ir.ui.view">
@@ -16,30 +20,28 @@
             <xpath expr="//field[@name='tz']" position="after">
                 <field name="salary" />
             </xpath>
+             
+            <xpath expr="//h1[@class='d-flex flex-row']" position="before">
+                <label for="reference"  class="o_form_label">Reference No</label>
+                <field name="reference" style="font-size: 18px;margin-bottom:30px;"/>
+                <!-- <field name="name" placeholder="Employee's Name" style="font-size:2.5rem; margin-bottom:10px;"/> -->
+              </xpath>
             <!-- <xpath expr="//field[@name'category_ids']" position="replace">
                 <field name="category_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Subjects" groups="hr.group_hr_user"/>
             </xpath>  -->
         </field>
     </record>
      <!-- Kanban -->
-    <!-- <record id="hms_doctor_kanban_view" model="ir.ui.view">
+    <record id="hms_doctor_kanban_view" model="ir.ui.view">
     <field name="name">hms.doctor.view.kanban</field>
     <field name="model">hr.employee</field>
     <field name="inherit_id" ref="hr.hr_kanban_view_employees" />
     <field name="arch" type="xml">
         <xpath expr="//field[@name='name']" position="after">
             <ul>
-                <li t-if="record.reference_no">
+                <li t-if="record.reference">
                     <strong>Reference No:</strong>
-                    <field name="reference_no" />
-                </li>
-            </ul>
-        </xpath>
-        <xpath expr="//field[@name='category_ids']" position="before">
-            <ul>
-                <li t-if="record.specialty_id">
-                    <strong>Specialty:</strong>
-                    <field name="specialty_id" />
+                    <field name="reference" />
                 </li>
             </ul>
         </xpath>
@@ -50,58 +52,38 @@
                     <field name="department_id" />
                 </li>
             </ul>
-             <ul>
-                <li t-if="record.years_of_experience">
-                    <strong>Experience:</strong>
-                    <field name="years_of_experience" />
-                </li>
-            </ul>
         </xpath>
-        <xpath expr="//field[@name='work_email']" position="attributes">
-            <attribute name="invisible">1</attribute>
-        </xpath>
-        <xpath expr="//field[@name='job_title']" position="attributes">
-            <attribute name="invisible">1</attribute>
-        </xpath>
-        <xpath expr="//field[@name='work_phone']" position="attributes">
-            <attribute name="invisible">1</attribute>
-        </xpath>
-        
     </field>
-</record> -->
+</record>
 <!-- tree -->
- <!-- <record model="ir.ui.view" id="hms_doctor_list">
+ <record model="ir.ui.view" id="hms_doctor_list">
       <field name="name">hms doctor list</field>
       <field name="model">hr.employee</field>
       <field name="arch" type="xml">
         <tree>
+          <field name="reference"/>
           <field name="name"/>
-          <field name="reference_no"/>
           <field name="category_ids"/>
-          <field name="specialty_id"/>
           <field name="department_id"/>
-          <field name="years_of_experience"/>
+          <field name="job_title" />
         </tree>
       </field>
-    </record> -->
+    </record>
     <!-- search -->
-  <!-- <record id="hms_doctor_search_view" model="ir.ui.view">
+  <record id="hms_doctor_search_view" model="ir.ui.view">
             <field name="name">hms.doctor.search.view</field>
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_filter" />
             <field name="arch" type="xml">
                     <xpath expr="//search" position="inside">
-                        <field name="reference_no" string="Reference No" filter_domain="[('reference_no', 'ilike', self)]" />
+                        <field name="reference" string="Reference No" filter_domain="[('reference', 'ilike', self)]" />
                         <field name="identification_id" string="Identification No" filter_domain="[('identification_id', 'ilike', self)]" />
                         <field name="passport_id" string="Passport No" filter_domain="[('passport_id', 'ilike', self)]" />
-                        <field name="years_of_experience" string="Experience" filter_domain="[('years_of_experience', 'ilike', self)]" />
                     </xpath>
 
                     <xpath expr="//search" position="inside">
                         <filter name="filter_male" string="Male" domain="[('gender', '=', 'male')]"/>
                         <filter name="filter_female" string="Female" domain="[('gender', '=', 'female')]"/>
-                        <filter name="filter_primary_surgeon" string="Primary Surgeon" domain="[('primary_surgeon', '=', True)]"/>
-                        <filter name="filter_consultation_physician" string="Consultation Physician" domain="[('consultation_physician', '=', True)]"/>
                     </xpath>
 
                     <xpath expr="//field[@name='job_id']" position="attributes">
@@ -119,29 +101,15 @@
                     <xpath expr="//filter[@name='message_needaction']" position="attributes">
                         <attribute name="invisible">1</attribute>
                     </xpath>
-                    <xpath expr="//search" position="inside">
-                        <group expand="0" string="Group By">
-                            <filter string="Specialty" name="group_by_specialty_id" context="{'group_by': 'specialty_id'}" />
-                            <filter string="Experience" name="group_by_years_of_experience" context="{'group_by': 'years_of_experience'}" />
-                            <filter string="Consultation Services" name="group_by_consultation_services_id" context="{'group_by': 'consultation_services_id'}" />
-                            <filter string="Language" name="group_by_lang" context="{'group_by': 'lang'}" />
-                            <filter string="Consultation Physician" name="group_by_consultation_physician" context="{'group_by': 'consultation_physician'}" />
-                            <filter string="Primary Surgeon" name="group_by_primary_surgeon" context="{'group_by': 'primary_surgeon'}" />
-                        </group>
-                    </xpath>
                     <xpath expr="//group/filter[@name='group_category_ids']" position="attributes">
                         <attribute name="invisible">1</attribute>
                     </xpath>
-                    <searchpanel>
-                         <field name="specialty_id" string="Specialty" icon="fa fa-heartbeat"  select="multi" enable_counters="1"/>
-                         <field name="consultation_services_id" string="Consultation Services" icon="fa fa-stethoscope"   select="multi" enable_counters="1"/>
-                    </searchpanel> 
             </field>
-        </record> -->
+        </record>
         <!-- actions -->
     <record model="ir.actions.act_window" id="ems_teacher_action_window">
       <field name="name">Teachers</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">kanban,tree,form</field>
       <field name="res_model">hr.employee</field>
       <field name="domain">[('is_teacher', '=', True)]</field>
       <field name="context">{'default_is_teacher': True, 'doctor': 1}</field>
