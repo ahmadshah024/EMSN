@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="ems_envent_inherit" model="ir.ui.view">
+        <field name="name">ems.eventview.form.inherit</field>
+        <field name="model">ems.event</field>
+        <field name="inherit_id" ref="ems_events.ems_event_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="teacher_id" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

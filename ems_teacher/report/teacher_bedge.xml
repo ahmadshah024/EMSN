@@ -25,6 +25,7 @@
                             </div>
                             <div class="info" style="text-align: center; margin-top: 20px;">
                                 <div class="name" style="font-size: 16px;"><t t-esc="employee.name"/></div>
+                                <div class="name" style="font-size: 16px;"><t t-esc="employee.reference"/></div>
                                 <div class="job-title" style="font-size: 12px;"><t t-esc="employee.job_id.name"/></div>
                                 <div class="job-title" style="font-size: 12px;"><t t-esc="employee.job_title"/></div>
                                 <div class="job-title" style="font-size: 12px;"><t t-esc="employee.department_id.name"/></div>

@@ -13,4 +13,11 @@ class EmsTeacher(models.Model):
     work_phone = fields.Char(default="+93(0)7909900961")
     salary = fields.Integer("Salary")
     category_ids = fields.Many2many(placeholder='subjects')
+    reference = fields.Char("Reference No", required=True,copy=False,readonly=True,default='New' )
 
+
+    @api.model
+    def create(self, vals):   
+        vals['reference'] = self.env['ir.sequence'].next_by_code('ems.teacher.sequence')
+        return super(EmsTeacher, self).create(vals)
+    
