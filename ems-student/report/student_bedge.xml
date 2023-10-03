@@ -13,64 +13,35 @@
 
     <template id="print_student_badge">
         <t t-call="web.basic_layout">
-            <style>
-                .badge-card {
-                    border: 2px solid #ccc;
-                    border-radius: 10px;
-                    padding: 10px; /* Increase padding for better spacing */
-                    margin: 10px;
-                    width: 500px;
-                    height: 300px;
-                    display: flex; /* Use flexbox for layout control */
-                    flex-direction: row; /* Arrange items in a row */
-                    justify-content: space-between; /* Space items evenly */
-                }
-    
-                .avatar img {
-                    max-height: 100px; /* Adjust image size */
-                    max-width: 100%;
-                }
-    
-                .info {
-                    flex: 1; /* Allow info section to grow and occupy remaining space */
-                    text-align: left; /* Align text to the left */
-                    padding: 10px; /* Add padding for spacing */
-                }
-    
-                .barcode {
-                    display: flex; /* Use flexbox for barcode layout */
-                    flex-direction: column; /* Arrange barcode vertically */
-                    align-items: flex-end; /* Align barcode to the right */
-                    align-items: flex-end;
-                }
-            </style>
             <div class="page">
                 <t t-foreach="docs" t-as="employee">
-                    <div class="col-md-4"> <!-- Adjust col-md-4 for smaller card columns -->
-                        <div class="badge-card">
-                            <div class="logo">
-                                <img t-if="employee.company_id.logo" t-att-src="image_data_uri(employee.company_id.logo)" alt="Company Logo"/>
+                    <div class="col-md-6">
+                        <div class="badge-container" style="height: 500px; width: 300px; display: flex; flex-direction: column; align-items: center;border:5px solid #000; margin-bottom:50px;">
+                            <div class="logo" style="margin-top: 20px;">
+                                <img t-if="employee.school.logo" t-att-src="image_data_uri(employee.school.logo)" alt="Company Logo" style="max-height: 85pt; max-width: 90%"/>
                             </div>
-                            <!-- <div class="avatar">
-                                <img t-att-src="image_data_uri(employee.image)" alt="Student Image"/>
-                            </div> -->
-                            <div class="info">
+                            <t t-if="employee.image">
+                                
+                                <div class="avatar" style="margin-bottom:40px;">
+                                    <img t-att-src="image_data_uri(employee.image)" alt="Student Image" style="max-height: 85pt; max-width: 90%"/>
+                                </div>
+                            </t>
+                            <div class="info" style="text-align: center; margin-bottom:80px;">
                                 <div class="name"><t t-esc="employee.name"/></div>
                                 <div class="class-name"><t t-esc="employee.class_id.name"/></div>
                             </div>
-                            <div class="barcode">
-                                <div t-if="employee.barcode" t-field="employee.barcode" t-options="{'widget': 'barcode', 'width': 600, 'height': 120, 'img_style': 'max-height:30pt;max-width:100%;', 'img_align': 'center'}"/>
+                            <div>
+                                <div t-if="employee.barcode" class="barcode">
+                                    <div t-field="employee.barcode" t-options="{'widget': 'barcode', 'width': 600, 'height': 120, 'img_style': 'max-height:50pt;max-width:100%;', 'img_align': 'center'}"/>
+                                </div>
                             </div>
-                            <div class="avatar">
-                                <img t-att-src="image_data_uri(employee.image)" alt="Student Image"/>
-                            </div>
+                            
                         </div>
                     </div>
                 </t>
             </div>
         </t>
     </template>
-    
     
     
 </odoo>

@@ -10,7 +10,15 @@
             <xpath expr="//field[@name='mobile_phone']" position="before">
                 <field name="is_teacher"  />
             </xpath>
-         
+            <xpath expr="//button[@name='%(hr.hr_employee_print_badge)d']" position="replace">
+                <button name="%(teacher_print_badge)d" string="Print Badge" class="btn btn-link" type="action" attrs="{'invisible': [('barcode', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='tz']" position="after">
+                <field name="salary" />
+            </xpath>
+            <!-- <xpath expr="//field[@name'category_ids']" position="replace">
+                <field name="category_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Subjects" groups="hr.group_hr_user"/>
+            </xpath>  -->
         </field>
     </record>
      <!-- Kanban -->

@@ -25,6 +25,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'report/teacher_bedge.xml',
         'views/ems_teacher_view.xml',
     ],
 }

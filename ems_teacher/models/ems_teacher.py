@@ -10,5 +10,7 @@ class EmsTeacher(models.Model):
 
 
     is_teacher = fields.Boolean("Is Teacher")
-
+    work_phone = fields.Char(default="+93(0)7909900961")
+    salary = fields.Integer("Salary")
+    category_ids = fields.Many2many(placeholder='subjects')
 
