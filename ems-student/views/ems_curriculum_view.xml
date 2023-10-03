@@ -14,4 +14,15 @@
         </field>
     </record>
 
+
+    <record id="ems_curriculum_view_tree_inherited" model="ir.ui.view">
+        <field name="name">ems.curriculum.view.tree.inherit</field>
+        <field name="model">ems.curriculum</field>
+        <field name="inherit_id" ref="curriculum.ems_curriculum_view_tree"/>
+        <field name="arch" type="xml">
+           <xpath expr="//field[@name='name']" position="after">
+                    <field name="class_id"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
