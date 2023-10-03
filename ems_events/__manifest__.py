@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "ems_teacher",
+    'name': "ems_events",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,15 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','hr'],
+    'depends': ['base'],
 
     # always loaded
     'data': [
-        'security/security.xml',
         'security/ir.model.access.csv',
-        'report/teacher_bedge.xml',
-        'data/sequences.xml',
-        'views/ems_teacher_view.xml',
         'views/ems_event_view.xml',
     ],
+     
 }

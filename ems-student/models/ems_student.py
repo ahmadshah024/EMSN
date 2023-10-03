@@ -16,8 +16,8 @@ class EmsStudent(models.Model):
     image = fields.Binary(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     name = fields.Char(states={'done': [('readonly', True)],'graduate': [('readonly', True)], 'change': [('readonly', True)]}, required=True)
 
-    father_name = fields.Char(required=True, states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
-    grand_father_name = fields.Char(required=True, states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
+    father_name = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
+    grand_father_name = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     address = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     phone = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     email = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
@@ -53,7 +53,7 @@ class EmsStudent(models.Model):
     new_school_date = fields.Date(readonly=True)
     documents = fields.Binary(readonly=True)
     avatar_1920 = fields.Image("Avatar")
-
+    event_id = fields.Many2one('ems.event')
     barcode = fields.Char(string="Badge ID", help="ID used for employee identification.", copy=False)
     pin = fields.Char(string="PIN", groups="hr.group_hr_user", copy=False,
         help="PIN used to Check In/Out in the Kiosk Mode of the Attendance application (if enabled in Configuration) and to change the cashier in the Point of Sale application.")
