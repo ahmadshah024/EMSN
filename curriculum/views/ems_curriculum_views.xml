@@ -1,0 +1,71 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="curriculum.list">
+      <field name="name">curriculum</field>
+      <field name="model">ems.curriculum</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+
+    <record id="ems_curriculum_view_form" model="ir.ui.view">
+      <field name="name">ems_curriculum.view.form</field>
+      <field name="model">ems.curriculum</field>
+      <field name="arch" type="xml">
+        <form string="">
+          <sheet>
+            <group>
+              <field name="reference"/>
+              <field name="name" />
+            </group>
+            <notebook>
+              <page name="book" string="Books">
+            <field name="book_ids">
+                <tree editable="top">
+                    <field name="name"/>
+                    <field name="publication_date"/>
+                    <field name="author"/>
+                    <field name="pages" />
+                </tree>
+            </field>
+             
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="curriculum.action_window">
+      <field name="name">ems.curriculum</field>
+      <field name="res_model">ems.curriculum</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <!-- Top menu item -->
+
+    <menuitem name="curriculum" id="curriculum.menu_root"  web_icon="curriculum,static/description/icon.png"/>
+
+    <!-- menu categories -->
+
+    <menuitem name="Menu 1" id="curriculum.menu_1" parent="curriculum.menu_root" action="curriculum.action_window"/>
+
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="curriculum.menu_1_list" parent="curriculum.menu_1"
+              action="curriculum.action_window"/>
+    <menuitem name="Server to list" id="curriculum" parent="curriculum.menu_2"
+              action="curriculum.action_server"/>
+-->
+  </data>
+</odoo>
