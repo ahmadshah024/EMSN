@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "ems-student",
+    'name': "ems_teacher",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,20 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'ems_parent'],
+    'depends': ['base','hr'],
 
     # always loaded
     'data': [
-        'security/security.xml',
         'security/ir.model.access.csv',
-        'report/student_bedge.xml',
-        'views/ems_student_view.xml',
-        'data/sequences.xml',
-        'views/ems_parent_view.xml',
-        'views/ems_class_room_view.xml',
-        'views/districts.xml',
-        'wizards/change_school_wizard.xml',
-
-        
+        'report/teacher_bedge.xml',
+        'views/ems_teacher_view.xml',
     ],
 }

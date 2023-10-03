@@ -135,6 +135,17 @@
                         <field name="documents"/>
                     </group>
                </page>
+               <page name="card" string="Card">
+                <group string="nnnnnnnnn" name="identification_group">
+                    <field name="pin" string="PIN Code"/>
+                    <label for="barcode"/>
+                    <div class="o_row">
+                        <field name="barcode"/>
+                        <button string="Generate" class="btn btn-link" type="object" name="generate_random_barcode" attrs="{'invisible': [('barcode', '!=', False)]}"/>
+                        <button name="%(hr_employee_print_badge)d" string="Print Badge" class="btn btn-link" type="action" attrs="{'invisible': [('barcode', '=', False)]}"/>
+                    </div>
+                </group>
+               </page>
             </notebook>
           </sheet>
         </form>
@@ -176,6 +187,27 @@
             </kanban>
         </field>
     </record>
+
+    <record id="ems_student_view_search" model="ir.ui.view">
+        <field name="name">ems.student.view.search</field>
+        <field name="model">ems.student</field>
+        <field name="arch" type="xml">
+          <search>
+            <field name="name" string="Student Name"/>
+            <field name="class_id" />
+            <field name="parent_id" />
+            <separator />
+            <filter name="graduate" string="Graduated Students" domain="[('state', '=', 'graduate')]" />
+            <filter name="change" string="Changed Students" domain="[('state', '=', 'change')]" />
+            <filter name="is_new" string="New Students" domain="[('is_new', '=', True)]" />
+            <filter name="is_changed" string="Changed Students" domain="[('is_changed', '=', True)]" />
+            <separator />
+            <group expand="0" string="Group By">
+              <filter name="gender" string="Gender" context="{'group_by': 'gender'}" />
+            </group>
+          </search>
+        </field>
+      </record>
 
     <!-- actions opening views on models -->
 

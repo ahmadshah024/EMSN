@@ -3,6 +3,8 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from datetime import datetime, date
+from string import digits
+from random import choice
 
 
 
@@ -45,11 +47,24 @@ class EmsStudent(models.Model):
     state = fields.Selection([('draft','Draft'),('done', 'Done'), ('cancel', 'Caneled'), ('graduate', 'Graduated'), ('change','Changed')], default='draft')
     is_new = fields.Boolean('Is New', states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     is_changed = fields.Boolean('Is Change', states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
-
+    company_id = fields.Many2one('res.company')
     new_school = fields.Char(readonly=True)
     new_reason = fields.Char(readonly=True)
     new_school_date = fields.Date(readonly=True)
     documents = fields.Binary(readonly=True)
+    avatar_1920 = fields.Image("Avatar")
+
+    barcode = fields.Char(string="Badge ID", help="ID used for employee identification.", copy=False)
+    pin = fields.Char(string="PIN", groups="hr.group_hr_user", copy=False,
+        help="PIN used to Check In/Out in the Kiosk Mode of the Attendance application (if enabled in Configuration) and to change the cashier in the Point of Sale application.")
+        
+    _sql_constraints = [
+        ('barcode_uniq', 'unique (barcode)', "The Badge ID must be unique, this one is already assigned to another employee."),
+        ('user_uniq', 'unique (user_id, company_id)', "A user cannot be linked to multiple employees in the same company.")
+    ]
+    def generate_random_barcode(self):
+        for employee in self:
+            employee.barcode = '041'+"".join(choice(digits) for i in range(9))
 
 
     def action_change_new_flase(self):
