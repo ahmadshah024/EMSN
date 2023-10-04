@@ -25,7 +25,9 @@
     'data': [
         'security/ir.model.access.csv',
         'views/ems_curriculum_views.xml',
+        'views/ems_books_views.xml',
         'data/sequence.xml',
+
   
     ],
 

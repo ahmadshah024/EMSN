@@ -67,3 +67,4 @@ class EmsBook(models.Model):
     publication_date = fields.Date(string='Publication Date')
     author = fields.Char()
     pages = fields.Integer()
+    image = fields.Binary()

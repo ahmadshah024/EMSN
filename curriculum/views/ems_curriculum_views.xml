@@ -106,22 +106,35 @@
 
     <!-- actions opening views on models -->
 
-    <record model="ir.actions.act_window" id="curriculum.action_window">
+    <record model="ir.actions.act_window" id="curriculum_action_window">
       <field name="name">Curriculum</field>
       <field name="res_model">ems.curriculum</field>
       <field name="view_mode">tree,form,kanban</field>
     </record>
 
+   
+
+       
+    <record model="ir.actions.act_window" id="book_action_window">
+      <field name="name">Books</field>
+      <field name="res_model">ems.book</field>
+      <field name="view_mode">tree,form,kanban</field>
+    </record>
+
+     
+
 
 
     <!-- Top menu item -->
 
-    <menuitem name="Curriculum" id="curriculum.menu_root"  web_icon="curriculum,static/description/icon.png"/>
+    <menuitem name="Curriculum" id="curriculum_menu_root"  web_icon="curriculum,static/description/icon.png"/>
 
     <!-- menu categories -->
 
-    <menuitem name="Curriculum" id="curriculum.menu_1" parent="curriculum.menu_root" action="curriculum.action_window"/>
+    <menuitem name="Curriculum" id="curriculum_menu_1" parent="curriculum_menu_root" action="curriculum_action_window"/>
+    <menuitem name="Books" id="book_menu_2" parent="curriculum_menu_root" action="book_action_window"/>
 
+ 
     <!-- actions -->
 <!--
     <menuitem name="List" id="curriculum.menu_1_list" parent="curriculum.menu_1"
