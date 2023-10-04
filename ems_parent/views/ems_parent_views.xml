@@ -129,7 +129,7 @@
 
     <!-- menu categories -->
 
-    <menuitem name="parent" id="ems_parent_menu" parent="ems_parent_menu_root" action="ems_parent_action_window"/>
+    <menuitem name="Parent" id="ems_parent_menu" parent="ems_parent_menu_root" action="ems_parent_action_window"/>
 
 
   </data>
