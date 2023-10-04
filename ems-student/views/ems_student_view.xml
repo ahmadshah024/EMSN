@@ -203,9 +203,9 @@
             <filter name="is_changed" string="Changed Students" domain="[('is_changed', '=', True)]" />
             <separator />
             <group expand="0" string="Group By">
-              <filter name="gender" string="Gender" context="{'group_by': 'gender'}" />
-            </group>
-          </search>
+           </group>
+                <filter name="gender" string="Gender" context="{'group_by': 'gender'}" />
+         </search>
         </field>
       </record>
 

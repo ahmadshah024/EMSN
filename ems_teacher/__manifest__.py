@@ -30,5 +30,6 @@
         'data/sequences.xml',
         'views/ems_teacher_view.xml',
         'views/ems_event_view.xml',
+        'views/ems_transport_view.xml',
     ],
 }

@@ -9,4 +9,4 @@ class EmsEvent(models.Model):
     _description = 'ems event inherited  description'
 
 
-    student_ids = fields.One2many('ems.student', 'event_id')
+    student_ids = fields.One2many('ems.student', 'event_id', states={'done': [('readonly', True)]})

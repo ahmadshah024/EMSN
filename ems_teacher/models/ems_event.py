@@ -9,4 +9,4 @@ class EmsEvent(models.Model):
     _description = 'ems event inherited  description'
 
 
-    teacher_id = fields.Many2one('hr.employee', domain="[('is_teacher', '=', True)]")
+    teacher_id = fields.Many2one('hr.employee', domain="[('is_teacher', '=', True)]", states={'done': [('readonly', True)]})

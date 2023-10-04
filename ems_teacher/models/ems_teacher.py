@@ -10,11 +10,11 @@ class EmsTeacher(models.Model):
 
 
     is_teacher = fields.Boolean("Is Teacher")
-    work_phone = fields.Char(default="+93(0)7909900961")
+    work_phone = fields.Char(default="")
     salary = fields.Integer("Salary")
     category_ids = fields.Many2many(placeholder='subjects')
     reference = fields.Char("Reference No", required=True,copy=False,readonly=True,default='New' )
-
+    transport_id = fields.Many2one('ems.transport')
 
     @api.model
     def create(self, vals):   

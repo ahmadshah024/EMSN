@@ -35,6 +35,7 @@
         'wizards/change_school_wizard.xml',
         'views/ems_curriculum_view.xml',
         'views/ems_event_view.xml',
+        # 'views/ems_transport_view.xml',
 
         
     ],
