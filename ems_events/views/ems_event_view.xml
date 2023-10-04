@@ -30,14 +30,27 @@
                     </h3>
                   </div>
                     <group>
-                      <group name="teacher">
-                        <field name="date" />
+                      <group>
+                        <field name="teacher_id" string="Responsable" />
+                        <field name="date"/>
                       </group>
                     <group>
                       <field name="event_category" />
                         <field name="reason" />
                     </group>
                     </group>
+                    <notebook>
+                      <page name="particpants" string="Particpants">
+                        <field name="event_line_ids">
+                          <tree editable="top">
+                            <field name="student_id" />
+                            <field name="father_name" />
+                            <field name="class_id" />
+                            <field name="phone" />
+                          </tree>
+                        </field>
+                      </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

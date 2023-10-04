@@ -9,8 +9,7 @@ class EmsCurriculum(models.Model):
 
 
     name = fields.Char(string='Curriculum Name', required=True)
-    book_ids = fields.One2many('ems.book', 'curriculum_id', string='Books')
-    book_name = fields.Char(string='Book Names', related='book_ids.name', store=True)
+    # book_name = fields.Char(string='Book Names', related='book_ids.name', store=True)
     reference = fields.Char(readonly=True, default="New")
     
     state = fields.Selection([
@@ -19,7 +18,8 @@ class EmsCurriculum(models.Model):
         ('cancel', 'Cancel'),
     ], string='State', default='draft', states={'done': [('readonly', True)]})
     acadomic_year = fields.Date()
-    
+    curriculum_line_ids = fields.One2many('ems.curriculum.line', 'curriculum_id')
+
 
  
     def action_mark_done(self):
@@ -43,6 +43,21 @@ class EmsCurriculum(models.Model):
         return super(EmsCurriculum, self).create(vals)
     
 
+class EmsCurriculumLine(models.Model):
+    _name = 'ems.curriculum.line'
+    _description = 'ems curvericulum line'
+
+
+    book_id = fields.Many2one('ems.book')
+    author = fields.Char(related='book_id.author')
+    page = fields.Integer(related='book_id.pages')
+
+
+    curriculum_id = fields.Many2one('ems.curriculum')
+
+
+
+
 class EmsBook(models.Model):
     _name = 'ems.book'
     _description = 'book'
@@ -52,4 +67,3 @@ class EmsBook(models.Model):
     publication_date = fields.Date(string='Publication Date')
     author = fields.Char()
     pages = fields.Integer()
-    curriculum_id = fields.Many2one('ems.curriculum', string='Curriculum')
