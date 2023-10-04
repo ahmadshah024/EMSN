@@ -54,6 +54,7 @@ class EmsStudent(models.Model):
     documents = fields.Binary(readonly=True)
     avatar_1920 = fields.Image("Avatar")
     event_id = fields.Many2one('ems.event')
+    transport_id = fields.Many2one('ems.transport')
     barcode = fields.Char(string="Badge ID", help="ID used for employee identification.", copy=False)
     pin = fields.Char(string="PIN", groups="hr.group_hr_user", copy=False,
         help="PIN used to Check In/Out in the Kiosk Mode of the Attendance application (if enabled in Configuration) and to change the cashier in the Point of Sale application.")
@@ -77,6 +78,8 @@ class EmsStudent(models.Model):
 
     def action_done(self):
         for rec in self:
+            if rec.is_new or rec.is_changed:
+                raise ValidationError('Please Check the new or changed student documents first, then you done the record')
             rec.state = 'done'
 
     def action_draft(self):
