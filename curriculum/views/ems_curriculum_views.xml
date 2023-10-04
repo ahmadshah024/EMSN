@@ -75,7 +75,7 @@
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="curriculum.action_window">
-      <field name="name">ems.curriculum</field>
+      <field name="name">Curriculum</field>
       <field name="res_model">ems.curriculum</field>
       <field name="view_mode">tree,form</field>
     </record>
