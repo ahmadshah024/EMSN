@@ -23,7 +23,6 @@
             <search string="">
                 <field name="name"/>
                 <field name="book_name" />
-
             </search>
         </field>
     </record>
