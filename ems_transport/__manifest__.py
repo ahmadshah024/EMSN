@@ -20,12 +20,16 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','ems_transport'],
 
     # always loaded
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'views/ems_transport_view.xml',
+        'data/sequences.xml',
+        'views/ems_transport_car_view.xml',
+        'views/ems_transport_driver_view.xml',
     ],
     
 }

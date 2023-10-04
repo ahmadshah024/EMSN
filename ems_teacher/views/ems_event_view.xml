@@ -6,8 +6,8 @@
         <field name="model">ems.event</field>
         <field name="inherit_id" ref="ems_events.ems_event_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='name']" position="after">
-                <field name="teacher_id" />
+            <xpath expr="//field[@name='date']" position="before">
+                <field name="teacher_id" string="Responable Person"/>
             </xpath>
         </field>
     </record>

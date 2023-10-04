@@ -25,6 +25,12 @@
       <field name="model">ems.transport</field>
       <field name="arch" type="xml">
         <form string="">
+            <header>
+                <button name="action_done" string="Done" type="object" attrs="{'invisible': [('state', 'in',('done','cancel'))]}"/>
+                <!-- <button name="action_draft" string="Draft" type="object" attrs="{'invisible': [('state', 'in',('done','draft','cancel'))]}"/> -->
+                <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in',('done','cancel'))]}"/>
+                <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,done"/>
+            </header>
           <sheet>
             <div class="oe_title">
               <h1>
@@ -34,14 +40,47 @@
             <group>
               <group>
                 <field name="distanation" />
-                <field name="car_id" />
-                <field name="driver_id" />
+                <field name="transport_fee" />
+              </group>
+              <group>
+                <field name="car_id" options="{'no_create': True}" />
+                <field name="driver_id" options="{'no_create': True}"/>
               </group>
             </group>
+            <notebook>
+              <page name="students" string="Students">
+                <field name="transport_line_ids">
+                  <tree>
+                    <field name="student_id" />
+                    <field name="father_name" />
+                    <field name="age" />
+                  </tree>
+                </field>
+              </page>
+            </notebook>
           </sheet>
         </form>
       </field>
     </record>
+
+    <record id="ems_transport_view_search" model="ir.ui.view">
+        <field name="name">ems.transport.view.search</field>
+        <field name="model">ems.transport</field>
+        <field name="arch" type="xml">
+          <search>
+            <field name="car_id" />
+            <field name="driver_id" />
+            <field name="distanation" />
+            <separator />
+            <group expand="0" string="Group By">
+                <filter name="cars" string="Cars" context="{'group_by': 'car_id'}" />
+                <filter name="drivers" string="Drivers" context="{'group_by': 'driver_id'}" />
+              </group>
+          </search>
+        </field>
+      </record>
+
+
     <record model="ir.actions.act_window" id="ems_transport_action_window">
       <field name="name">Transport</field>
       <field name="res_model">ems.transport</field>
@@ -51,12 +90,12 @@
     <record model="ir.actions.act_window" id="ems_transport__car_action_window">
       <field name="name">Cars</field>
       <field name="res_model">ems.transport.car</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">kanban,tree,form</field>
     </record>
     <record model="ir.actions.act_window" id="ems_transport_driver_action_window">
       <field name="name">Driver</field>
       <field name="res_model">ems.transport.driver</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">kanban,tree,form</field>
     </record>
 
     <!-- Top menu item -->
