@@ -24,6 +24,7 @@ class EmsEvent(models.Model):
         ('workshops_and_training','Workshops and Training'),
     ], states={'done': [('readonly', True)]})
     state = fields.Selection([('draft','Draft'),('done', 'Done'), ('cancel', 'Caneled')], default='draft')
+    event_line_ids = fields.One2many('ems.event.line', 'event_id')
 
 
 
@@ -35,3 +36,17 @@ class EmsEvent(models.Model):
     def action_cancel(self):
         for rec in self:
             rec.state = 'cancel'
+
+
+class EmsEventLine(models.Model):
+    _name = 'ems.event.line'
+    _description = 'ems event line'
+
+
+    student_id = fields.Many2one('ems.student')
+    father_name = fields.Char(related='student_id.father_name')
+    class_id = fields.Many2one(related='student_id.class_id')
+    phone = fields.Char(related='student_id.phone')
+    
+    
+    event_id = fields.Many2one('ems.event')

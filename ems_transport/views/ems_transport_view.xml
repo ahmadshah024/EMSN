@@ -50,10 +50,21 @@
             <notebook>
               <page name="students" string="Students">
                 <field name="transport_line_ids">
-                  <tree>
+                  <tree editable="top">
                     <field name="student_id" />
                     <field name="father_name" />
-                    <field name="age" />
+                    <field name="class_id" />
+                    <field name="phone" />
+                  </tree>
+                </field>
+              </page>
+              <page name="teachers" string="Teachers">
+                <field name="transport_teacher_line_ids">
+                  <tree editable="top">
+                    <field name="teacher_id" string="Employee Name"/>
+                    <field name="job_titlee" />
+                    <field name="departmente" />
+                    <field name="teacher_phonee" />
                   </tree>
                 </field>
               </page>

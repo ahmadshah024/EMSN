@@ -14,6 +14,7 @@ class EmsTransport(models.Model):
     transport_fee = fields.Integer(required=True, default=None, states={'done': [('readonly', True)]})
     state = fields.Selection([('draft','Draft'),('done', 'Done'), ('cancel', 'Caneled')], default='draft')
     transport_line_ids = fields.One2many('ems.transport.line', 'transport_id')
+    transport_teacher_line_ids = fields.One2many('ems.transport.line.teacher', 'transport_teacher_id')
 
 
     def action_done(self):
@@ -37,8 +38,23 @@ class EmsTransportline(models.Model):
 
     student_id = fields.Many2one('ems.student')
     father_name = fields.Char(related='student_id.father_name')
-    age = fields.Integer(related='student_id.age')
+    class_id = fields.Many2one(related='student_id.class_id')
+    phone = fields.Char(related='student_id.phone')
+
     transport_id = fields.Many2one('ems.transport')
+
+class EmsTransportlineTeacher(models.Model):
+    _name = 'ems.transport.line.teacher'
+    _description = 'ems transport line teacher description'
+
+
+    teacher_id = fields.Many2one('hr.employee')
+    # name = fields.Char(related='teacher_id.name')
+    teacher_phonee = fields.Char(related='teacher_id.work_phone')
+    job_titlee = fields.Char(related='teacher_id.job_title')
+    departmente = fields.Many2one(related='teacher_id.department_id')
+
+    transport_teacher_id = fields.Many2one('ems.transport')
 
 
 
