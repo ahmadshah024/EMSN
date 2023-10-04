@@ -11,7 +11,7 @@
           <field name="acadomic_year"/>
           <field name="book_name"/>
         </tree>
-        
+
       </field>
     </record>
 
@@ -23,9 +23,41 @@
             <search string="">
                 <field name="name"/>
                 <field name="book_name" />
+
             </search>
         </field>
     </record>
+
+     <record id="ems_curriculum_kanban" model="ir.ui.view">
+            <field name="name">ems_curriculum_view_kanban</field>
+            <field name="model">ems.curriculum</field>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <kanban sample="1">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <strong class="ml-2">
+                                         <field name="name"/>
+                                        </strong>
+                                        <div class="ml-2" name="class">
+
+                                        </div>
+                                        <div class="oe_kanban_details mt-3 ml-2" name="items">
+                                            <ul>
+                                                <li><i class="fa fa-year p-1" title="acadomic_year"/> <field name="acadomic_year" widget="acadomic_year"/></li> 
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record> 
 
 
     <record id="ems_curriculum_view_form" model="ir.ui.view">
@@ -77,7 +109,7 @@
     <record model="ir.actions.act_window" id="curriculum.action_window">
       <field name="name">Curriculum</field>
       <field name="res_model">ems.curriculum</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,kanban</field>
     </record>
 
 

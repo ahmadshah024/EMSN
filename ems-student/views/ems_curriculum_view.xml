@@ -25,4 +25,29 @@
             </xpath>
         </field>
     </record>
+
+
+        <record id="ems_curriculum_view_search_inherited" model="ir.ui.view">
+        <field name="name">ems.curriculum.view.search.inherit</field>
+        <field name="model">ems.curriculum</field>
+        <field name="inherit_id" ref="curriculum.ems_curriculum_view_search"/>
+        <field name="arch" type="xml">
+           <xpath expr="//search" position="inside">
+                <group expand="0" string="Group By">
+                  <filter name="class" string="Class" context="{'group_by': 'class_id'}" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+       <record id="ems_curriculum_view_kanban_inherited" model="ir.ui.view">
+        <field name="name">ems.curriculum.view.kanban.inherit</field>
+        <field name="model">ems.curriculum</field>
+        <field name="inherit_id" ref="curriculum.ems_curriculum_kanban"/>
+        <field name="arch" type="xml">
+           <xpath expr="//div[@name='class']" position="inside">
+                    <field name="class_id"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
