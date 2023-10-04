@@ -11,7 +11,7 @@ class EmsCurriculum(models.Model):
     name = fields.Char(string='Curriculum Name', required=True)
     # book_name = fields.Char(string='Book Names', related='book_ids.name', store=True)
     reference = fields.Char(readonly=True, default="New")
-    
+    class_id = fields.Many2one('ems.class.room')
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done'),

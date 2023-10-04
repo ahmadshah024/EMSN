@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'ems_parent','curriculum'],
+    'depends': ['base', 'ems_parent'],
 
     # always loaded
     'data': [
@@ -33,7 +33,7 @@
         'views/ems_class_room_view.xml',
         'views/districts.xml',
         'wizards/change_school_wizard.xml',
-        'views/ems_curriculum_view.xml',
+        # 'views/ems_curriculum_view.xml',
         # 'views/ems_event_view.xml',
         # 'views/ems_transport_view.xml',
 
