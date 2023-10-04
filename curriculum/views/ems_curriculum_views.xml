@@ -11,6 +11,7 @@
           <field name="acadomic_year"/>
           <field name="book_name"/>
         </tree>
+        
       </field>
     </record>
 
@@ -83,7 +84,7 @@
 
     <!-- Top menu item -->
 
-    <menuitem name="curriculum" id="curriculum.menu_root"  web_icon="curriculum,static/description/icon.png"/>
+    <menuitem name="Curriculum" id="curriculum.menu_root"  web_icon="curriculum,static/description/icon.png"/>
 
     <!-- menu categories -->
 
