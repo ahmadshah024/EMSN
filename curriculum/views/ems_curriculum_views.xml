@@ -109,7 +109,7 @@
     <record model="ir.actions.act_window" id="curriculum_action_window">
       <field name="name">Curriculum</field>
       <field name="res_model">ems.curriculum</field>
-      <field name="view_mode">tree,form,kanban</field>
+      <field name="view_mode">kanban,tree,form</field>
     </record>
 
    
@@ -118,7 +118,7 @@
     <record model="ir.actions.act_window" id="book_action_window">
       <field name="name">Books</field>
       <field name="res_model">ems.book</field>
-      <field name="view_mode">tree,form,kanban</field>
+      <field name="view_mode">kanban,tree,form</field>
     </record>
 
      

@@ -18,6 +18,13 @@
             <field name="model">ems.book</field>
             <field name="arch" type="xml">
                 <form string="">
+            <header>
+                <button name="action_mark_done" string="Done" type="object" class="oe_highlight"
+                        attrs="{'invisible': [('state', 'in', ('cancel','done'))]}"/>
+                <button name="action_mark_cancel" string="Cancel" type="object" class="oe_highlight"
+                        attrs="{'invisible': [('state', 'in', ('done','cancel'))]}"/>   
+                <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel,"/>
+            </header>
                     <sheet>
                     <field name="image" widget='image' class="oe_avatar"/>
                         <div class="oe_title">
@@ -62,8 +69,8 @@
                                         </div>
                                         <div class="oe_kanban_details mt-3 ml-2" name="items">
                                             <ul>
-                                                <li><i class="fa fa-phone p-1" title="author"/> <field name="author" widget="author" /></li> 
-                                                <li><i class="fa fa-home p-1" title="pages"/> <field name="pages" /></li> 
+                                                <li><i class="fa fa-at p-1" title="author"/> <field name="author" widget="author" /></li> 
+                                                <li><i class="fa fa-file p-1" title="pages"/> <field name="pages" /></li> 
                                             </ul>
                                         </div>
                                     </div>
