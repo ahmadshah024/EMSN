@@ -62,8 +62,30 @@ class EmsBook(models.Model):
     _name = 'ems.book'
     _description = 'book'
 
+
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('done', 'Done'),
+        ('cancel', 'Cancel'),
+    ], string='State', default='draft', states={'done': [('readonly', True)]})
     
     name = fields.Char(string='Book Name', required=True)
     publication_date = fields.Date(string='Publication Date')
     author = fields.Char()
     pages = fields.Integer()
+    image = fields.Binary()
+
+
+    def action_mark_done(self):
+        for record in self:
+            record.state = 'done'
+
+    
+    def action_mark_cancel(self):
+        for record in self:
+            record.state = 'cancel'
+
+    def action_mark_draft(self):
+        for record in self:
+            record.state = 'draft'   
+    
