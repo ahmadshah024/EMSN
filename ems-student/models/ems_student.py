@@ -58,7 +58,11 @@ class EmsStudent(models.Model):
     barcode = fields.Char(string="Badge ID", help="ID used for employee identification.", copy=False)
     pin = fields.Char(string="PIN", groups="hr.group_hr_user", copy=False,
         help="PIN used to Check In/Out in the Kiosk Mode of the Attendance application (if enabled in Configuration) and to change the cashier in the Point of Sale application.")
-        
+    
+    # is_persent = fields.Boolean(default=False)
+    # is_absent = fields.Boolean(default=False)
+    # is_leave = fields.Boolean(default=False)
+    
     _sql_constraints = [
         ('barcode_uniq', 'unique (barcode)', "The Badge ID must be unique, this one is already assigned to another employee."),
         ('user_uniq', 'unique (user_id, company_id)', "A user cannot be linked to multiple employees in the same company.")
