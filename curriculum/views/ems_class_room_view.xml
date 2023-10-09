@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <!-- Inherit Patient Form View -->
+        <record id="view_ems_books" model="ir.ui.view">
+            <field name="model">ems.class.room</field>
+            <field name="inherit_id" ref="ems-student.ems_class_room_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                        <button class="oe_stat_button" name="action_open_books" type="object" icon="fa-book">
+                        <field string="Books" name="curriculum_line_count" widget="statinfo" />
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

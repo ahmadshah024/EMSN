@@ -161,3 +161,23 @@ class EmsClassRoom(models.Model):
     room_number = fields.Char('Room Number')
 
 
+    student_ids = fields.One2many('ems.student', 'class_id')
+    student_count = fields.Integer(compute="_compute_student_count")
+
+    def _compute_student_count(self):
+        for record in self:
+            student_count = len(record.student_ids)
+            record.student_count = student_count
+
+    def action_open_students(self):
+        for rec in self:
+            return {
+                'name': 'Students',
+                'type': 'ir.actions.act_window',
+                'res_model': 'ems.student',
+                'view_mode': 'tree,form',
+                'domain': [('class_id', '=', self.id)],
+            }
+        
+    
+
