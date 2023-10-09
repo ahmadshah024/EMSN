@@ -163,7 +163,7 @@
                         <div t-attf-class="oe_kanban_global_click">
                             <div class="row">
                                 <div class="col-4 d-flex align-items-center">
-                                    <field name="image" widget="image" class="oe_avatar" style="{'size': [400,400]}" />
+                                    <field name="image" widget="image" class="oe_avatar" style="{'size': [800,900]}" />
                                 </div>
                                 <div class="col-8">
                                     <strong class="ml-2">
@@ -214,14 +214,14 @@
     <record model="ir.actions.act_window" id="ems_student_action_window">
       <field name="name">Student</field>
       <field name="res_model">ems.student</field>
-      <field name="view_mode">tree,form,kanban</field>
+      <field name="view_mode">kanban,tree,form</field>
     </record>
 
 
     <record model="ir.actions.act_window" id="ems_class_room_action_window">
         <field name="name">Class Room</field>
         <field name="res_model">ems.class.room</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">tree,form</field>
     </record>
   
     <record id="ems_district_action" model="ir.actions.act_window">
@@ -235,12 +235,12 @@
         </field>
     </record>
 
-      <menuitem name="Student" id="ems_student_menu_root"  web_icon="ems-student,static/description/icon.png"/>
+    <menuitem name="Student" id="ems_student_menu_root"  web_icon="ems-student,static/description/icon.png"/>
+    <menuitem name="Classes" id="ems_class_room_menu"   action="ems_class_room_action_window" web_icon="ems-student,static/description/icon2.png"/>
       <menuitem name="Students" id="ems_student_menu" parent="ems_student_menu_root" action="ems_student_action_window"/>
       <menuitem name="Configuration" id="ems_student_menu_configuration" parent="ems_student_menu_root" />
-      <menuitem id="class_room" name="Classes" sequence="1" parent="ems_student_menu_configuration">
-         <menuitem name="Class Room" id="ems_class_room_menu"   action="ems_class_room_action_window"/>
-      </menuitem>
+      <!-- <menuitem id="class_room" name="Classes" sequence="1" parent="ems_student_menu_configuration">
+      </menuitem> -->
       <menuitem id="country" name="County" sequence="2" parent="ems_student_menu_configuration">
         <menuitem name="Country" id="ems_country_menu"   action="base.action_country"/>
         <menuitem id="districts_menu" name="Districts" action="ems_district_action"/>

@@ -54,6 +54,8 @@ class EmsCurriculumLine(models.Model):
 
 
     curriculum_id = fields.Many2one('ems.curriculum')
+    class_id = fields.Many2one(related='curriculum_id.class_id', store=True)
+
 
 
 
@@ -74,7 +76,6 @@ class EmsBook(models.Model):
     author = fields.Char()
     pages = fields.Integer()
     image = fields.Binary()
-
 
     def action_mark_done(self):
         for record in self:
