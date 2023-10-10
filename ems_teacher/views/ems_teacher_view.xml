@@ -17,6 +17,9 @@
             <xpath expr="//button[@name='%(hr.hr_employee_print_badge)d']" position="replace">
                 <button name="%(teacher_print_badge)d" string="Print Badge" class="btn btn-link" type="action" attrs="{'invisible': [('barcode', '=', False)]}"/>
             </xpath>
+            <xpath expr="//field[@name='coach_id']" position="replace">
+                <field name="class_id" string="Responsible For Class" options="{'no_create': True}"  attrs="{'invisible': [('is_teacher', '=', False)]}" />
+            </xpath>
             <xpath expr="//field[@name='tz']" position="after">
                 <field name="salary" />
             </xpath>

@@ -15,7 +15,8 @@ class EmsTeacher(models.Model):
     category_ids = fields.Many2many(placeholder='subjects')
     reference = fields.Char("Reference No", required=True,copy=False,readonly=True,default='New' )
     transport_id = fields.Many2one('ems.transport')
-
+    class_id = fields.Many2one('ems.class.room')
+    
     @api.model
     def create(self, vals):   
         vals['reference'] = self.env['ir.sequence'].next_by_code('ems.teacher.sequence')

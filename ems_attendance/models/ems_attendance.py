@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 
 class EmsAttendance(models.Model):
@@ -19,24 +20,18 @@ class EmsAttendance(models.Model):
 
     date = fields.Date(states={'done': [('readonly', True)]}, default=lambda self: fields.Date.today())
     class_id = fields.Many2one('ems.class.room', states={'done': [('readonly', True)]})
-    # student_ids = fields.One2many('ems.student','attendance_id', string='Students in Class', compute='_compute_student_ids',states={'done': [('readonly', True)]}, store=True, readonly=False)
     attendance_line_ids = fields.One2many('ems.attendance.line','attendance_id', string='Students in Class', compute='_compute_student_ids',states={'done': [('readonly', True)]}, store=True, readonly=False)
     company_id = fields.Many2one('res.company' , default=lambda self: self.env.company.id)
 
 
-
+    @api.model
+    def create(self, vals):
+        vals['name'] = f"ATT/{vals['date']}/{self.env['ir.sequence'].next_by_code('ems.attendance.sequences.sheet')}"
+        return super(EmsAttendance, self).create(vals)
+    
     def action_mark_done(self):
         for record in self:
             record.state = 'done'
-
-    
-    def action_mark_cancel(self):
-        for record in self:
-            record.state = 'cancel'
-
-    def action_mark_draft(self):
-        for record in self:
-            record.state = 'draft'   
 
     @api.depends('class_id')
     def _compute_student_ids(self):
@@ -47,11 +42,15 @@ class EmsAttendance(models.Model):
             else:
                 record.attendance_line_ids = False
 
-    @api.model
-    def create(self, vals):   
-        vals['name'] = self.env['ir.sequence'].next_by_code('ems.attendance.sequences.sheet')
-        return super(EmsAttendance, self).create(vals)
     
+    def action_mark_cancel(self):
+        for record in self:
+            record.state = 'cancel'
+
+    def action_mark_draft(self):
+        for record in self:
+            record.state = 'draft'   
+
 
 class EmsAttendanceLine(models.Model):
     _name = 'ems.attendance.line'

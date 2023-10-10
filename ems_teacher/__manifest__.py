@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','hr'],
+    'depends': ['base','hr','ems-student'],
 
     # always loaded
     'data': [
@@ -29,5 +29,6 @@
         'report/teacher_bedge.xml',
         'data/sequences.xml',
         'views/ems_teacher_view.xml',
+        'views/ems_class_room_view.xml',
     ],
 }

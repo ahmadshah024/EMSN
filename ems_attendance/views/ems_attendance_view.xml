@@ -58,10 +58,24 @@
       </field>
     </record>
 
+    <record id="ems_attendance_view_search" model="ir.ui.view">
+      <field name="name">ems.attendance.view.search</field>
+      <field name="model">ems.attendance</field>
+      <field name="arch" type="xml">
+          <search string="">
+              <field name="class_id" />
+              <filter string="Today" name="date_today" domain="[('date', '=', context_today())]" />
+              <group expand="1" string="Group By">
+                  <filter string="Class" name='class_id' context="{'group_by':'class_id'}"/>
+              </group>
+          </search>
+      </field>
+  </record>
     <record model="ir.actions.act_window" id="ems_attendance_action_window">
       <field name="name">Attendance</field>
       <field name="res_model">ems.attendance</field>
       <field name="view_mode">tree,form</field>
+      <field name="context">{'search_default_date_today': 1}</field>
     </record> 
 
 
