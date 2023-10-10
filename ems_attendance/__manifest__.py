@@ -25,8 +25,12 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'report/student_daily_attendance.xml',
-        'views/ems_attendance_view.xml',
         'data/sequences.xml',
+        'report/student_daily_attendance.xml',
+        'report/student_monthly_attendance.xml',
+        'views/ems_attendance_view.xml',
+        'views/ems_class_room_view.xml',
+        'wizard/ems_attendance_report_wizard_view.xml',
+        
     ],
 }

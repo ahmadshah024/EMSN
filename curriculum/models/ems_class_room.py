@@ -3,7 +3,7 @@
 from odoo import models, fields
 
 
-class Class_room(models.Model):
+class ClassRoom(models.Model):
     _inherit = 'ems.class.room'
 
     curriculum_line_ids = fields.One2many('ems.curriculum.line','class_id')

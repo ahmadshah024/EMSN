@@ -32,5 +32,7 @@
         'views/ems_timetable_view.xml',
         'views/ems_exam_timetable_view.xml',
         'views/ems_subject_view.xml',
+        'views/ems_subject_view.xml',
+        'views/ems_class_room_view.xml',
     ],
 }
