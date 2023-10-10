@@ -29,4 +29,6 @@ class EmsStudent(models.Model):
     def _onchange_is_leave(self):
         if self.is_leave:
             self.is_absent = self.is_present = False
+
+    
         
