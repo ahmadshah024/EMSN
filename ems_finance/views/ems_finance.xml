@@ -16,13 +16,13 @@
 -->
 
     <!-- actions opening views on models -->
-<!--
-    <record model="ir.actions.act_window" id="ems_finance.action_window">
-      <field name="name">ems_finance window</field>
-      <field name="res_model">ems_finance.ems_finance</field>
+
+    <record model="ir.actions.act_window" id="ems_finance_action_window">
+      <field name="name">Finance</field>
+      <field name="res_model">ems.finance</field>
       <field name="view_mode">tree,form</field>
     </record>
--->
+
 
     <!-- server action to the one above -->
 <!--
@@ -41,12 +41,12 @@
 -->
 
     <!-- Top menu item -->
-<!--
-    <menuitem name="ems_finance" id="ems_finance.menu_root"/>
--->
+
+    <menuitem name="Finance" id="ems_finance_menu_root"  web_icon="ems_finance,static/description/icon.png"/>
+    <menuitem name="Finance" id="ems_finance_menu_1" action="ems_finance_action_window" parent="ems_finance_menu_root"/>
+
     <!-- menu categories -->
 <!--
-    <menuitem name="Menu 1" id="ems_finance.menu_1" parent="ems_finance.menu_root"/>
     <menuitem name="Menu 2" id="ems_finance.menu_2" parent="ems_finance.menu_root"/>
 -->
     <!-- actions -->
