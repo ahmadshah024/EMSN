@@ -19,44 +19,55 @@ class EmsLibrary(models.Model):
     is_returned = fields.Boolean(default=False, states={'done': [('readonly', True)]})
     state = fields.Selection([
     ('draft', 'Draft'),
-    ('waiting', 'Waiting'),  # Add the 'Waiting' state
+    ('waiting', 'Waiting'),
+    ('return', 'Returned'),
     ('done', 'Done'),
     ('cancel', 'Cancel'),
     ], string='State', default='draft', states={'done': [('readonly', True)]})
 
+
     def action_mark_done(self):
         for record in self:
             if not record.is_returned:
-                raise ValidationError('the book has not returned yet')
+                raise ValidationError('The book has not been returned yet')
+            for library_line in record.library_line_ids:
+                book = library_line.book_id
+                if book.copy_amount >= book.available:
+                    book.available += 1
+                else:
+                   raise ValidationError(f'Book "{book.name}" is returned') 
+                book.state = 'free'
             record.state = 'done'
+   
 
     def action_mark_cancel(self):
         for record in self:
             record.state = 'cancel'
 
-    def action_mark_draft(self):
+    def action_mark_return(self):
         for record in self:
-            record.state = 'draft'
-
+            record.is_returned = True
+            record.state = 'return'
+ 
     def action_mark_waiting(self):
         for record in self:
+            books_to_check = set()
             for library_line in record.library_line_ids:
                 book = library_line.book_id
-                if book.available <= 0:
-                    raise ValidationError('Book is not available')
                 if book.copy_amount <= 0:
-                    raise ValidationError('No more copies available')
-                book.write({'state': 'assigned', 'available': book.available - 1, 'copy_amount': book.copy_amount - 1})
+                    raise ValidationError(f'No more copies available for book "{book.name}"')
+                if book.available == 0 and library_line.book_id.state == 'free':
+                    book.available = book.copy_amount
+                if book.available <= 0:
+                    raise ValidationError(f'Book "{book.name}" is not available')
+                books_to_check.add(book.id)
+                book.available -= 1
+            if len(books_to_check) < len(record.library_line_ids):
+                raise ValidationError('Duplicate books selected in the request')
+            record.library_line_ids.book_id.write({'state': 'assigned'})
             record.state = 'waiting'
-    # def action_mark_waiting(self):
-    #     for record in self:
-    #         record.library_line_ids.book_id.state= 'assigned'
-    #         record.library_line_ids.book_id.available = record.library_line_ids.book_id.copy_amount - 1
-    #         if record.library_line_ids.book_id.available < 1:
-    #             raise ValidationError('Book is not available') 
-    #         record.state = 'waiting'
-
-
+ 
+ 
 
     @api.depends('date', 'days')
     def _compute_return_date(self):
@@ -89,17 +100,7 @@ class EmsLibraryLine(models.Model):
     author = fields.Char(related='book_id.author')
     language = fields.Char(related='book_id.language')
     subjects = fields.Char( related='book_id.subjects')
-
-
-
-    # @api.depends('book_id')
-    # def _onchange_book_id(self):
-    #     for rec in self:
-    #         borrowed_copies = self.env['    '].search_count([('book_id', '=', rec.book_id.id)])
-    #         if rec.book_id.copy_amount <= borrowed_copies:
-    #             raise ValidationError('All copies of this book have been borrowed. Cannot borrow more.')
-
-
+ 
 
 
 class EmsBook(models.Model):
@@ -116,11 +117,12 @@ class EmsBook(models.Model):
     publication_date = fields.Date(string='Publication Date')
     description = fields.Text(string='Description')
     copy_amount = fields.Integer(string='Copy Amount')
-    available = fields.Integer(string='Available Amount', readonly=True)
+    available = fields.Integer(string='Available Amount')
     state = fields.Selection([
         ('free', 'Free'),
         ('assigned', 'Assigned'),
     ], string='State', default='free')
+
 
 
     
@@ -131,4 +133,3 @@ class EmsBook(models.Model):
 
 
     
-

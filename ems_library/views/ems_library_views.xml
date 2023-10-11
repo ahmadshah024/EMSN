@@ -36,6 +36,8 @@
             <form string="">
         <header>
             <button name="action_mark_done" string="Done" type="object" class="oe_highlight"
+                    attrs="{'invisible': [('state', 'not in', ('return',))]}"/>
+            <button name="action_mark_return" string="Return" type="object" class="oe_highlight"
                     attrs="{'invisible': [('state', 'not in', ('waiting',))]}"/>
             <button name="action_mark_cancel" string="Cancel" type="object" class="oe_highlight"
                     attrs="{'invisible': [('state', 'not in', ('draft',))]}"/> 
