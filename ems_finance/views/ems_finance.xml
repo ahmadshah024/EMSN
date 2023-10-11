@@ -1,21 +1,91 @@
 <odoo>
   <data>
     <!-- explicit list view definition -->
-<!--
-    <record model="ir.ui.view" id="ems_finance.list">
-      <field name="name">ems_finance list</field>
-      <field name="model">ems_finance.ems_finance</field>
+
+    <record model="ir.ui.view" id="ems_finance_view_tree">
+      <field name="name">ems.finance.view.tree</field>
+      <field name="model">ems.finance</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
-          <field name="value"/>
-          <field name="value2"/>
+          <field name="student_id"/>
+          <field name="student_class"/>
+          <field name="date" />
         </tree>
       </field>
     </record>
--->
 
-    <!-- actions opening views on models -->
+    <record id="ems_finance_view_form" model="ir.ui.view">
+        <field name="name">ems.finance.view.form</field>
+        <field name="model">ems.finance</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div> 
+                    <group>
+                        <group>
+                            <field name="student_id" options="{'no_create': True}" />
+                            <field name="student_class" />
+                            <field name="date" />
+                        </group>
+                        <group>
+                            <field name="is_enrollment" />
+                            <field name="is_monthly_fee" />
+                            <field name="is_uniform_fee" />
+                            <field name="is_book" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="enrollment" string="Enrollment"  attrs="{'invisible': [('is_enrollment', '=', False)]}">
+                            <field name="finance_line_ids">
+                                <tree editable='bottom'>
+                                    <field name="registration_fee" />
+                                    <field name="monthly_fee" />
+                                    <field name="uniform_fee" />
+                                    <field name="books_fee" />
+                                    <field name="total" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="monthly_fee" string="Month Fee"  attrs="{'invisible': [('is_monthly_fee', '=', False)]}">
+                            <field name="finance_month_line_ids">
+                                <tree editable='bottom'>
+                                    <field name="monthly_fee" />
+                                    <field name="month" />
+                                    <field name="number_of_month" />
+                                    <field name="total" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="uniform_fee" string="Uniform Fee"  attrs="{'invisible': [('is_uniform_fee', '=', False)]}">
+                            <field name="finance_uniform_line_ids">
+                                <tree editable="bottom">
+                                    <field name="uniform_id" />
+                                    <!-- <field name="uniform_price" /> -->
+                                    <field name="pices" />
+                                    <field name="total" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="book_fee" string="Book"  attrs="{'invisible': [('is_book', '=', False)]}">
+                            <field name="finance_book_line_ids">
+                                <tree editable="bottom">
+                                    <field name="book_id" />
+                                    <field name="total" />
+                                </tree>
+                            </field>
+                        </page>
+                        
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
     <record model="ir.actions.act_window" id="ems_finance_action_window">
       <field name="name">Finance</field>
@@ -23,38 +93,8 @@
       <field name="view_mode">tree,form</field>
     </record>
 
-
-    <!-- server action to the one above -->
-<!--
-    <record model="ir.actions.server" id="ems_finance.action_server">
-      <field name="name">ems_finance server</field>
-      <field name="model_id" ref="model_ems_finance_ems_finance"/>
-      <field name="state">code</field>
-      <field name="code">
-        action = {
-          "type": "ir.actions.act_window",
-          "view_mode": "tree,form",
-          "res_model": model._name,
-        }
-      </field>
-    </record>
--->
-
-    <!-- Top menu item -->
-
     <menuitem name="Finance" id="ems_finance_menu_root"  web_icon="ems_finance,static/description/icon.png"/>
     <menuitem name="Finance" id="ems_finance_menu_1" action="ems_finance_action_window" parent="ems_finance_menu_root"/>
 
-    <!-- menu categories -->
-<!--
-    <menuitem name="Menu 2" id="ems_finance.menu_2" parent="ems_finance.menu_root"/>
--->
-    <!-- actions -->
-<!--
-    <menuitem name="List" id="ems_finance.menu_1_list" parent="ems_finance.menu_1"
-              action="ems_finance.action_window"/>
-    <menuitem name="Server to list" id="ems_finance" parent="ems_finance.menu_2"
-              action="ems_finance.action_server"/>
--->
   </data>
 </odoo>

@@ -20,11 +20,12 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','ems-student'],
+    'depends': ['base','ems-student','product'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'data/sequences.xml',
         'views/ems_finance.xml',
     ],
      

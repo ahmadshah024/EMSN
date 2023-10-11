@@ -66,7 +66,7 @@ class EmsLibrary(models.Model):
                 raise ValidationError('Duplicate books selected in the request')
             record.library_line_ids.book_id.write({'state': 'assigned'})
             record.state = 'waiting'
- 
+
  
 
     @api.depends('date', 'days')
@@ -117,11 +117,38 @@ class EmsBook(models.Model):
     publication_date = fields.Date(string='Publication Date')
     description = fields.Text(string='Description')
     copy_amount = fields.Integer(string='Copy Amount')
-    available = fields.Integer(string='Available Amount')
+    available = fields.Integer(string='Available Amount', readonly=True)
     state = fields.Selection([
         ('free', 'Free'),
         ('assigned', 'Assigned'),
     ], string='State', default='free')
+
+
+    library_line_ids = fields.One2many('ems.library.line','book_id')
+ 
+    assigned_students_count = fields.Integer(compute='_compute_assigned_students_count', string='Assigned Students Count')
+    assigned_students = fields.Many2many('ems.student', compute='_compute_assigned_students', string='Assigned Students')
+
+    def _compute_assigned_students_count(self):
+        for book in self:
+            book.assigned_students_count = len(book.assigned_students)
+
+    def _compute_assigned_students(self):
+        for book in self:
+            book.assigned_students = book.library_line_ids.mapped('library_id.student_id')
+
+
+    def action_open_library(self):
+        for rec in self:
+            # book_ids = rec.curriculum_line_ids.mapped('book_id')
+            return {
+                'name': 'Requests',
+                'type': 'ir.actions.act_window',
+                'res_model': 'ems.student',
+                'view_mode': 'tree,form',
+                'domain': [('id', 'in', rec.library_line_ids.ids)],
+            }
+        
 
 
 
