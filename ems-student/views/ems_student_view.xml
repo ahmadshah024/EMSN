@@ -127,7 +127,7 @@
                         <field name="student_document" />
                     </group>
                </page>
-               <page name="student_new_school" string="Next School Info">
+               <page name="student_new_school" string="Next School Info" attrs="{'invisible': [('state', 'in', ('draft','cancel'))]}">
                     <group name="name" string="">
                         <field name="new_school"/>
                         <field name="new_reason"/>
@@ -247,9 +247,9 @@
         </field>
     </record>
 
-    <menuitem name="Student" id="ems_student_menu_root"  web_icon="ems-student,static/description/icon.png"/>
+    <menuitem name="Admission" id="ems_student_menu_root"  web_icon="ems-student,static/description/icon.png"/>
     <menuitem name="Classes" id="ems_class_room_menu"   action="ems_class_room_action_window" web_icon="ems-student,static/description/icon2.png"/>
-      <menuitem name="Students" id="ems_student_menu" parent="ems_student_menu_root" action="ems_student_action_window"/>
+      <menuitem name="Admission" id="ems_student_menu" parent="ems_student_menu_root" action="ems_student_action_window"/>
       <menuitem name="Configuration" id="ems_student_menu_configuration" parent="ems_student_menu_root" />
       <!-- <menuitem id="class_room" name="Classes" sequence="1" parent="ems_student_menu_configuration">
       </menuitem> -->
