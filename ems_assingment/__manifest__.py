@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "ems_curriculum",
+    'name': "ems_assingment",
 
     'summary': """
-       curriculum""",
+        Short (1 phrase/line) summary of the module's purpose, used as
+        subtitle on modules listing or apps.openerp.com""",
 
     'description': """
-       curriculum
+        Long description of module's purpose
     """,
 
-    'author': "Netlinks",
-    'website': "https://www.netlinks.ltd.com",
+    'author': "My Company",
+    'website': "https://www.yourcompany.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/16.0/odoo/addons/base/data/ir_module_category_data.xml
@@ -19,17 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','ems-student','ems-student','ems_timetable'],
+    'depends': ['base','hr','ems-student','ems_timetable'],
 
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/ems_assignment_view.xml',
         'views/ems_class_room_view.xml',
-        'views/ems_curriculum_views.xml',
-        'views/ems_books_views.xml',
-        'data/sequence.xml',
-
-  
     ],
-
+    
 }
