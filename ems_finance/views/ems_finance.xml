@@ -20,6 +20,11 @@
         <field name="model">ems.finance</field>
         <field name="arch" type="xml">
             <form string="">
+                <header>
+                    <button name="action_draft" string="Draft" type="object" states="approved"/>
+                    <button name="action_approved" string="Approve" type="object" states="draft"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,approved" />
+                </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>
@@ -31,6 +36,10 @@
                             <field name="student_id" options="{'no_create': True}" />
                             <field name="student_class" />
                             <field name="date" />
+                            <field name="enrollment_total" attrs="{'invisible': [('is_enrollment', '=', False)]}" />
+                            <field name="fee_total" attrs="{'invisible': [('is_monthly_fee', '=', False)]}"/>
+                            <field name="uniform_total" attrs="{'invisible': [('is_uniform_fee', '=', False)]}"/>
+                            <field name="book_total" attrs="{'invisible': [('is_book', '=', False)]}"/>
                         </group>
                         <group>
                             <field name="is_enrollment" />
@@ -45,8 +54,12 @@
                                 <tree editable='bottom'>
                                     <field name="registration_fee" />
                                     <field name="monthly_fee" />
-                                    <field name="uniform_fee" />
-                                    <field name="books_fee" />
+                                    <field name="uniform_id" />
+                                    <field name="uniform_pices" />
+                                    <field name="uniform_price" />
+                                    <field name="book_id" />
+                                    <field name="book_quantity" />
+                                    <field name="book_price" />
                                     <field name="total" />
                                 </tree>
                             </field>
@@ -65,7 +78,7 @@
                             <field name="finance_uniform_line_ids">
                                 <tree editable="bottom">
                                     <field name="uniform_id" />
-                                    <!-- <field name="uniform_price" /> -->
+                                    <field name="price" />
                                     <field name="pices" />
                                     <field name="total" />
                                 </tree>
@@ -75,6 +88,8 @@
                             <field name="finance_book_line_ids">
                                 <tree editable="bottom">
                                     <field name="book_id" />
+                                    <field name="quantity" />
+                                    <field name="price" />
                                     <field name="total" />
                                 </tree>
                             </field>
