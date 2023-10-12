@@ -41,7 +41,7 @@
                     attrs="{'invisible': [('state', 'not in', ('waiting',))]}"/>
             <button name="action_mark_cancel" string="Cancel" type="object" class="oe_highlight"
                     attrs="{'invisible': [('state', 'not in', ('draft',))]}"/> 
-            <button name="action_mark_waiting" string="Waiting" type="object" class="oe_highlight"
+            <button name="action_mark_waiting" string="Assign" type="object" class="oe_highlight"
                     attrs="{'invisible': [('state', 'not in', ('draft',))]}"/>
             <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel,waiting,"/>
         </header>
