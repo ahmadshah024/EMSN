@@ -152,41 +152,53 @@
       </field>
     </record>
 
-    <record id="ems_student_view_kanban" model="ir.ui.view">
-        <field name="name">ems.student.view.kanban</field>
-        <field name="model">ems.student</field>
-        <field name="priority">10</field>
-        <field name="arch" type="xml">
-            <kanban sample="1">
-                <templates>
-                    <t t-name="kanban-box">
-                        <div t-attf-class="oe_kanban_global_click">
-                            <div class="row">
-                                <div class="col-4 d-flex align-items-center">
-                                    <field name="image" widget="image" class="oe_avatar" style="{'size': [800,900]}" />
-                                </div>
-                                <div class="col-8">
-                                    <strong class="ml-2">
-                                        <field name="name" /> (<field name="reference" title="Reference"/>)
+
+<record id="ems_student_view_kanban" model="ir.ui.view">
+    <field name="name">ems.student.view.kanban</field>
+    <field name="model">ems.student</field>
+    <field name="priority">10</field>
+    <field name="arch" type="xml">
+        <kanban sample="1">
+            <field name="id"/>
+            <field name="name"/>
+            <field name="reference"/>
+            <field name="gender"/>
+            <field name="age"/>
+            <field name="email"/>
+            <field name="phone"/>
+            <field name="address"/>
+            <field name="image"/>
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+                     <field name="image" class="o_kanban_image_fill_left d-block" preview_image="image_128" widget="background_image" options="{'zoom': true, 'zoom_delay': 1000}"/>
+                        <div class="oe_kanban_details">
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name" placeholder="Student's Name"/>
                                     </strong>
-                                    <div class="ml-2">
-                                        <field name="gender" />,<field name="age"/>
-                                    </div>
-                                    <div class="oe_kanban_details mt-3 ml-2" name="items">
-                                        <ul>
-                                            <li><i class="fa fa-envelope p-1" title="envelope"/> <field name="email" widget="email" /></li>
-                                            <li><i class="fa fa-phone p-1" title="phone"/> <field name="phone" widget="phone" /></li> 
-                                            <li><i class="fa fa-home p-1" title="address"/> <field name="address" /></li> 
-                                        </ul>
-                                    </div>
+                                    <ul>
+                                        <li class="o_text_overflow"><i class="fa fa-envelope p-1" title="envelope"/> <field name="email" widget="email" /></li>
+                                        <li class="o_force_ltr"><i class="fa fa-phone p-1" title="phone"/> <field name="phone" widget="phone" /></li>
+                                        <li><i class="fa fa-home p-1" title="address"/> <field name="address" /></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </t>
-                </templates>
-            </kanban>
-        </field>
-    </record>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+    </field>
+</record>
+
+
+
+
+
+
+
 
     <record id="ems_student_view_search" model="ir.ui.view">
         <field name="name">ems.student.view.search</field>

@@ -2,6 +2,7 @@
 <odoo>
     <record id="student_print_monthly_attendance" model="ir.actions.report">
         <field name="name">Print monthly Attendance</field>
+        <field name="model">ems.attendance.report.wizard</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">ems_attendance.print_student_monthly_attendance</field>
         <field name="report_file">ems_attendance.print_student_monthly_attendance</field>
