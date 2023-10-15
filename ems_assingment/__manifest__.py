@@ -25,8 +25,12 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'data/ir_cron_schedule.xml',
         'views/ems_assignment_view.xml',
+        'views/ems_student_view.xml',
         'views/ems_class_room_view.xml',
+        'wizards/submit_assignment_wizard.xml',
+
     ],
     
 }

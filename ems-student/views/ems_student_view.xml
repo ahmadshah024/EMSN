@@ -34,6 +34,9 @@
                 <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,graduate,change,done"/>
             </header>
           <sheet>
+            <div class="oe_button_box" name="button_box">
+                
+            </div>
             <field name="image" widget='image' class="oe_avatar"/>
             <div class="oe_title">
                 <h1>

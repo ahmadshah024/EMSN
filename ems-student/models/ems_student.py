@@ -108,6 +108,7 @@ class EmsStudent(models.Model):
         'target': 'new',
         'context':{'default_student_id': self.id}
     }
+     
     
     _sql_constraints = [
         ('name_unique', 'unique(nic)',
