@@ -26,6 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/ems_event_view.xml',
+        'views/ems_student_view.xml',
     ],
      
 }

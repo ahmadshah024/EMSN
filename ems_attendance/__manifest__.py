@@ -30,6 +30,7 @@
         'report/student_monthly_attendance.xml',
         'views/ems_attendance_view.xml',
         'views/ems_class_room_view.xml',
+        'views/ems_student_view.xml',
         'wizard/ems_attendance_report_wizard_view.xml',
         
     ],

@@ -10,7 +10,7 @@ class EmsEvent(models.Model):
     name = fields.Char(required=True, states={'done': [('readonly', True)]})
     reason = fields.Text(states={'done': [('readonly', True)]})
     date =fields.Date(states={'done': [('readonly', True)]})
-    teacher_id = fields.Many2one('hr.employee', states={'done': [('readonly', True)]})
+    teacher_id = fields.Many2one('hr.employee', states={'done': [('readonly', True)]}, domain=[('is_teacher','=', True)])
     event_category = fields.Selection([
         ('academic','Academic'),
         ('sports','Sports'),
