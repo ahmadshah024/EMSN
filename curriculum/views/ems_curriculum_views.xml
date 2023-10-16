@@ -91,10 +91,8 @@
               <page name="book" string="Books">
                   <field name="curriculum_line_ids">
                       <tree editable="top">
+                        <field name="subject_id"/>
                           <field name="book_id"/>
-                          <field name="author"/>
-                          <field name="page"/>
-                          <field name="class_id"/>
                       </tree>
                   </field>
               </page>

@@ -164,7 +164,7 @@ class EmsClassRoom(models.Model):
     name = fields.Char('Name', required=True)
     block = fields.Char('Block')
     room_number = fields.Char('Room Number')
-
+    class_line_ids = fields.One2many('ems.class.room.line', 'class_id')
 
     student_ids = fields.One2many('ems.student', 'class_id')
     student_count = fields.Integer(compute="_compute_student_count")
@@ -181,8 +181,19 @@ class EmsClassRoom(models.Model):
                 'type': 'ir.actions.act_window',
                 'res_model': 'ems.student',
                 'view_mode': 'tree,form',
-                'domain': [('class_id', '=', self.id)],
+                'domain': [('class_id', '=', rec.id)],
             }
         
     
 
+class EmsClassRoomline(models.Model):
+    _name = 'ems.class.room.line'
+    _description = 'ems class room line description'
+
+
+    # subject_id = fields.Many2one('ems.subject')
+    # book_id = fields.Many2one('ems.book')
+    class_id = fields.Many2one('ems.class.room')
+    # max_mark = fields.Integer(related='subject_id.maximum_mark')
+    # min_mark = fields.Integer(related='subject_id.minimum_mark')
+    # teacher_id = fields.Char()

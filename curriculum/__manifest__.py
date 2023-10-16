@@ -24,11 +24,11 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/ems_class_room_view.xml',
+        'data/sequence.xml',
         'views/ems_curriculum_views.xml',
         'views/ems_books_views.xml',
-        'data/sequence.xml',
-
+        'views/ems_subject_view.xml',
+        'views/ems_class_room_view.xml',
   
     ],
 

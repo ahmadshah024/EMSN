@@ -13,9 +13,10 @@ class EmsSubject(models.Model):
     minimum_mark = fields.Integer(states={'done': [('readonly', True)]})
     is_practical = fields.Boolean(states={'done': [('readonly', True)]})
     state = fields.Selection([('draft','Draft'),('done', 'Done'), ('cancel', 'Caneled')], default='draft')
-    
-    class_line_ids = fields.One2many('ems.subject.line','subject_id', states={'done': [('readonly', True)]})
-    teacher_line_ids = fields.One2many('ems.subject.line.teacher','subject_id', states={'done': [('readonly', True)]})
+    teacher_id = fields.Many2one('hr.employee', domain=[('is_teacher', '=', True)])
+    # book_id = fields.Many2one('ems.book')
+    # class_line_ids = fields.One2many('ems.subject.line','subject_id', states={'done': [('readonly', True)]})
+    # teacher_line_ids = fields.One2many('ems.subject.line.teacher','subject_id', states={'done': [('readonly', True)]})
 
 
     def action_done(self):
@@ -32,26 +33,25 @@ class EmsSubject(models.Model):
         return super(EmsSubject, self).create(vals)
     
 
-class EmsSubjectLine(models.Model):
-    _name = 'ems.subject.line'
-    _description = 'ems subject line description'
+# class EmsSubjectLine(models.Model):
+#     _name = 'ems.subject.line'
+#     _description = 'ems subject line description'
 
 
-    class_id = fields.Many2one('ems.class.room')
-    block = fields.Char(related='class_id.block')
-    room = fields.Char(related='class_id.room_number')
-    subject_id = fields.Many2one('ems.subject')
+#     class_id = fields.Many2one('ems.class.room')
+#     block = fields.Char(related='class_id.block')
+#     room = fields.Char(related='class_id.room_number')
+#     subject_id = fields.Many2one('ems.subject')
 
 
-class EmsSubjectLineTeacher(models.Model):
-    _name = 'ems.subject.line.teacher'
-    _description = 'ems subject line teacher description'
+# class EmsSubjectLineTeacher(models.Model):
+#     _name = 'ems.subject.line.teacher'
+#     _description = 'ems subject line teacher description'
 
-    teacher_id = fields.Many2one('hr.employee')
-    phone = fields.Char(related='teacher_id.work_phone')
-    email = fields.Char(related='teacher_id.work_email')
-    department = fields.Many2one(related='teacher_id.department_id')
-    job = fields.Char(related='teacher_id.job_title')
-    subject_id = fields.Many2one('ems.subject')
+#     phone = fields.Char(related='teacher_id.work_phone')
+#     email = fields.Char(related='teacher_id.work_email')
+#     department = fields.Many2one(related='teacher_id.department_id')
+#     job = fields.Char(related='teacher_id.job_title')
+#     subject_id = fields.Many2one('ems.subject')
 
 
