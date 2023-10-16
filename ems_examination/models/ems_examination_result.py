@@ -14,15 +14,7 @@ class EmsExaminationResult(models.Model):
     ])
     examination_result_line_ids = fields.One2many('ems.examination.result.line', 'examination_result_id')
 
-
-    @api.depends('class_id')
-    def _compute_subject_id(self):
-        for record in self:
-            if record.class_id:
-                students = record.class_id.subject_id
-                record.ems_examination_result_line_ids = [(0, 0, {'subject_id': student.id}) for student in students]
-            else:
-                record.ems_examination_result_line_ids = False
+     
 
 
 class EmsExaminationResultLine(models.Model):
