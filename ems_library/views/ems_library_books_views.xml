@@ -21,10 +21,6 @@
       <field name="arch" type="xml">
         <form string="">
          <header>
-            <!-- <button name="action_mark_done" string="Done" type="object" class="oe_highlight"
-                    attrs="{'invisible': [('state', 'in', ('cancel','done'))]}"/>
-            <button name="action_mark_cancel" string="Cancel" type="object" class="oe_highlight"
-                    attrs="{'invisible': [('state', 'in', ('done','cancel'))]}"/>    -->
             <field name="state" widget="statusbar" statusbar_visible="free,assigned"/>
         </header>
           <sheet>
@@ -105,7 +101,16 @@
                 </kanban>
             </field>
         </record> 
-
+        <record id="ems_library_book_view_search" model="ir.ui.view">
+            <field name="name">ems_library_book_view_search</field>
+            <field name="model">ems.library.books</field>
+            <field name="arch" type="xml">
+                <search string="">
+                    <field name="name" />
+                    <filter name="assigned_books" string="Assigned Books" domain="[('state', '=', 'assigned')]" />
+                </search>
+            </field>
+        </record>
 
     <!-- actions opening views on models -->
 
