@@ -22,5 +22,4 @@ class EmsExaminationResultLine(models.Model):
     _description = 'ems_examination_result.line'
 
     subject_id = fields.Many2one('ems.subject')
-    # class_id = fields.Many2one(related='student_id.class_id')
     examination_result_id = fields.Many2one('ems.examination.result')

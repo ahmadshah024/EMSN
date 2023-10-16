@@ -33,7 +33,6 @@
                     <field name="examination_result_line_ids">
                         <tree editable="top">
                             <field name="subject_id" />
-                            <!-- <field name="class_id" /> -->
                         </tree>
                     </field>
                     </page>
