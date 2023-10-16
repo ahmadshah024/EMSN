@@ -1,0 +1,46 @@
+<odoo>
+  <data>
+
+    <record id="ems_examination_result_view_tree" model="ir.ui.view">
+        <field name="name">ems_examination_result_view_tree</field>
+        <field name="model">ems.examination.result</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="student_id" />
+                <field name="class_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="ems_examination_result_view_form" model="ir.ui.view">
+        <field name="name">ems_examination_result_view_form</field>
+        <field name="model">ems.examination.result</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                <group>
+                    <group>
+                     <field name="student_id" />
+                     <field name="class_id" />
+                    </group>
+                    <group>
+                        <field name="reference" />
+                        <field name="exam_type" />
+                    </group>
+                </group>
+                <notebook>
+                    <page name="subject_marks" string="Subject Marks">
+                    <field name="examination_result_line_ids">
+                        <tree editable="top">
+                            <field name="subject_id" />
+                            <field name="class_id" />
+                        </tree>
+                    </field>
+                    </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+  </data>
+</odoo>

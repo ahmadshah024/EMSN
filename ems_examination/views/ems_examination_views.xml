@@ -65,9 +65,15 @@
 
     <!-- actions opening views on models -->
 
-    <record model="ir.actions.act_window" id="ems_examination.action_window">
+    <record model="ir.actions.act_window" id="ems_examination_action_window">
       <field name="name">Examination</field>
       <field name="res_model">ems.examination</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+     <record model="ir.actions.act_window" id="ems_examination_result_action_window">
+      <field name="name">Result</field>
+      <field name="res_model">ems.examination.result</field>
       <field name="view_mode">tree,form</field>
     </record>
 
@@ -76,11 +82,12 @@
 
     <!-- Top menu item -->
 
-    <menuitem name="Examination" id="ems_examination.menu_root" web_icon="ems_examination,static/description/icon.png"/>
+    <menuitem name="Examination" id="ems_examination_menu_root" web_icon="ems_examination,static/description/icon.png"/>
 
     <!-- menu categories -->
 
-    <menuitem name="Exam" id="ems_examination.menu_1" parent="ems_examination.menu_root" action="ems_examination.action_window"/>
+    <menuitem name="Exam" id="ems_examination_menu_1" parent="ems_examination_menu_root" action="ems_examination_action_window"/>
+    <menuitem name="Result" id="ems_examination_result_menu_2" parent="ems_examination_menu_root" action="ems_examination_result_action_window"/>
 
     <!-- actions -->
 <!--
