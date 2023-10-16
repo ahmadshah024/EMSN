@@ -4,5 +4,3 @@ access_ems_timetable_line,ems.timetable.line,model_ems_timetable_line,base.group
 access_ems_exam_timetable,ems.exam.timetable,model_ems_exam_timetable,base.group_user,1,1,1,1
 access_ems_exam_timetable_line,ems.exam.timetable.line,model_ems_exam_timetable_line,base.group_user,1,1,1,1
 access_ems_subject,ems.subject,model_ems_subject,base.group_user,1,1,1,1
-access_ems_subject_line,ems.subject.line,model_ems_subject_line,base.group_user,1,1,1,1
-access_ems_subject_line_teacher,ems.subject.line.teacher,model_ems_subject_line_teacher,base.group_user,1,1,1,1

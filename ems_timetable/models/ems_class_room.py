@@ -7,7 +7,7 @@ class ClassRoom(models.Model):
     _inherit = 'ems.class.room'
 
     timetable__ids = fields.One2many('ems.timetable','class_id')
-
+    
 
     def action_open_timetable(self):
         for rec in self:

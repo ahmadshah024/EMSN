@@ -34,6 +34,7 @@
                             <group>
                                 <field name="name" />
                                 <field name="is_practical" />
+                                <field name="teacher_id"/>
                             </group>
                             <group>
                                 <field name="maximum_mark" />
@@ -41,7 +42,7 @@
                             </group>
                         </group>
                         <notebook>
-                            <page name="classes" string="Classes">
+                            <!-- <page name="classes" string="Classes">
                                 <field name="class_line_ids">
                                     <tree editable="top">
                                         <field name="class_id" options="{'no_create': True}" />
@@ -60,7 +61,7 @@
                                         <field name="job" />
                                     </tree>
                                 </field>
-                            </page>
+                            </page> -->
                             
                         </notebook>
                     </sheet>
