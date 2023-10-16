@@ -1,6 +1,5 @@
 <odoo>
   <data>
-    <!-- explicit list view definition -->
 
     <record model="ir.ui.view" id="ems-student.list">
       <field name="name">ems-student list</field>
@@ -156,51 +155,45 @@
     </record>
 
 
-<record id="ems_student_view_kanban" model="ir.ui.view">
-    <field name="name">ems.student.view.kanban</field>
-    <field name="model">ems.student</field>
-    <field name="priority">10</field>
-    <field name="arch" type="xml">
-        <kanban sample="1">
-            <field name="id"/>
-            <field name="name"/>
-            <field name="reference"/>
-            <field name="gender"/>
-            <field name="age"/>
-            <field name="email"/>
-            <field name="phone"/>
-            <field name="address"/>
-            <field name="image"/>
-            <templates>
-                <t t-name="kanban-box">
-                    <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
-                     <field name="image" class="o_kanban_image_fill_left d-block" preview_image="image_128" widget="background_image" options="{'zoom': true, 'zoom_delay': 1000}"/>
-                        <div class="oe_kanban_details">
-                            <div class="o_kanban_record_top">
-                                <div class="o_kanban_record_headings">
-                                    <strong class="o_kanban_record_title">
-                                        <field name="name" placeholder="Student's Name"/>
-                                    </strong>
-                                    <ul>
-                                        <li class="o_text_overflow"><i class="fa fa-envelope p-1" title="envelope"/> <field name="email" widget="email" /></li>
-                                        <li class="o_force_ltr"><i class="fa fa-phone p-1" title="phone"/> <field name="phone" widget="phone" /></li>
-                                        <li><i class="fa fa-home p-1" title="address"/> <field name="address" /></li>
-                                    </ul>
+    <record id="ems_student_view_kanban" model="ir.ui.view">
+        <field name="name">ems.student.view.kanban</field>
+        <field name="model">ems.student</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <kanban sample="1">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="gender"/>
+                <field name="age"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="address"/>
+                <field name="image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+                        <field name="image" class="o_kanban_image_fill_left d-block" preview_image="image_128" widget="background_image" options="{'zoom': true, 'zoom_delay': 1000}"/>
+                            <div class="oe_kanban_details">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <strong class="o_kanban_record_title">
+                                            <field name="name" placeholder="Student's Name"/>
+                                        </strong>
+                                        <ul>
+                                            <li class="o_text_overflow"><i class="fa fa-envelope p-1" title="envelope"/> <field name="email" widget="email" /></li>
+                                            <li class="o_force_ltr"><i class="fa fa-phone p-1" title="phone"/> <field name="phone" widget="phone" /></li>
+                                            <li><i class="fa fa-home p-1" title="address"/> <field name="address" /></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </t>
-            </templates>
-        </kanban>
-    </field>
-</record>
-
-
-
-
-
-
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
 
     <record id="ems_student_view_search" model="ir.ui.view">
@@ -224,7 +217,6 @@
         </field>
       </record>
 
-    <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="ems_student_action_window">
       <field name="name">Student</field>
@@ -250,18 +242,13 @@
         </field>
     </record>
 
-    <menuitem name="Admission" id="ems_student_menu_root"  web_icon="ems-student,static/description/icon.png"/>
+    <menuitem name="Admission" id="ems_student_menu_root" action="ems_student_action_window"  web_icon="ems-student,static/description/icon3.png"/>
     <menuitem name="Classes" id="ems_class_room_menu"   action="ems_class_room_action_window" web_icon="ems-student,static/description/icon2.png"/>
-      <menuitem name="Admission" id="ems_student_menu" parent="ems_student_menu_root" action="ems_student_action_window"/>
+      <menuitem name="Student" id="ems_student_menu" action="ems_student_action_window" web_icon="ems-student,static/description/icon.png"/>
       <menuitem name="Configuration" id="ems_student_menu_configuration" parent="ems_student_menu_root" />
-      <!-- <menuitem id="class_room" name="Classes" sequence="1" parent="ems_student_menu_configuration">
-      </menuitem> -->
       <menuitem id="country" name="County" sequence="2" parent="ems_student_menu_configuration">
         <menuitem name="Country" id="ems_country_menu"   action="base.action_country"/>
         <menuitem id="districts_menu" name="Districts" action="ems_district_action"/>
      </menuitem>
-     
- 
-    <!-- <menuitem name="Menu 2" id="ems-student.menu_2" parent="ems-student.menu_root"/> -->
   </data>
 </odoo>

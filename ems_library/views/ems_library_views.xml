@@ -22,6 +22,7 @@
             <search string="">
                 <field name="name" />
                 <field name="student_id" />
+                <filter name="assigned_books" string="Assigned Books" domain="[('state', '=', 'waiting')]" />
                 <group expand="0" string="Group By">
                   <filter name="student_id" string="Students" context="{'group_by': 'student_id'}" />
                 </group>

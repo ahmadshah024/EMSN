@@ -66,6 +66,27 @@
             </form>
         </field>
     </record>
+    
+
+
+    <record id="ems_assignment_view_search" model="ir.ui.view">
+        <field name="name">ems.assignment.view.search</field>
+        <field name="model">ems.assignment</field>
+        <field name="arch" type="xml">
+          <search>
+            <field name="name" string="assignment Name"/>
+            <field name="teacher_id" />
+            <field name="class_id" />
+            <separator />
+            <group expand="0" string="Group By">
+           </group>
+                <filter name="teacher" string="Teacher" context="{'group_by': 'teacher_id'}" />
+                <filter name="subject" string="Subject" context="{'group_by': 'subject_id'}" />
+                <filter name="class" string="Class" context="{'group_by': 'class_id'}" />
+         </search>
+        </field>
+      </record>
+
 
     <record model="ir.actions.act_window" id="ems_assingment_action_window">
       <field name="name">Assignment</field>
