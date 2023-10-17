@@ -23,6 +23,12 @@
             <xpath expr="//field[@name='tz']" position="after">
                 <field name="salary" />
             </xpath>
+            <xpath expr="//page[@name='hr_settings']" position="after">
+                <page name="slots" string="Free Slots">
+                     
+                </page>
+            </xpath>
+
              
             <xpath expr="//h1[@class='d-flex flex-row']" position="before">
                 <label for="reference"  class="o_form_label">Reference No</label>

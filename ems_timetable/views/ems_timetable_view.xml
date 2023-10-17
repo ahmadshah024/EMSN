@@ -22,6 +22,7 @@
                 <header>
                     <button name="action_done" string="Done" type="object" attrs="{'invisible': [('state', 'in',('done','cancel'))]}"/>
                     <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in',('done','cancel'))]}"/>
+                    <button name="generate_timetable_for_class" string="Generate Timetable" type="object" class="oe_highlight"/>
                     <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,done"/>
                 </header>
                 <sheet>
@@ -37,7 +38,7 @@
                         <page name="timetable" string="Timetable">
                             <field name="timetable_line_ids">
                                 <tree editable="bottom"> 
-                                    <field name="week_days" />
+                                    <!-- <field name="week_days" />
                                     <field name="subject_id1" string="Subject One" options="{'no_create': True}" />
                                     <field name="subject_id2" string="Subject Two" options="{'no_create': True}" />
                                     <field name="subject_id3" string="Subject Three" options="{'no_create': True}" />
@@ -45,7 +46,7 @@
                                     <field name="subject_id5" string="Subject Five" options="{'no_create': True}" />
                                     <field name="subject_id6" string="Subject Six" options="{'no_create': True}" />
                                     <field name="subject_id7" string="Subject Seven" options="{'no_create': True}" />
-                                    
+                                     -->
                                 </tree>
                             </field>
                             
@@ -86,12 +87,33 @@
         <field name="res_model">ems.subject</field>
         <field name="view_mode">tree,form</field>
       </record>
+
+    <record id="ems_timetable_period_action" model="ir.actions.act_window">
+        <field name="name">Periods</field>
+        <field name="res_model">ems.timetable.period</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="ems_timetable_period_action" model="ir.actions.act_window">
+        <field name="name">Periods</field>
+        <field name="res_model">ems.timetable.period</field>
+        <field name="view_mode">tree,form</field>
+    </record>
   
+    <record id="ems_timetable_day_action" model="ir.actions.act_window">
+        <field name="name">days</field>
+        <field name="res_model">ems.timetable.day</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
     <menuitem name="Timetable" id="ems_timetable_menu_root" web_icon="ems_timetable,static/description/icon.png"/>
 
     <menuitem name="Regular Timetable" id="ems_timetable_menu" parent="ems_timetable_menu_root" action="ems_timetable_action_window" sequence="1"/>
     <menuitem name="Exam Timetable" id="ems_exam_timetable_menu" parent="ems_timetable_menu_root" action="ems_exam_timetable_action_window" sequence="2"/>
-    <menuitem name="Subjects" id="ems_subject_menu" parent="ems_timetable_menu_root" action="ems_subject_action_window" sequence="22"/>
+    <menuitem name="Subjects" id="ems_subject_menu" parent="ems_timetable_menu_root" action="ems_subject_action_window" sequence="3"/>
+    <menuitem name="Periods" id="ems_period_menu" parent="ems_timetable_menu_root" action="ems_timetable_period_action" sequence="4"/>
+    <menuitem name="days" id="ems_day_menu" parent="ems_timetable_menu_root" action="ems_timetable_day_action" sequence="4"/>
+
     
 
   </data>

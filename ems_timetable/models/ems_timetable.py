@@ -61,3 +61,57 @@ class EmsTimetableLine(models.Model):
     # def _compute_subjects(self):
     #     for record in self:
              
+
+
+class EmsTimetablePeriod(models.Model):
+    _name = 'ems.timetable.period'
+    _description = 'ems timetable period description'
+
+
+    name = fields.Char()
+
+    period_line_ids = fields.One2many('ems.timetable.period.line', 'period_id')
+
+
+class EmsTimetablePeriodLine(models.Model):
+    _name = 'ems.timetable.period.line'
+    _description = 'ems timetable period line description'
+
+
+    number = fields.Integer('No')
+    start_time = fields.Float()
+    end_time = fields.Float()
+    length = fields.Float(compute="_compute_length")
+    period_id = fields.Many2one('ems.timetable.period')
+
+
+
+
+
+    @api.depends('start_time', 'end_time')
+    def _compute_length(self):
+        for rec in self:
+            start_time_minutes = int(rec.start_time) * 60 + (rec.start_time - int(rec.start_time)) * 100
+            end_time_minutes = int(rec.end_time) * 60 + (rec.end_time - int(rec.end_time)) * 100
+
+            rec.length = end_time_minutes - start_time_minutes
+
+
+class EmsTimetableDay(models.Model):
+    _name = 'ems.timetable.day'
+    _description = 'ems timetable day description'
+
+
+    name = fields.Char()
+    
+    day_line_ids = fields.One2many('ems.timetable.day.line', 'day_id')
+
+
+class EmsTimetableDayLine(models.Model):
+    _name = 'ems.timetable.day.line'
+    _description = 'ems timetable day line description'
+
+
+    name = fields.Char()
+
+    day_id = fields.Many2one('ems.timetable.day')    
