@@ -1,0 +1,23 @@
+<odoo>
+    <data>
+<record id="ems_teacher_inherit_timetable" model="ir.ui.view">
+        <field name="name">view.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='class_id']" position="after">
+                <field name="day_id" />
+            </xpath>
+
+            <xpath expr="//page[@name='slots']" position="inside">
+                <field name="teacher_availablility_ids" />
+            </xpath>
+        </field>
+    </record>
+
+ 
+
+    
+
+</data>
+</odoo>
