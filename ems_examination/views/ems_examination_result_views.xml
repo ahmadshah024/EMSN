@@ -17,6 +17,13 @@
         <field name="model">ems.examination.result</field>
         <field name="arch" type="xml">
             <form string="">
+                <header>
+                    <button name="action_mark_done" string="Done" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'in',('done','cancel'))]}"/>
+                    <button name="action_mark_cancel" string="Cancel" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('state', 'in', ('cancel','done'))]}"/>      
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel,"/>
+                </header>
                 <sheet>
                 <group>
                     <group>
@@ -31,12 +38,28 @@
                 <notebook>
                     <page name="subject_marks" string="Subject Marks">
                     <field name="examination_result_line_ids">
-                        <tree editable="top">
+                        <tree editable="bottom" create="0">
                             <field name="subject_id" />
+                            <field name="max_mark" />
+                            <field name="min_mark" />
+                            <field name="obtain_mark" />
                         </tree>
                     </field>
                     </page>
                 </notebook>
+                <group>
+                    <group>
+                        <field name="present_days" />
+                        <field name="absent_days" />
+                        <field name="leave_days" />
+                    </group>
+                    <group>
+                        <field name="total_marks" />
+                        <field name="average_marks" />
+                        <field name="result" />
+                        <field name="grade" />
+                    </group>
+                </group>
                 </sheet>
             </form>
         </field>

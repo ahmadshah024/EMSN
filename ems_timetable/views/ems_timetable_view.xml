@@ -30,7 +30,7 @@
                             <field name="name" />
                             <field name="academic_year" />
                             <field name="company_id" invisible="1"/>
-                            <field name="class_id"/>
+                            <field name="class_id" options="{'no_create': True}"/>
                         </group>
                     </group>
                     <notebook>
@@ -86,12 +86,33 @@
         <field name="res_model">ems.subject</field>
         <field name="view_mode">tree,form</field>
       </record>
+
+    <record id="ems_timetable_period_action" model="ir.actions.act_window">
+        <field name="name">Periods</field>
+        <field name="res_model">ems.timetable.period</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="ems_timetable_period_action" model="ir.actions.act_window">
+        <field name="name">Periods</field>
+        <field name="res_model">ems.timetable.period</field>
+        <field name="view_mode">tree,form</field>
+    </record>
   
+    <record id="ems_timetable_day_action" model="ir.actions.act_window">
+        <field name="name">days</field>
+        <field name="res_model">ems.timetable.day</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
     <menuitem name="Timetable" id="ems_timetable_menu_root" web_icon="ems_timetable,static/description/icon.png"/>
 
     <menuitem name="Regular Timetable" id="ems_timetable_menu" parent="ems_timetable_menu_root" action="ems_timetable_action_window" sequence="1"/>
     <menuitem name="Exam Timetable" id="ems_exam_timetable_menu" parent="ems_timetable_menu_root" action="ems_exam_timetable_action_window" sequence="2"/>
-    <menuitem name="Subjects" id="ems_subject_menu" parent="ems_timetable_menu_root" action="ems_subject_action_window" sequence="22"/>
+    <menuitem name="Subjects" id="ems_subject_menu" parent="ems_timetable_menu_root" action="ems_subject_action_window" sequence="3"/>
+    <menuitem name="Periods" id="ems_period_menu" parent="ems_timetable_menu_root" action="ems_timetable_period_action" sequence="4"/>
+    <menuitem name="days" id="ems_day_menu" parent="ems_timetable_menu_root" action="ems_timetable_day_action" sequence="4"/>
+
     
 
   </data>

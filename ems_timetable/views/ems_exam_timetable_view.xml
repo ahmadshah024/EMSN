@@ -36,7 +36,7 @@
                         <page name="timetable" string="Timetable">
                             
                             <field name="exam_timetable_line_ids">
-                              <tree editable="top"> 
+                              <tree editable="bottom"> 
                                   <field name="exam_date" />
                                   <field name="week_day" />
                                   <field name="subject_id" options="{'no_create': True}" />
