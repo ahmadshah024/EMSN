@@ -42,7 +42,9 @@
                             <field name="subject_id" />
                             <field name="max_mark" />
                             <field name="min_mark" />
-                            <field name="obtain_mark" />
+                            <field name="mid_mark" />
+                            <field name="final_mark" />
+                            <field name="total" />
                         </tree>
                     </field>
                     </page>
