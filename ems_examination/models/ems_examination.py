@@ -19,6 +19,7 @@ class EmsExamination(models.Model):
         ('final', 'Final'),
     ], required=True, states={'finished': [('readonly', True)]})
 
+    
     state = fields.Selection([
         ('draft', 'Draft'),
         ('running', 'Running'),
@@ -67,7 +68,6 @@ class EmsExaminationLine(models.Model):
     _description = 'ems_examination_line'
 
     class_id = fields.Many2one('ems.class.room')
-    timetable_id = fields.Many2one('ems.exam.timetable')
+    timetable_id = fields.Many2one('ems.exam.timetable', domain="[('exam_timetable_line_ids.class_id', '=', class_id)]")
     teacher_id = fields.Many2one('hr.employee', domain=[('is_teacher','=', True)])
     examination_id = fields.Many2one('ems.examination')
-
