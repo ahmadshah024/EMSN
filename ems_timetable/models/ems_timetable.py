@@ -38,8 +38,6 @@ class EmsTimetableLine(models.Model):
         ('tuesday','Tuesday'),
         ('wednesday','Wednesday'),
         ('thursday','Thursday'),
-        ('friday','Friday'),
-        ('break','Break'),
     ])
     subject_id1 = fields.Many2one('ems.subject')
     subject_id2 = fields.Many2one('ems.subject')

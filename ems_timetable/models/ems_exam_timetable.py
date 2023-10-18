@@ -38,7 +38,7 @@ class EmsExamTimetableLine(models.Model):
     subject_id = fields.Many2one('ems.subject')
     start_time = fields.Float()
     end_time = fields.Float()
-    teacher_id = fields.Many2one('hr.employee')
+    teacher_id = fields.Many2one('hr.employee', domain=[('is_teacher', '=', True)])
     class_id = fields.Many2one('ems.class.room')
 
     exam_timetable_id = fields.Many2one('ems.exam.timetable')
