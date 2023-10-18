@@ -30,9 +30,14 @@ class EmsExaminationResult(models.Model):
     @api.depends('examination_result_line_ids', 'exam_type')
     def _compute_total_marks(self):
         for rec in self:
-            total_marks = sum(rec.examination_result_line_ids.mapped('obtain_mark'))
-            rec.total_marks = total_marks
-
+            if rec.exam_type == 'mid-term':
+                total_marks = sum(rec.examination_result_line_ids.mapped('mid_mark'))
+                rec.total_marks = total_marks
+            else:
+                total_marks = sum(rec.examination_result_line_ids.mapped('final_mark'))
+                rec.total_marks = total_marks
+                
+    
     @api.depends('examination_result_line_ids', 'total_marks')
     def _compute_average_marks(self):
         for rec in self:
@@ -112,6 +117,22 @@ class EmsExaminationResultLine(models.Model):
     subject_id = fields.Many2one('ems.subject')
     max_mark = fields.Integer(related='subject_id.maximum_mark')
     min_mark = fields.Integer(related='subject_id.minimum_mark')
-    obtain_mark = fields.Integer()
+    mid_mark = fields.Integer()
+    final_mark = fields.Integer()
     examination_result_id = fields.Many2one('ems.examination.result')
+    total = fields.Integer(compute="_compute_total_of_marks")
 
+    @api.depends('mid_mark', 'final_mark')
+    def _compute_total_of_marks(self):
+        for rec in self:
+            rec.total = rec.mid_mark + rec.final_mark   
+
+    @api.constrains('mid_mark', 'final_mark', 'examination_result_id')
+    def _check_marks_range(self):
+        for rec in self:
+            if rec.examination_result_id:
+                if rec.examination_result_id.exam_type == 'mid-term' and (rec.mid_mark < 0 or rec.mid_mark > 40):
+                    raise ValidationError("Mid-term marks should be between 0 and 40.")
+                if rec.examination_result_id.exam_type == 'final' and (rec.final_mark < 0 or rec.final_mark > 60):
+                    raise ValidationError("Final marks should be between 0 and 60.")
+                    
