@@ -59,6 +59,7 @@ class EmsStudent(models.Model):
     pin = fields.Char(string="PIN", groups="hr.group_hr_user", copy=False,
         help="PIN used to Check In/Out in the Kiosk Mode of the Attendance application (if enabled in Configuration) and to change the cashier in the Point of Sale application.")
     
+    discipline_reason = fields.Text(readonly=True)
     # is_persent = fields.Boolean(default=False)
     # is_absent = fields.Boolean(default=False)
     # is_leave = fields.Boolean(default=False)
@@ -108,7 +109,17 @@ class EmsStudent(models.Model):
         'target': 'new',
         'context':{'default_student_id': self.id}
     }
-     
+    
+    def action_report(self):
+        return {
+        'type': 'ir.actions.act_window',
+        'name': 'Student Report Discipline',
+        'res_model': 'discipline.wizard',
+        'view_type': 'form',
+        'view_mode': 'form',
+        'target': 'new',
+        'context':{'default_student_id': self.id}
+    }
     
     _sql_constraints = [
         ('name_unique', 'unique(nic)',

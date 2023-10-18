@@ -52,7 +52,7 @@
             <filter name="from_an_ad" string="From an ad" domain="[('from_an_ad', '=', True)]" />
             <filter name="local_community" string="Local community" domain="[('local_community', '=', True)]" />
             <filter name="social_media" string="Social media" domain="[('social_media', '=', True)]" />
-
+            
           <separator />
             <group expand="0" string="Group By">
            </group>
