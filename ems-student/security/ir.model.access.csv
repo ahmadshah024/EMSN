@@ -10,6 +10,7 @@ access_ems_class_room_user,ems.class.room.user,model_ems_class_room,ems-student.
 access_ems_district_admin,ems.district.admin,model_ems_district,ems-student.group_student_administrator,1,1,1,1
 access_ems_district_usere,ems.district.user,model_ems_district,ems-student.group_student_user,1,0,0,0
 access_accept_reason_wizard_admin,change.school.wizard.admin,model_change_school_wizard,ems-student.group_student_administrator,1,1,1,1
+access_report_reason_wizard_admin,discipline.wizard.admin,model_discipline_wizard,ems-student.group_student_administrator,1,1,1,1
 access_accept_reason_wizard_user,change.school.wizard.user,model_change_school_wizard,ems-student.group_student_user,1,0,0,0
 access_ems_class_room_line_admin,ems.class.room.line.admin,model_ems_class_room_line,ems-student.group_student_administrator,1,1,1,1
 access_ems_class_room_line_user,ems.class.room.line.user,model_ems_class_room_line,ems-student.group_student_user,1,0,0,0

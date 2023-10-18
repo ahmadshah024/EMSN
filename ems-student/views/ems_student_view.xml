@@ -1,8 +1,8 @@
 <odoo>
   <data>
 
-    <record model="ir.ui.view" id="ems-student.list">
-      <field name="name">ems-student list</field>
+    <record model="ir.ui.view" id="ems_student_view_tree">
+      <field name="name">ems_student_tree</field>
       <field name="model">ems.student</field>
       <field name="arch" type="xml">
         <tree>
@@ -29,6 +29,7 @@
                 <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in',('done','graduate','change','cancel'))]}"/>
                 <button name="action_graduate" string="Graduate" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
                 <button name="action_change" string="Change" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                <button name="action_report" string="Report" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
                 <button name="action_change_new_flase" class="btn-info" string="Documents Done" type="object" attrs="{'invisible': [('is_new', '!=', True),('is_changed', '!=', True)]}"/>
                 <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,graduate,change,done"/>
             </header>
@@ -137,7 +138,12 @@
                         <field name="documents"/>
                     </group>
                </page>
-               <page name="card" string="Card">
+                 <page name="student_report_discipline" string="Student Report Dsicipline" attrs="{'invisible': [('state', 'in', ('draft','cancel'))]}">
+                    <group name="name" string="">
+                        <field name="discipline_reason"/>
+                    </group>
+               </page>
+               <page name="card" string="Card" >
                 <group string="nnnnnnnnn" name="identification_group">
                     <field name="pin" string="PIN Code"/>
                     <label for="barcode"/>

@@ -32,6 +32,7 @@
         'views/ems_parent_view.xml',
         'views/districts.xml',
         'wizards/change_school_wizard.xml',
+        'wizards/discipline_wizard.xml',
         'views/ems_class_room_view.xml',
         # 'views/ems_ClassRoom_view.xml',
         # 'views/ems_transport_view.xml',
