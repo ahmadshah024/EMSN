@@ -53,8 +53,8 @@
             </group>
             <group name="educational_info" string="Educatinal Information">
                 <field name="school" />
-                <field name="class_id" options="{'no_create': True}" />
-                <field name="academic_year" />
+                <field name="class_id" options="{'no_create': True}"/>
+                <field name="academic_year"/>
                 <field name="date"/>
             </group>
            
