@@ -6,7 +6,7 @@ class EmsExaminationResult(models.Model):
     _description = 'ems_examination_result'
     _rec_name = 'reference'
 
-    student_id = fields.Many2one('ems.student', required=True)
+    student_id = fields.Many2one('ems.student')
     class_id = fields.Many2one(related='student_id.class_id')
     reference = fields.Char(related='student_id.reference')
     exam_id = fields.Many2one('ems.examination', domain="[('class_id', '=', class_id)]")
@@ -21,11 +21,14 @@ class EmsExaminationResult(models.Model):
     result = fields.Char(compute='_compute_result', store=True)
     grade = fields.Char(compute='_compute_grade', store=True)
     exam_id = fields.Many2one('ems.examination')
+    subject_id = fields.Many2one('ems.subject')
+
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done'),
         ('cancel', 'Cancel'),
     ], string='State', default='draft')
+    other_examination_result_line_ids = fields.One2many('ems.other.examination.result.line', 'examination_result_id')
 
 
 
@@ -47,6 +50,13 @@ class EmsExaminationResult(models.Model):
                 rec.examination_result_line_ids = new_lines
             else:
                 rec.examination_result_line_ids = False
+            if rec.class_id:
+                if rec.exam_type == 'other':
+                    students = rec.class_id.student_ids
+                    rec.other_examination_result_line_ids = [(5, 0, 0)]
+                    rec.other_examination_result_line_ids = [(0, 0, {'student_id': student.id}) for student in students]
+            else:
+                rec.other_examination_result_line_ids = False
 
     @api.depends('examination_result_line_ids', 'exam_type')
     def _compute_total_marks(self):
@@ -129,6 +139,7 @@ class EmsExaminationResultLine(models.Model):
     _description = 'ems_examination_result.line'
 
     subject_id = fields.Many2one('ems.subject')
+    student_id = fields.Many2one('ems.student')
     max_mark = fields.Integer(related='subject_id.maximum_mark')
     min_mark = fields.Integer(related='subject_id.minimum_mark')
     mid_mark = fields.Integer()
@@ -150,3 +161,14 @@ class EmsExaminationResultLine(models.Model):
                 if rec.examination_result_id.exam_type == 'final' and (rec.final_mark < 0 or rec.final_mark > 60):
                     raise ValidationError("Final marks should be between 0 and 60.")
                     
+
+
+
+class EmsOtherExaminationResultLine(models.Model):
+    _name = 'ems.other.examination.result.line'
+    _description = 'ems_examination_result.line'
+
+    student_id = fields.Many2one('ems.student')
+    mark =  fields.Integer()
+    examination_result_id = fields.Many2one('ems.examination.result')
+    std_id = fields.Char(related='student_id.reference')

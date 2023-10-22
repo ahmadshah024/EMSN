@@ -17,6 +17,7 @@ class EmsExamination(models.Model):
     exam_type = fields.Selection([
         ('mid-term', 'Mid-term'),
         ('final', 'Final'),
+        ('other', 'Other'),
     ], required=True, states={'finished': [('readonly', True)]})
 
     

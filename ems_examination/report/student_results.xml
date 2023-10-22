@@ -98,30 +98,46 @@
                                 <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Company Logo" class="school-logo"/>
                             </div>
                         </div>
+                        
                         <div class="row">
-                            <div class="student-info table" style="width:80%;float: left;">
-                                <div class="info-row">
-                                    <div class="info-label">Name:</div>
-                                    <div class="info-value"><t t-esc="o.student_id.name"/></div>
-                                    <div class="info-label">Father Name:</div>
-                                    <div class="info-value"><t t-esc="o.student_id.father_name"/></div>
+                                <t t-if="o.exam_type != 'other'">
+                                <div class="student-info table" style="width:80%;float: left;">
+                                    <div class="info-row">
+                                        <div class="info-label">Name:</div>
+                                        <div class="info-value"><t t-esc="o.student_id.name"/></div>
+                                        <div class="info-label">Father Name:</div>
+                                        <div class="info-value"><t t-esc="o.student_id.father_name"/></div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label">Class:</div>
+                                        <div class="info-value"><t t-esc="o.class_id.display_name"/></div>
+                                        <div class="info-label">Teacher:</div>
+                                        <div class="info-value"><t t-esc="o.exam_id.examination_line_ids.teacher_id.class_id.name"/></div>
+                                    </div>
+                                    <div class="info-row">
+                                        <div class="info-label">Year:</div>
+                                        <div class="info-value"><t t-esc="o.exam_id.academic_year"/></div>
+                                        <div class="info-label">Exam Type:</div>
+                                        <div class="info-value"><t t-esc="o.exam_type"/></div>
+                                    </div>
                                 </div>
-                                <div class="info-row">
-                                    <div class="info-label">Class:</div>
-                                    <div class="info-value"><t t-esc="o.class_id.display_name"/></div>
-                                    <div class="info-label">Teacher:</div>
-                                    <div class="info-value"><t t-esc="o.exam_id.examination_line_ids.teacher_id.class_id.name"/></div>
+                                <div class="student-image" style="width:20%;float: right; heigth:200px;">
+                                    <img t-if="o.student_id.image" t-att-src="image_data_uri(o.student_id.image)" alt="student image" class="rounded float-right" style="max-width: 100%; max-height: 120px; margin-top: 0px; float: right;"/>
                                 </div>
-                                <div class="info-row">
-                                    <div class="info-label">Year:</div>
-                                    <div class="info-value"><t t-esc="o.exam_id.academic_year"/></div>
-                                    <div class="info-label">Exam Type:</div>
-                                    <div class="info-value"><t t-esc="o.exam_type"/></div>
+                            </t>
+                            <t t-if="o.exam_type == 'other'">
+                                
+                                <div class="student-info table" style="width:100%;">
+                                    <div class="info-row">
+                                        <div class="info-label">Date:</div>
+                                        <div class="info-value"><t t-esc="o.exam_id.start_date"/></div>
+                                        <div class="info-label">Subject:</div>
+                                        <div class="info-value"><t t-esc="o.subject_id.name"/></div>
+                                        <div class="info-label">Exam Type: </div>
+                                        <div class="info-value"><t t-esc="o.exam_type"/></div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="student-image" style="width:20%;float: right; heigth:200px;">
-                                <img t-if="o.student_id.image" t-att-src="image_data_uri(o.student_id.image)" alt="student image" class="rounded float-right" style="max-width: 100%; max-height: 120px; margin-top: 0px; float: right;"/>
-                            </div>
+                            </t>
                             <t t-if="o.exam_type == 'mid-term'">
                                 <div class="col-md-4 results-section">
                                     <table class="table subject-marks">
@@ -193,8 +209,31 @@
                                     </table>
                                 </div>
                             </t>
-                            <div class="col-md-4 attendance-section">
-                                <table class="table attendance-table" style="margin-bottom:50px;">
+                            <t t-elif="o.exam_type == 'other'">
+                                <div class="col-md-12">
+                                    <table class="table subject-marks">
+                                        <thead>
+                                            <tr style="background-color:#B6FFFA;">
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Mark</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="o.other_examination_result_line_ids" t-as="line">
+                                                <tr>
+                                                    <td><t t-esc="line.student_id.reference"/></td>
+                                                    <td> <t t-esc="line.student_id.name"/></td>
+                                                    <td><t t-esc="line.mark"/></td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </t>
+                            <t t-if="o.exam_type  != 'other'">
+                                <div class="col-md-4 attendance-section">
+                                    <table class="table attendance-table" style="margin-bottom:50px;">
                                     <tbody>
                                         <tr style="background-color:#B6FFFA;">
                                             <th colspan="3"><h2>Attendance</h2></th>
@@ -219,25 +258,25 @@
                                             <th colspan="4"><h2>Result</h2></th>
                                         </tr>
                                     </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th colspan="2">Total</th>
-                                                <td colspan="2"><t t-esc="o.total_marks"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2">Average</th>
-                                                <td colspan="2"><t t-esc="o.average_marks"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2">Result</th>
-                                                <td colspan="2"><t t-esc="o.result"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2">Grade</th>
-                                                <td colspan="2"><t t-esc="o.grade"/></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="2">Total</th>
+                                            <td colspan="2"><t t-esc="o.total_marks"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Average</th>
+                                            <td colspan="2"><t t-esc="o.average_marks"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Result</th>
+                                            <td colspan="2"><t t-esc="o.result"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="2">Grade</th>
+                                            <td colspan="2"><t t-esc="o.grade"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                                 <table class="table attendance-table">
                                     <tbody>
                                         <tr style="background-color:#B6FFFA;">
@@ -268,6 +307,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </t>
                         </div>
                     </div>
                 </t>
