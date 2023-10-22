@@ -24,16 +24,17 @@ class EmsCurriculum(models.Model):
  
     def action_mark_done(self):
         for rec in self:
-            if rec.class_id.class_line_ids:
-                raise  ValidationError("A curriculum already exists for this class.")
-            else:
+            # if rec.class_id.class_line_ids:
+            #     raise  ValidationError("A curriculum already exists for this class.")
+            # else:
                 for line in rec.curriculum_line_ids:
                     rec.env['ems.class.room.line'].create({
                         'subject_id': line.subject_id.id,
                         'book_id': line.book_id.id,
                         'class_id': rec.class_id.id,
                     })
-            rec.state = 'done'
+                rec.state = 'done'
+
 
 
     def action_mark_cancel(self):
@@ -43,6 +44,7 @@ class EmsCurriculum(models.Model):
     def action_mark_draft(self):
         for record in self:
             record.state = 'draft'   
+            record.class_id.class_line_ids.unlink()  
     
 
  
