@@ -27,6 +27,5 @@
         'views/ems_examination_views.xml',
         'views/ems_examination_result_views.xml',
         'data/sequence.xml',
-
     ],
 }
