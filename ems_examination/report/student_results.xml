@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="student_result">
-        <t t-call="web.html_container">
+        <t t-call="web.basic_layout">
             <t t-foreach="docs" t-as="o">
-                <t t-call="web.external_layout">
                     <t t-set="paperformat" t-value="'report_paperformat_custom'" />
-                    <div class="page">
+                    <div class="page" style="page-break-after: always;">
                         <style>
                             .oe_structure {
                                 display: flex;
@@ -148,26 +147,6 @@
                                                     </t>
                                                 </tr>
                                             </t>
-    
-                                            <tr style="background-color:#B6FFFA;">
-                                                <th colspan="3"><h2>Result</h2></th>
-                                            </tr>
-                                            <tr>
-                                                <th>Total</th>
-                                                <td><t t-esc="o.total_marks"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Average</th>
-                                                <td><t t-esc="o.average_marks"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Result</th>
-                                                <td><t t-esc="o.result"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Grade</th>
-                                                <td><t t-esc="o.grade"/></td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -210,31 +189,12 @@
                                                     <td><t t-esc="line.total"/></td>
                                                 </tr>
                                             </t>
-                                            <tr>
-                                                <th colspan="4"><h2>Result</h2></th>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2">Total</th>
-                                                <td colspan="2"><t t-esc="o.total_marks"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2">Average</th>
-                                                <td colspan="2"><t t-esc="o.average_marks"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2">Result</th>
-                                                <td colspan="2"><t t-esc="o.result"/></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2">Grade</th>
-                                                <td colspan="2"><t t-esc="o.grade"/></td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </t>
                             <div class="col-md-4 attendance-section">
-                                <table class="table attendance-table" style="margin-bottom:500px;">
+                                <table class="table attendance-table" style="margin-bottom:50px;">
                                     <tbody>
                                         <tr style="background-color:#B6FFFA;">
                                             <th colspan="3"><h2>Attendance</h2></th>
@@ -253,6 +213,31 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <table class="table attendance-table" style="margin-bottom:50px;">
+                                    <thead>
+                                        <tr style="background-color:#B6FFFA;">
+                                            <th colspan="4"><h2>Result</h2></th>
+                                        </tr>
+                                    </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th colspan="2">Total</th>
+                                                <td colspan="2"><t t-esc="o.total_marks"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2">Average</th>
+                                                <td colspan="2"><t t-esc="o.average_marks"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2">Result</th>
+                                                <td colspan="2"><t t-esc="o.result"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2">Grade</th>
+                                                <td colspan="2"><t t-esc="o.grade"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 <table class="table attendance-table">
                                     <tbody>
                                         <tr style="background-color:#B6FFFA;">
@@ -286,7 +271,6 @@
                         </div>
                     </div>
                 </t>
-            </t>
         </t>
     </template>
 </odoo>

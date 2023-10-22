@@ -1,6 +1,5 @@
 <odoo>
   <data>
-
     <record id="ems_examination_result_view_tree" model="ir.ui.view">
         <field name="name">ems_examination_result_view_tree</field>
         <field name="model">ems.examination.result</field>
@@ -8,10 +7,13 @@
             <tree string="">
                 <field name="student_id" />
                 <field name="class_id" />
+                <field name="total_marks" />
+                <field name="average_marks" />
+                <field name="result" />
+                <field name="grade" />
             </tree>
         </field>
     </record>
-
     <record id="ems_examination_result_view_form" model="ir.ui.view">
         <field name="name">ems_examination_result_view_form</field>
         <field name="model">ems.examination.result</field>
@@ -27,8 +29,9 @@
                 <sheet>
                 <group>
                     <group>
-                     <field name="student_id" />
-                     <field name="class_id" />
+                        <field name="exam_id" options="{'no_create': True}"/>
+                        <field name="student_id" options="{'no_create': True}"/>
+                        <field name="class_id" />
                     </group>
                     <group>
                         <field name="reference" />
@@ -66,5 +69,21 @@
             </form>
         </field>
     </record>
+    <record id="ems_result_view_search" model="ir.ui.view">
+        <field name="name">ems.result.view.search</field>
+        <field name="model">ems.examination.result</field>
+        <field name="arch" type="xml">
+          <search>
+            <field name="student_id" string="Student Name"/>
+            <field name="class_id" />
+            <field name="exam_id" />
+            <separator />
+            <group expand="0" string="Group By">
+           </group>
+                <filter name="result" string="Result" context="{'group_by': 'result'}" />
+         </search>
+        </field>
+      </record>
+
   </data>
 </odoo>
