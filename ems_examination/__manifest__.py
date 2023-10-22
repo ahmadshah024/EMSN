@@ -24,8 +24,12 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'data/sequence.xml',
+        'report/report.xml',
+        'report/student_results.xml',
         'views/ems_examination_views.xml',
         'views/ems_examination_result_views.xml',
         'data/sequence.xml',
+
     ],
 }

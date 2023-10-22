@@ -18,7 +18,7 @@ class EmsExaminationResult(models.Model):
         ('cancel', 'Cancel'),
     ], string='State', default='draft')
     examination_result_line_ids = fields.One2many('ems.examination.result.line', 'examination_result_id')
-
+    company_id = fields.Many2one('res.company' , default=lambda self: self.env.company.id)    
     present_days = fields.Integer(related='student_id.present_count')
     absent_days = fields.Integer(related='student_id.absent_count')
     leave_days = fields.Integer(related='student_id.leave_count')
@@ -26,7 +26,7 @@ class EmsExaminationResult(models.Model):
     average_marks = fields.Float(compute='_compute_average_marks', store=True)
     result = fields.Char(compute='_compute_result', store=True)
     grade = fields.Char(compute='_compute_grade', store=True)
-
+    exam_id = fields.Many2one('ems.examination')
     @api.depends('examination_result_line_ids', 'exam_type')
     def _compute_total_marks(self):
         for rec in self:
@@ -37,8 +37,15 @@ class EmsExaminationResult(models.Model):
                 total_marks = sum(rec.examination_result_line_ids.mapped('final_mark'))
                 rec.total_marks = total_marks
                 
-    
-    @api.depends('examination_result_line_ids', 'total_marks')
+    @api.depends('examination_result_line_ids', 'exam_type')
+    def _compute_total_marks(self):
+        for rec in self:
+            if rec.exam_type == 'mid-term':
+                rec.total_marks = sum(rec.examination_result_line_ids.mapped('mid_mark'))
+            elif rec.exam_type == 'final':
+                rec.total_marks = sum(rec.examination_result_line_ids.mapped('final_mark')) + sum(rec.examination_result_line_ids.mapped('mid_mark'))
+
+    @api.depends('examination_result_line_ids', 'total_marks', 'exam_type')
     def _compute_average_marks(self):
         for rec in self:
             subject_count = len(rec.examination_result_line_ids)
@@ -47,14 +54,14 @@ class EmsExaminationResult(models.Model):
             else:
                 rec.average_marks = 0.0
 
-    @api.depends('exam_type', 'average_marks')
+    @api.depends('exam_type', 'average_marks', 'total_marks')
     def _compute_result(self):
         for rec in self:
             if rec.exam_type == 'mid-term':
-                if rec.average_marks < (16 / 40 * 100):
-                    rec.result = 'Fail'
-                else:
+                if rec.average_marks >= 16 :
                     rec.result = 'Pass'
+                else:
+                    rec.result = 'Fail'
             elif rec.exam_type == 'final':
                 if rec.average_marks < (40 / 100 * 100):
                     rec.result = 'Fail'
@@ -63,21 +70,76 @@ class EmsExaminationResult(models.Model):
             else:
                 rec.result = ''
 
-    @api.depends('average_marks')
+    @api.depends('average_marks', 'exam_type')
     def _compute_grade(self):
         for rec in self:
-            if 90 <= rec.average_marks <= 100:
-                rec.grade = 'A+'
-            elif 80 <= rec.average_marks < 90:
-                rec.grade = 'A'
-            elif 70 <= rec.average_marks < 80:
-                rec.grade = 'B'
-            elif 60 <= rec.average_marks < 70:
-                rec.grade = 'C'
-            elif 40 <= rec.average_marks < 60:
-                rec.grade = 'D'
-            else:
-                rec.grade = 'F'
+            if rec.exam_type == 'mid-term':
+                if 35 <= rec.average_marks <= 40:
+                    rec.grade = 'A+'
+                elif 30 <= rec.average_marks < 35:
+                    rec.grade = 'A'
+                elif 25 <= rec.average_marks < 30:
+                    rec.grade = 'B'
+                elif 20 <= rec.average_marks < 25:
+                    rec.grade = 'C'
+                elif 16 <= rec.average_marks < 20:
+                    rec.grade = 'D'
+                else:
+                    rec.grade = 'F'
+            elif rec.exam_type == 'final':
+                if 90 <= rec.average_marks <= 100:
+                    rec.grade = 'A+'
+                elif 80 <= rec.average_marks < 90:
+                    rec.grade = 'A'
+                elif 70 <= rec.average_marks < 80:
+                    rec.grade = 'B'
+                elif 60 <= rec.average_marks < 70:
+                    rec.grade = 'C'
+                elif 40 <= rec.average_marks < 60:
+                    rec.grade = 'D'
+                else:
+                    rec.grade = 'F'
+
+    # @api.depends('examination_result_line_ids', 'total_marks')
+    # def _compute_average_marks(self):
+    #     for rec in self:
+    #         subject_count = len(rec.examination_result_line_ids)
+    #         if subject_count:
+    #             rec.average_marks = rec.total_marks / subject_count
+    #         else:
+    #             rec.average_marks = 0.0
+
+    # @api.depends('exam_type', 'average_marks')
+    # def _compute_result(self):
+    #     for rec in self:
+    #         if rec.exam_type == 'mid-term':
+    #             if rec.average_marks < (16 / 40 * 100):
+    #                 rec.result = 'Fail'
+    #             else:
+    #                 rec.result = 'Pass'
+    #         elif rec.exam_type == 'final':
+    #             if rec.average_marks < (40 / 100 * 100):
+    #                 rec.result = 'Fail'
+    #             else:
+    #                 rec.result = 'Pass'
+    #         else:
+    #             rec.result = ''
+
+    # @api.depends('average_marks')
+    # def _compute_grade(self):
+    #     for rec in self:
+    #         if 90 <= rec.average_marks <= 100:
+    #             rec.grade = 'A+'
+    #         elif 80 <= rec.average_marks < 90:
+    #             rec.grade = 'A'
+    #         elif 70 <= rec.average_marks < 80:
+    #             rec.grade = 'B'
+    #         elif 60 <= rec.average_marks < 70:
+    #             rec.grade = 'C'
+    #         elif 40 <= rec.average_marks < 60:
+    #             rec.grade = 'D'
+    #         else:
+    #             rec.grade = 'F'
 
 
 
