@@ -29,6 +29,7 @@
         'report/student_results.xml',
         'views/ems_examination_views.xml',
         'views/ems_examination_result_views.xml',
+        'views/ems_student_view.xml',
 
 
     ],
