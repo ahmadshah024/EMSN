@@ -12,7 +12,7 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='mobile_phone']" position="before">
-                <field name="is_teacher"  />
+                <field name="is_teacher" attrs="{'invisible': [('is_teacher', '=', True)]}"  />
             </xpath>
             <xpath expr="//button[@name='%(hr.hr_employee_print_badge)d']" position="replace">
                 <button name="%(teacher_print_badge)d" string="Print Badge" class="btn btn-link" type="action" attrs="{'invisible': [('barcode', '=', False)]}"/>

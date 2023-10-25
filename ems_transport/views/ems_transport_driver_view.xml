@@ -39,8 +39,8 @@
                 <field name="phone" />
               </group>
               <group>
-                <field name="car_id" />
-                <field name="salary" />
+                <field name="car_id"  options="{'no_create': True}" />
+                <!-- <field name="salary" /> -->
               </group>
               <group>
                 <field name="driving_license" />

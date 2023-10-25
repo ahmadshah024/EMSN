@@ -47,7 +47,7 @@
                 <notebook>
                     <page name="class" string="Class">
                        <field name="examination_line_ids">
-                        <tree editable="top">
+                        <tree editable="bottom  ">
                             <field name="class_id" options="{'no_create': True}" />
                             <field name="timetable_id" options="{'no_create': True}" />
                             <field name="teacher_id" options="{'no_create': True}" />
@@ -75,17 +75,24 @@
       <field name="view_mode">tree,form</field>
     </record>
 
-
-
-
-    <!-- Top menu item -->
-
-    <menuitem name="Examination" id="ems_examination_menu_root" web_icon="ems_examination,static/description/icon.png"/>
-
-    <!-- menu categories -->
-
-    <menuitem name="Exam" id="ems_examination_menu_1" parent="ems_examination_menu_root" action="ems_examination_action_window"/>
-    <menuitem name="Result" id="ems_examination_result_menu_2" parent="ems_examination_menu_root" action="ems_examination_result_action_window"/>
+    <record model="ir.actions.act_window" id="ems_certificate_action_window">
+        <field name="name">Certificate</field>
+        <field name="res_model">ems.certificate</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+  
+      
+      
+      
+      <!-- Top menu item -->
+      
+      <menuitem name="Examination" id="ems_examination_menu_root" web_icon="ems_examination,static/description/icon.png"/>
+      
+      <!-- menu categories -->
+      
+      <menuitem name="Exam" id="ems_examination_menu_1" parent="ems_examination_menu_root" action="ems_examination_action_window"/>
+      <menuitem name="Result" id="ems_examination_result_menu_2" parent="ems_examination_menu_root" action="ems_examination_result_action_window"/>
+      <menuitem name="Certificate" id="ems_certificate_menu" parent="ems_examination_menu_root" action="ems_certificate_action_window"/>
 
     <!-- actions -->
 <!--

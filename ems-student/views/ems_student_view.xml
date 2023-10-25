@@ -29,8 +29,8 @@
                 <button name="action_cancel" string="Cancel" type="object" attrs="{'invisible': [('state', 'in',('done','graduate','change','cancel'))]}"/>
                 <button name="action_graduate" string="Graduate" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
                 <button name="action_change" string="Change" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
-                <button name="action_report" string="Report" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
-                <button name="action_change_new_flase" class="btn-info" string="Documents Done" type="object" attrs="{'invisible': [('is_new', '!=', True),('is_changed', '!=', True)]}"/>
+                <button name="action_report" string="Report To Discipline" type="object" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                <button name="action_change_new_flase" class="btn-info" string="Collect The Documents" type="object" attrs="{'invisible': [('is_new', '!=', True),('is_changed', '!=', True)]}"/>
                 <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,graduate,change,done"/>
             </header>
           <sheet>

@@ -23,6 +23,7 @@
           <group>
               <group>
                   <field name="name" />
+                  <field name="date_time" />
                   <field name="reason"/>
               </group>
             <group name="about us" string="How did you find out about us?">

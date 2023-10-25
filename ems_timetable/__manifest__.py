@@ -37,6 +37,8 @@
         'views/ems_period_view.xml',
         'views/ems_day_view.xml',
         'views/ems_teacher_view.xml',
+        'views/ems_teacher_timetable_view.xml',
+        
 
 
     ],

@@ -6,8 +6,8 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
-                    <button class="oe_stat_button" name="action_open_assignment" type="object" icon="fa-pencil-square">
-                        <field string="Assignment" name="assignment_count" widget="statinfo" />
+                    <button class="oe_stat_button" name="action_open_assignment" type="object" attrs="{'invisible': [('is_teacher', '!=', True)]}" icon="fa-pencil-square" >
+                        <field string="Assignment" name="assignment_count" attrs="{'invisible': [('is_teacher', '!=', True)]}" widget="statinfo" />
                     </button>
             </xpath>
             <xpath expr="//header" position="inside">

@@ -4,3 +4,4 @@ access_ems_examination_result,ems.examination.result,model_ems_examination_resul
 access_ems_examination_line,ems.examination.line,model_ems_examination_line,base.group_user,1,1,1,1
 access_ems_examination_result_line,ems.examination.result.line,model_ems_examination_result_line,base.group_user,1,1,1,1
 access_ems_other_examination_result_line,ems.other.examination.result.line,model_ems_other_examination_result_line,base.group_user,1,1,1,1
+access_ems_certificate,ems.certificate,model_ems_certificate,base.group_user,1,1,1,1

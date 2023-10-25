@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="student_certificate">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="page-break-after: always; ">
+                    <style>
+                        @font-face {
+                            font-family: 'CustomFont';
+                            src: url('/custom_fonts/CustomFont-Regular.ttf') format('truetype');
+                            font-weight: normal;
+                        }
+                        
+                        @font-face {
+                            font-family: 'CustomFont';
+                            src: url('/custom_fonts/CustomFont-Bold.ttf') format('truetype');
+                            font-weight: bold;
+                        }
+
+                        .certificate {
+                            width: 100%;
+                            text-align: center;
+                            border: 25px solid #B2533E; /* Add a blue border */
+                            border-image: linear-gradient(#B2533E, #5C8374) 30;
+                            padding: 20px; /* Add padding inside the border */
+                        }
+    
+                        .school-logo {
+                            width: 150px;
+                            height: auto;
+                        }
+    
+                        .school-name {
+                            font-size: 40px;
+                            color: #B2533E; /* Blue color */
+                            margin-top:-90px;
+                        }
+    
+                        .certificate-title {
+                            font-size: 48px;
+                            font-weight: bold;
+                            color: #B2533E; /* Blue color */
+                            margin-bottom:-30px;
+                        }
+    
+                        .student-details {
+                            font-size: 30px;
+                            color: #5C8374; /* Light brown color */
+                            margin-top: 20px;
+                        }
+    
+                        .reason {
+                            font-size: 30px;
+                            font-weight: bold;
+                            color: #B2533E; /* Blue color */
+                            margin-top: 50px;
+                            <!-- margin-bottom:100px; -->
+                        }
+    
+                        .date-signature-container {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: 20px;
+                        }
+    
+                        .date {
+                            font-size: 20px;
+                            color: #5C8374; /* Light brown color */
+                            margin-left:70px;
+                        }
+    
+                        .signature {
+                            font-size: 20px;
+                            magrgin-right:70px;
+                        }
+                    </style>
+                    <div class="oe_structure" >
+                        <div class="certificate">
+                            <div class="school-logo" style="float:left;">
+                                <img class="ministry-logo img" src="ems_examination/static/description/award.png" style="width:100%;" alt="Ministry Logo"/>
+                            </div>
+                            <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Company Logo" class="school-logo" style="margin-bottom:100px;margin-left:-150px;" />
+                            <span style="float:right; border-bottom:1px solid #5C8374;color:#B2533E;">NO:<t t-esc="o.name"/></span>
+
+                            <div class="school-name"><t t-esc="o.company_id.name" /></div>
+                            <div class="certificate-title">CERTIFICATE OF EXCELLENCE</div>
+                            <div class="student-details">
+                                <span style="margin-top:-20px;">is hereby granted to:</span><br></br>
+                                <span style="color: #B2533E; font-size:48px; font-weight: bold;"><t t-esc="o.student_id.name" /> son of <t t-esc="o.student_id.father_name" /></span><br></br>
+                                <span style="color: #B2533E; font-size:42px;">Student of class <t t-esc="o.class_id.name" /></span><br></br>
+                                for outstanding performance in <br></br><span t-field="o.certification_reason" />
+                                <!-- <t t-esc="o.class_id.name" /> -->
+                            </div>
+                            
+                            <div class="reason" style="margin-bottom:145px;">
+                                <div class="date-signature-container">
+                                    <div class="date">Date<br></br><t t-esc="o.date" /></div>
+                                   
+                                    <div class="signature">Presenter's Signature<br></br><br></br><span style="color:#5C8374;">__________________________________</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

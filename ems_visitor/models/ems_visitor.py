@@ -19,7 +19,10 @@ class EmsVisitor(models.Model):
         ('twitter', 'Twitter'),
         ('instagram', 'Instagram'),
         ('youtube', 'Youtube'),
-    ], required=True)
+    ])
+    # date_time = fields.Date(default=fields.Date.today())
+    date_time = fields.Datetime(default=lambda self: fields.Datetime.now())
+
 
 
      

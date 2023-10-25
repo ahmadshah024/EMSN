@@ -26,7 +26,7 @@ class EmsStudent(models.Model):
     age = fields.Char(compute='_compute_age', store=True)
     gender = fields.Selection([('male', 'Male'), ('female', 'Female')],states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     student_document = fields.Binary(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
-    parent_id = fields.Many2one('ems.parent', required=True, states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
+    parent_id = fields.Many2one('ems.parent', states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     school = fields.Many2one('res.company', states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     class_id = fields.Many2one('ems.class.room', states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     country_id = fields.Many2one('res.country', states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]}  ,default=lambda self: self.env['res.country'].search([('name', '=', 'Afghanistan'), ('code', '=', 'AF')]))
@@ -83,8 +83,10 @@ class EmsStudent(models.Model):
 
     def action_done(self):
         for rec in self:
-            if rec.is_new or rec.is_changed:
-                raise ValidationError('Please Check the new or changed student documents first, then you done the record')
+            if rec.is_new:
+                raise ValidationError('This Student is new, please the check the documentes first')
+            elif rec.is_changed:
+                raise ValidationError('This Student is changed, please the check the documentes first')
             rec.state = 'done'
 
     def action_draft(self):
