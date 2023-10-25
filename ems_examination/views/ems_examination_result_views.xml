@@ -47,7 +47,8 @@
                             <field name="max_mark" />
                             <field name="min_mark" />
                             <field name="mid_mark" />
-                            <field name="final_mark" />
+                            <field name="exam_type" invisible="1" />
+                            <field name="final_mark" attrs="{'readonly': [('exam_type', '=', 'mid-term')]}" />
                             <field name="total" />
                         </tree>
                     </field>

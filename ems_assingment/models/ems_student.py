@@ -7,6 +7,7 @@ class ClassRoom(models.Model):
     _inherit = 'ems.student'
 
 
+    assignment_count = fields.Integer(compute='_compute_assignment_count')
 
     def action_submit(self):
         return {
@@ -19,12 +20,6 @@ class ClassRoom(models.Model):
         'target': 'new',
     }
     
-    assignment_count = fields.Integer(compute='_compute_assignment_count')
-
-    # def _compute_assignment_count(self):
-    #     for rec in self:
-    #         rec.assignment_count = rec.env['ems.assignment'].search_count([('class_id', '=', rec.class_id.id), ('state', '=', 'active')])
-
 
     @api.depends('class_id')
     def _compute_assignment_count(self):

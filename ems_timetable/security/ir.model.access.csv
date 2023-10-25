@@ -8,3 +8,5 @@ access_ems_timetable_period,ems.timetable.period,model_ems_timetable_period,base
 access_ems_timetable_period_line,ems.timetable.period.line,model_ems_timetable_period_line,base.group_user,1,1,1,1
 access_ems_timetable_day,ems.timetable.day,model_ems_timetable_day,base.group_user,1,1,1,1
 access_ems_timetable_day_line,ems.timetable.day.line,model_ems_timetable_day_line,base.group_user,1,1,1,1
+access_ems_teacher_timetable,ems.teacher.timetable,model_ems_teacher_timetable,base.group_user,1,1,1,1
+access_ems_teacher_timetable_line,ems.teacher.timetable.line,model_ems_teacher_timetable_line,base.group_user,1,1,1,1

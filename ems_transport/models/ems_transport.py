@@ -17,6 +17,13 @@ class EmsTransport(models.Model):
     transport_teacher_line_ids = fields.One2many('ems.transport.line.teacher', 'transport_teacher_id')
 
 
+    @api.onchange('driver_id')
+    def _onchange_driver_id(self):
+        if self.driver_id:
+            self.car_id = self.driver_id.car_id
+        else:
+            self.car_id = False
+
     def action_done(self):
         for rec in self:
             rec.state = 'done'

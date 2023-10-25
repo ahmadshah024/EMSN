@@ -145,6 +145,7 @@ class EmsExaminationResultLine(models.Model):
     mid_mark = fields.Integer()
     final_mark = fields.Integer()
     examination_result_id = fields.Many2one('ems.examination.result')
+    exam_type = fields.Selection(related='examination_result_id.exam_type')
     total = fields.Integer(compute="_compute_total_of_marks")
 
     @api.depends('mid_mark', 'final_mark')
