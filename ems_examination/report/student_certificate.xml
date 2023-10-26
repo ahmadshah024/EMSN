@@ -103,8 +103,16 @@
                             <t t-if="o.certificate_type == 'student'">
                                 
                                 <span style="">is hereby granted to:</span><br></br>
-                                <span style="color: #B2533E; font-size:40px; font-weight: bold;"><t t-esc="o.student_id.name" /> Son/Daughter of <t t-esc="o.student_id.father_name" /></span><br></br>
+                                <span style="color: #B2533E; font-size: 40px; font-weight: bold;">
+                                    <t t-if="o.student_id.gender == 'male'">
+                                        <t t-esc="o.student_id.name" /> Son of <t t-esc="o.student_id.father_name" />
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="o.student_id.name" /> Daughter of <t t-esc="o.student_id.father_name" />
+                                    </t>
+                                </span><br></br>
                                 <span style="color: #B2533E; font-size:42px;">Student of Class <t t-esc="o.class_id.name" /></span><br></br>
+
                                 <t t-if="o.certification_reason == 'graduation'">
                                 With warmest congratulations on your well-earned certificate in <br></br><span t-field="o.certification_reason" />
                                 </t>
