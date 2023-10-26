@@ -40,8 +40,8 @@
     </record>
 
     <record id="report_student_certificate_qweb" model="ir.actions.report">
-        <field name="name">Student Certificate</field>
-        <field name="print_report_name">'Certificate of(%s)'%object.student_id.name</field>
+        <field name="name">Certificate</field>
+        <field name="print_report_name">'Certificate'</field>
         <field name="model">ems.certificate</field>
         <field name="binding_model_id" ref="model_ems_certificate"/>
         <field name="report_type">qweb-pdf</field>
