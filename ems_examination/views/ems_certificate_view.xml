@@ -37,14 +37,14 @@
                 </div>
                 <group>
                     <group>
-                        <field name="certificate_type" />
+                        <field name="certificate_type" string="Certificate Achievers" />
                         <field name="student_id" options="{'no_create': True}"  attrs="{'invisible': [('certificate_type', '=', 'teacher')]}" />
                         <field name="teacher_id" options="{'no_create': True}" attrs="{'invisible': [('certificate_type', '=', 'student')]}"/>
                         <field name="class_id" attrs="{'invisible': [('certificate_type', '=', 'teacher')]}" />
                     </group>
                     <group>
                         <field name="date" />
-                        <field name="certification_reason" />
+                        <field name="certification_reason" attrs="{'invisible': [('certificate_type', '=', 'teacher')]}" />
                     </group>
                 </group>
                 </sheet>

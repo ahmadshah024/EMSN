@@ -92,7 +92,7 @@
       
       <menuitem name="Exam" id="ems_examination_menu_1" parent="ems_examination_menu_root" action="ems_examination_action_window"/>
       <menuitem name="Result" id="ems_examination_result_menu_2" parent="ems_examination_menu_root" action="ems_examination_result_action_window"/>
-      <menuitem name="Certificate" id="ems_certificate_menu" parent="ems_examination_menu_root" action="ems_certificate_action_window"/>
+      <menuitem name="Certificate" id="ems_certificate_menu" web_icon="ems_examination,static/description/icon2.png" action="ems_certificate_action_window"/>
 
     <!-- actions -->
 <!--
