@@ -10,45 +10,31 @@
                             src: url('/custom_fonts/CustomFont-Regular.ttf') format('truetype');
                             font-weight: normal;
                         }
-                        
                         @font-face {
                             font-family: 'CustomFont';
                             src: url('/custom_fonts/CustomFont-Bold.ttf') format('truetype');
                             font-weight: bold;
                         }
-
                         .certificate {
                             width: 100%;
                             text-align: center;
                             border: 25px solid #B2533E; /* Add a blue border */
                             border-image: linear-gradient(#B2533E, #5C8374) 30;
                             padding: 20px; /* Add padding inside the border */
-                            <!-- background: linear-gradient(to bottom, #F4A460, #B2533E); -->
-                            <!-- background: rgb(117,116,136); -->
-                            <!-- background: linear-gradient(90deg, rgba(117,116,136,0.1) 0%, rgba(0,212,255,0.1) 100%); -->
                             background-color: #FA8BFF;
-                            <!-- background: linear-gradient(45deg, rgba(250, 139, 255, 0.1) 0%, rgba(43, 210, 255, 0.1) 52%, rgba(43, 255, 136, 0.1) 90%); -->
                             background: linear-gradient(45deg, rgba(250, 139, 255, 0.2) 0%, rgba(43, 210, 255, 0.2) 52%, rgba(43, 255, 136, 0.2) 90%);
-
                             background-repeat: no-repeat;
-
                             background-position: center;
-
-
-
                         }
-    
                         .school-logo {
                             width: 150px;
                             height: auto;
                         }
-    
                         .school-name {
                             font-size: 40px;
                             color: #B2533E; /* Blue color */
                             margin-top:-90px;
                         }
-    
                         .certificate-title {
                             font-size: 40px;
                             font-weight: bold;
@@ -56,19 +42,16 @@
                             margin-bottom: -10px;
                             
                         }
-    
                         .student-details {
                             font-size: 30px;
                             color: #5C8374; /* Light brown color */
                             margin-top: 20px;
                         }
-    
                         .reason {
                             font-size: 30px;
                             font-weight: bold;
                             color: #B2533E; /* Blue color */
                             margin-top: 50px;
-                            <!-- margin-bottom:100px; -->
                         }
     
                         .date-signature-container {
@@ -76,14 +59,12 @@
                             justify-content: space-between;
                             margin-top: 20px;
                         }
-    
                         .date {
                             font-size: 20px;
                             color: #5C8374; /* Light brown color */
                             margin-left:70px;
                             margin-top: 27px;
                         }
-    
                         .signature {
                             font-size: 20px;
                             magrgin-right:100px;
@@ -96,12 +77,10 @@
                             </div>
                             <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Company Logo" class="school-logo" style="margin-bottom:200px;margin-left:-20px;" />
                             <span style="float:right; border-bottom:1px solid #5C8374;color:#B2533E;">NO:<t t-esc="o.name"/></span>
-
                             <div class="school-name"><t t-esc="o.company_id.name" /></div>
                             <div class="certificate-title">CERTIFICATE OF EXCELLENCE</div>
                             <div class="student-details">
                             <t t-if="o.certificate_type == 'student'">
-                                
                                 <span style="">is hereby granted to:</span><br></br>
                                 <span style="color: #B2533E; font-size: 40px; font-weight: bold;">
                                     <t t-if="o.student_id.gender == 'male'">
@@ -112,7 +91,6 @@
                                     </t>
                                 </span><br></br>
                                 <span style="color: #B2533E; font-size:42px;">Student of Class <t t-esc="o.class_id.name" /></span><br></br>
-
                                 <t t-if="o.certification_reason == 'graduation'">
                                 With warmest congratulations on your well-earned certificate in <br></br><span t-field="o.certification_reason" />
                                 </t>
@@ -120,7 +98,7 @@
                                 For Outstanding Performance in <br></br><span style="color:#B2533E;" t-field="o.certification_reason" />
                                 </t>
                                     <br></br>
-                                <div class="reason" style="margin-top:100px;">
+                                <div class="reason" style="margin-top:130px;">
                                     <div class="date-signature-container">
                                         <div class="date">Date: <t t-esc="o.date" /></div>
                                         <div class="signature">Presenter's Signature<br></br><span style="color:#5C8374;">__________________________________</span></div>
@@ -132,7 +110,7 @@
                                 <span style="color: #B2533E; font-size:48px; font-weight: bold;"><t t-esc="o.teacher_id.name" /></span><br></br>
                                 <span style="color: #B2533E; font-size:30px;">in grateful recognition of your unwavering dedication and exceptional commitment to nurturing young minds at </span><span style="font-size:42; font-weight: bold;"><t t-esc="o.company_id.name" />.</span><br></br>
                                 <br></br>
-                                <div class="reason" style="margin-top:120px;">
+                                <div class="reason" style="margin-top:140px;">
                                     <div class="date-signature-container">
                                         <div class="date" style="">Date: <t t-esc="o.date" /></div>
                                     
