@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="report_paperformat_custom_monthly" model="report.paperformat">
+        <field name="name">Custom A4</field>
+        <field name="format">custom</field>
+        <field name="page_height">260</field>  
+        <field name="page_width">210</field>   
+        <field name="orientation">Portrait</field>  
+        <field name="margin_top">1</field>  
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+    </record>
     <record id="student_print_monthly_attendance" model="ir.actions.report">
         <field name="name">Print monthly Attendance</field>
         <field name="model">ems.attendance.report.wizard</field>
@@ -8,6 +19,7 @@
         <field name="report_file">ems_attendance.print_student_monthly_attendance</field>
         <field name="print_report_name">'Print Student monthly Attendance'</field>
         <field name="binding_model_id" ref="model_ems_attendance_report_wizard"/>
+        <field name="paperformat_id" ref="report_paperformat_custom_monthly"/>
         <field name="binding_type">report</field>
     </record>
     <template id="print_student_monthly_attendance">
@@ -25,7 +37,7 @@
                                 <h2><t t-esc="o.company_id.name"/></h2>
                             </div>
                             
-                            <h1>Attendance Report for Class <t t-esc="o.class_id.name"/></h1>
+                            <h1>Attendance Report for Class <t t-esc="o.class_id.name" class="red"/></h1>
                             <h2>From <t t-esc="o.start_date"/> To <t t-esc="o.end_date"/> </h2>
                         </div>
                         <div class="row">
