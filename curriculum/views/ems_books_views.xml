@@ -52,7 +52,7 @@
             <field name="model">ems.book</field>
             <field name="priority">10</field>
             <field name="arch" type="xml">
-                <kanban sample="1">
+                <kanban sample="1">=
                     <templates>
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_global_click">
