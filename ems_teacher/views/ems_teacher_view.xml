@@ -24,8 +24,13 @@
                 <field name="salary" />
             </xpath>
             <xpath expr="//page[@name='hr_settings']" position="after">
-                <page name="slots" string="Free Slots">
-                     
+                <page name="slots" string="Teacher Subjects and Classes">
+                     <field name="teacher_line_ids">
+                        <tree editable="bottom">
+                            <field name="class_id" />
+                            <field name="period_count" />
+                        </tree>
+                     </field>
                 </page>
             </xpath>
 
