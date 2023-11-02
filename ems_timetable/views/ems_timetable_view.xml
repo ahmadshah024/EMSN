@@ -30,7 +30,12 @@
                             <field name="name" />
                             <field name="academic_year" />
                             <field name="company_id" invisible="1"/>
-                            <field name="class_id" options="{'no_create': True}"/>
+                            <field name="day_ids" options="{'no_create': True}" widget="many2many_tags"/>
+                            <field name="period_count"/>
+                            <field name="class_ids" options="{'no_create': True}" widget="many2many_tags"/>
+                            <field name="teacher_ids" options="{'no_create': True}" widget="many2many_tags"/>
+                            <field name="subject_ids" options="{'no_create': True}" widget="many2many_tags"/>
+                            
                             <button name="generate_timetable" type="object" string="Generate Timetable" class="oe_highlight"/>
 
                         </group>

@@ -17,6 +17,7 @@ class EmsTeacher(models.Model):
     transport_id = fields.Many2one('ems.transport')
     class_id = fields.Many2one('ems.class.room')
     
+    teacher_line_ids = fields.One2many('ems.teacher.availability', 'teacher_id')
     @api.model
     def create(self, vals):   
         vals['reference'] = self.env['ir.sequence'].next_by_code('ems.teacher.sequence')
@@ -35,12 +36,9 @@ class EmsTeacherAvailability(models.Model):
     _name = 'ems.teacher.availability'
     _description = 'Teacher Availability'
 
-    day_1 = fields.Selection([('yes', 'Yes'), ('no', 'No')], string="Day 1", default='yes')
-    day_2 = fields.Selection([('yes', 'Yes'), ('no', 'No')], string="Day 2", default='yes')
-    day_3 = fields.Selection([('yes', 'Yes'), ('no', 'No')], string="Day 3", default='yes')
-    day_4 = fields.Selection([('yes', 'Yes'), ('no', 'No')], string="Day 4", default='yes')
-    day_5 = fields.Selection([('yes', 'Yes'), ('no', 'No')], string="Day 5", default='yes')
-    day_6 = fields.Selection([('yes', 'Yes'), ('no', 'No')], string="Day 6", default='yes')
+    
+    class_id = fields.Many2one('ems.class.room')
+    period_count = fields.Integer('Count')
     teacher_id = fields.Many2one('hr.employee')
 
 

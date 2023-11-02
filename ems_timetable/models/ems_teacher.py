@@ -8,3 +8,14 @@ class EmsTeacher(models.Model):
 
 
     subject_ids = fields.Many2many('ems.subject')
+
+
+
+
+class EmsTeacher(models.Model):
+    _inherit = 'ems.teacher.availability'
+
+    subject_id = fields.Many2one('ems.subject')
+    
+
+
