@@ -11,6 +11,9 @@
                 <xpath expr="//field[@name='category_ids']" position="replace">
                     <field name="category_ids" widget="many2many_tags" attrs="{'invisible': [('is_teacher', '=', True)]}" placeholder="Tags"/>
                 </xpath>
+                <xpath expr="//field[@name='teacher_line_ids']//tree//field[@name='class_id']" position="after">
+                    <field name="subject_id" />
+                </xpath>
             </field>
         </record>
     </data>
