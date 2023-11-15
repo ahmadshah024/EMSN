@@ -55,6 +55,8 @@ class EmsStudent(models.Model):
     avatar_1920 = fields.Image("Avatar")
     event_id = fields.Many2one('ems.event')
     transport_id = fields.Many2one('ems.transport')
+    user_id = fields.Many2one('res.users', copy=False, string="Related User") 
+    partner_id = fields.Many2one('res.partner', copy=False, string="Related Partner", readonly=True)
     barcode = fields.Char(string="Badge ID", help="ID used for employee identification.", copy=False)
     pin = fields.Char(string="PIN", groups="hr.group_hr_user", copy=False,
         help="PIN used to Check In/Out in the Kiosk Mode of the Attendance application (if enabled in Configuration) and to change the cashier in the Point of Sale application.")
@@ -131,6 +133,7 @@ class EmsStudent(models.Model):
 
     @api.model
     def create(self, vals):   
+        
         vals['reference'] = self.env['ir.sequence'].next_by_code('ems.student.sequence')
         return super(EmsStudent, self).create(vals)
     
@@ -146,6 +149,54 @@ class EmsStudent(models.Model):
                 dob = patient.dob
                 patient.age = today.year - dob.year - \
                     ((today.month, today.day) < (dob.month, dob.day))
+
+
+    def create_user_server_action(self):
+        if not self.env.user.has_group('ems-student.group_student_administrator'):
+            raise ValidationError("You cannot access this action.")
+
+        for student in self.browse(self.env.context['active_ids']):
+            if not student.user_id:
+                # Provide default values for required fields
+                partner_vals = {
+                    'is_company': False,
+                    'company_type': 'person',
+                    'name': student.name or _('Unknown'),
+                    'email': student.email or '',
+                    'phone': student.phone or '',
+                    'image_1920': student.image,
+                }
+
+                # Create res.partner record
+                new_partner_id = self.env['res.partner'].create(partner_vals)
+
+                # Create res.users record
+                new_user_id = self.env['res.users'].create({
+                    'partner_id': new_partner_id.id,
+                    'login': student.email or student.name,
+                })
+
+                # Associate new records with the student
+                student.write({
+                    'user_id': new_user_id.id,
+                    'partner_id': new_partner_id.id,
+                })
+
+                # Add the user to the 'ems-student.group_student_user' group
+                self.env.ref('ems-student.group_student_user').users = [(4, new_user_id.id)]
+
+        return True
+    # def create_user_server_action(self):
+    #     if not self.env.user.has_group('ems-student.group_student_administrator'):
+    #         raise ValidationError("You cannot access this action.")
+    #     for student in self.browse(self.env.context['active_ids']):
+    #         if not student.user_id:
+    #             new_user_id = self.env['res.users'].create({
+    #                 'partner_id': student.partner_id.id,
+    #                 'login': student.email if student.email else student.name,
+    #             })
+    #             student.user_id = new_user_id.id 
+    #             self.env.ref('ems-student.group_student_user').users = [(4, student.user_id.id)]
 
 
 
