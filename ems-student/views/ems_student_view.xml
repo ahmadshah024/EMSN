@@ -16,7 +16,17 @@
       </field>
     </record>
 
-
+     <!-- Server Action -->
+     <record id="create_user_server_action" model="ir.actions.server">
+        <field name="name">Create User</field>
+        <field name="model_id" ref="model_ems_student"/>
+        <field name="binding_model_id" ref="model_ems_student"/>
+        <field name="state">code</field>
+        <field name="code">
+            for rec in record:
+                rec.create_user_server_action()
+        </field>
+    </record>
     
     <record id="ems_student_view_form" model="ir.ui.view">
       <field name="name">ems.student.view.form</field>

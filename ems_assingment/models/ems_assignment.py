@@ -7,6 +7,8 @@ from odoo.exceptions import UserError, ValidationError
 class EmsAassignment(models.Model):
     _name = 'ems.assignment'
     _description = 'ems assignment description'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+
 
     name = fields.Char(states={'active': [('readonly', True)], 'done': [('readonly', True)]})
     teacher_id = fields.Many2one('hr.employee', domain=[('is_teacher','=',True)], states={'active': [('readonly', True)], 'done': [('readonly', True)]})
@@ -35,6 +37,19 @@ class EmsAassignment(models.Model):
         today = fields.Date.today()
         overdue_assignments = self.search([('state', '=', 'active'), ('due_date', '<', today)])
         overdue_assignments.write({'state': 'done'})
+    
+    
+    @api.model
+    def create(self, values):
+        assignment = super(EmsAassignment, self).create(values)
+        for student in assignment.class_id.student_ids:
+            assignment._create_activity_for_student('mail_acitvity_student_assignment', student.user_id.id, 'an assignment is assigned to you')
+        return assignment
+
+    def _create_activity_for_student(self, mail_template_id, user, note):
+        for rec in self:
+            rec.activity_schedule(mail_template_id, user_id = user, note = note)
+ 
 
 class EmsAassignmentLine(models.Model):
     _name = 'ems.assignment.line'
@@ -45,14 +60,3 @@ class EmsAassignmentLine(models.Model):
     documents = fields.Binary()
     student_id = fields.Many2one('ems.student')
 
-
-
-
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100

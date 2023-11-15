@@ -26,6 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/ir_cron_schedule.xml',
+        'data/mail_activity_date.xml',
         'views/ems_assignment_view.xml',
         'views/ems_student_view.xml',
         'views/ems_teacher_view.xml',
