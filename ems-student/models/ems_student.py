@@ -11,6 +11,7 @@ from random import choice
 class EmsStudent(models.Model):
     _name = 'ems.student'
     _description = 'ems student description'
+    
 
     reference = fields.Char("Reference No", required=True,copy=False,readonly=True,default='New' )
     image = fields.Binary(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mail_template_ems_event_student" model="mail.template">
+            <field name="name">Event Notification for Students</field>
+            <field name="model" >ems.events</field>
+            <field name="model_id" ref="model_ems_event"/>
+            <field name="email_from">{{ (object.company_id.email)}}</field>
+            <field name="subject">Event Notification: {{object.name}}</field>
+            <field name="auto_delete" eval="False" />
+            <field name="body_html" type="html">
+                <p>Hello <t t-out="object.event_line_ids.student_id.name"/>,</p>
+                <p>We are delighted to extend a warm invitation to you for our upcoming event, "<t t-out="object.name"/>." Your presence will add immense value and joy to this special occasion.</p>
+                <p>Details of the event:</p>
+                <ul>
+                    <li><strong>Event Name:</strong> <t t-out="object.name"/></li>
+                    <li><strong>Date:</strong> <t t-out="object.date"/> (Please save the date!)</li>
+                    <li><strong>Reasone:</strong> <t t-out="object.reason"/></li>
+                </ul>
+                <p>We look forward to your participation and sharing wonderful moments together.</p>
+                <p>Thank you for being a part of our school community!</p>
+            </field>
+        </record>
+    </data>
+</odoo>
