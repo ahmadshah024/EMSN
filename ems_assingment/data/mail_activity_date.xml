@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mail_acitvity_student_assignment" model="mail.activity.type">
+            <field name="name">Assignment</field>
+            <field name="icon">fa-check-circle</field>
+            <field name="sequence">4</field>
+            <field name="active">False</field>
+            <field name="res_model">ems.assignment</field>
+        </record>
+    </data>
+
+</odoo>
