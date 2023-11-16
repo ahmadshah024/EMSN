@@ -19,13 +19,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','report_xlsx'],
 
     # always loaded
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/ems_parent_views.xml',
+        'report/parent_xls_report.xml',
         
     ],
 }
