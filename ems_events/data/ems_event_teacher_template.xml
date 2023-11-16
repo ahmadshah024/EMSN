@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mail_template_ems_event_teacher" model="mail.template">
+            <field name="name">Event Notification for Teachers</field>
+            <field name="model" >ems.events</field>
+            <field name="model_id" ref="model_ems_event"/>
+            <field name="email_from">{{ (object.company_id.email)}}</field>
+            <field name="subject">Event Notification: {{object.name}}</field>
+            <field name="auto_delete" eval="False" />
+            <field name="body_html" type="html">
+                <p>Hello <t t-out="object.teacher_id.name"/>,</p>
+                <p>We hope this message finds you well. We are delighted to invite you to an upcoming event at our school, "<t t-out="object.name"/>," scheduled for <t t-out="object.date"/>. Your presence and participation will greatly contribute to the success of this event.</p>
+                <p>Event Details:</p>
+                <ul>
+                    <li><strong>Event Name:</strong> <t t-out="object.name"/></li>
+                    <li><strong>Date:</strong> <t t-out="object.date"/></li>
+                    <li><strong>Reason:</strong> <t t-out="object.reason"/></li>
+                </ul>
+                <p>Your role as a teacher is highly valued, and your involvement will enhance the overall experience for everyone. Your dedication to our school community is truly appreciated.</p>
+                <p>We look forward to your participation and making this event a memorable occasion. Thank you for your ongoing support!</p>
+            </field>
+        </record>
+    </data>
+</odoo>
