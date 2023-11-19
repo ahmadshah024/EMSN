@@ -22,8 +22,8 @@
                         <p><strong>Class: </strong><span t-field="o.student_class.name"/></p>
                     </div>
                     <div class="invoice-header" style="display:flex; flex-direcation:row; justify-content:start; margin-bottom:60px; ">
-                        <p style="margin-right:200px;"><strong>Invoice #: </strong><span t-field="o.name"/></p>
-                        <p style="margin-right:200px;"><strong>Invoice Date: </strong><span t-field="o.date"/></p>
+                        <p style="margin-right:90px;"><strong>Invoice #: </strong><span t-field="o.name"/></p>
+                        <p style="margin-right:100px;"><strong>Invoice Date: </strong><span t-field="o.date"/></p>
                     </div>
                     <!-- Invoice Details -->
                     <t t-if="o.invoice_type == 'is_enrollment'">
@@ -42,6 +42,7 @@
                                         <th>Book</th>
                                         <th>Book Price</th>
                                         <th>Book Quantity</th>
+                                        <th>Discount</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -57,6 +58,7 @@
                                                 <td><span t-field="line.book_id.name" /></td>
                                                 <td><span t-field="line.book_price" /></td>
                                                 <td><span t-field="line.book_quantity" /></td>
+                                                <td><span t-field="line.discount_amount" /></td>
                                                 <td><span t-field="line.total"/></td>
                                             </tr>
                                         </t>
@@ -80,6 +82,9 @@
                                 <tr>
                                     <th>Monthly Fee</th>
                                     <th>Month</th>
+                                    <th>Discount</th>
+                                    <th>total</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,6 +94,7 @@
                                         <tr>
                                             <td><span t-field="line.monthly_fee" /></td>
                                             <td><span t-field="line.month" /></td>
+                                            <td><span t-field="line.discount_amount" /></td>
                                             <td><span t-field="line.total"/></td>
                                         </tr>
                                     </t>
@@ -100,7 +106,7 @@
                 <!-- Totals Section -->
                 <div class="totals" style="float:right;">
                     <h3>Total</h3>
-                    <p>Fee Total: <span t-field="o.fee_total"/></p>
+                    <p>Total:<strong> <span t-field="o.fee_total"/></strong></p>
                 </div>
                 </t>
                 <t t-elif="o.invoice_type == 'is_uniform_fee'">
@@ -134,7 +140,7 @@
                 <!-- Totals Section -->
                 <div class="totals" style="float:right;">
                     <h3>Total</h3>
-                    <p>Uniform Total: <span t-field="o.uniform_total"/></p>
+                    <p>Total:<strong><span t-field="o.uniform_total"/></strong> </p>
                     <!-- <p>Book Total: <span t-field="o.book_total"/></p> -->
                     <!-- <p><strong>Total Amount: <span t-field="o.enrollment_total + o.fee_total + o.uniform_total + o.book_total"/></strong></p> -->
                 </div>
@@ -170,7 +176,7 @@
                 <!-- Totals Section -->
                 <div class="totals" style="float:right;">
                     <h3>Total</h3>
-                    <p>Book Total: <span t-field="o.book_total"/></p>
+                    <p>Total:<strong> <span t-field="o.book_total"/></strong></p>
                 </div>
                 </t>
                     <!-- Footer Section -->
