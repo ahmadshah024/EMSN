@@ -23,7 +23,7 @@
                 <header>
                     <button name="action_draft" string="Draft" type="object" states="approved"/>
                     <button name="action_approved" string="Approve" type="object" states="draft"/>
-                    <button name="%(report_student_finance)d" string="Print Invoice" type="action" states="approved"/>
+                    <button name="%(report_student_finance)d" string="Print Invoice" class="oe_highlight" type="action" states="approved"/>
                     
                     <field name="state" widget="statusbar" statusbar_visible="draft,approved" />
                 </header>
