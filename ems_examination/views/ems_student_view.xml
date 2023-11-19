@@ -11,6 +11,7 @@
                         <!-- <field string="Result" name="result_count" widget="statinfo" /> -->
                     </button>
                 </xpath>
+                
             </field>
         </record>
     </data>

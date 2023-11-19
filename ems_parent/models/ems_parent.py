@@ -12,9 +12,11 @@ class EmsParent(models.Model):
     image = fields.Binary(states={'done': [('readonly', True)]})
     address = fields.Char(states={'done': [('readonly', True)]})
     phone = fields.Char(states={'done': [('readonly', True)]}, required=True)
-    email = fields.Char(states={'done': [('readonly', True)]})
+    email = fields.Char(states={'done': [('readonly', True)]}, required=True)
     dob = fields.Date(states={'done': [('readonly', True)]})
     age = fields.Char(compute='_compute_age', store=True, states={'done': [('readonly', True)]})
+    user_id = fields.Many2one('res.users', copy=False, string="Related User") 
+    partner_id = fields.Many2one('res.partner', copy=False, string="Related Partner", readonly=True)
     gender = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female'),
@@ -63,3 +65,29 @@ class EmsParent(models.Model):
                 rec.age = today.year - dob.year - \
                     ((today.month, today.day) < (dob.month, dob.day))        
 
+    def create_user_server_action(self):
+        if not self.env.user.has_group('ems_parent.group_parent_administrator'):
+            raise ValidationError("You cannot access this action.")
+
+        for parent in self.browse(self.env.context['active_ids']):
+            if not parent.user_id:
+                partner_vals = {
+                    'is_company': False,
+                    'company_type': 'person',
+                    'name': parent.name or ('Unknown'),
+                    'email': parent.email or '',
+                    'phone': parent.phone or '',
+                    'image_1920': parent.image,
+                }
+                new_partner_id = self.env['res.partner'].create(partner_vals)
+                new_user_id = self.env['res.users'].create({
+                    'partner_id': new_partner_id.id,
+                    'login': parent.email or parent.name,
+                })
+                parent.write({
+                    'user_id': new_user_id.id,
+                    'partner_id': new_partner_id.id,
+                })
+                self.env.ref('ems_parent.group_parent_user').users = [(4, new_user_id.id)]
+
+        return True
