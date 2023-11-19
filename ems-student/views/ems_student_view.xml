@@ -130,11 +130,6 @@
                        </tree>
                     </field>
                </page>
-               <page name="history" string="History" attrs="{'invisible': [('state', 'in', ('draft','cancel'))]}">
-                    <group name="name" string="string">
-                        <field name="academic_year"/>
-                    </group>
-               </page>
                <page name="student_documents" string="Student Documents">
                     <group name="name" string="">
                         <field name="student_document" />

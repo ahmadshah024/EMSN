@@ -38,7 +38,11 @@ class EmsExaminationResult(models.Model):
 
     def action_mark_cancel(self):
         for record in self:
-            record.state = 'cancel'  
+            record.state = 'cancel' 
+
+    def action_mark_draft(self):
+        for record in self:
+            record.state = 'draft'  
 
     @api.onchange('class_id')
     def _onchange_class_id(self):

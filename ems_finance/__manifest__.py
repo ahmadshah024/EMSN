@@ -26,7 +26,11 @@
     'data': [
         'security/ir.model.access.csv',
         'data/sequences.xml',
+        'report/report.xml',
+        'report/student_finance.xml',
         'views/ems_finance.xml',
+        'views/ems_finance_discount_view.xml',
+        'views/ems_student_view.xml',
     ],
      
 }

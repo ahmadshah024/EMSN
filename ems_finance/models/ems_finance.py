@@ -12,10 +12,15 @@ class EmsFinance(models.Model):
     student_id = fields.Many2one('ems.student')
     student_class = fields.Many2one(related='student_id.class_id')
     date = fields.Date(default=fields.Date.today())
-    is_enrollment = fields.Boolean(default=False)
-    is_monthly_fee = fields.Boolean(default=False)
-    is_uniform_fee = fields.Boolean(default=False)
-    is_book = fields.Boolean(default=False)
+    invoice_type = fields.Selection(
+        [
+            ('is_enrollment', 'Enrollment'),
+            ('is_monthly_fee', 'Fee'),
+            ('is_uniform_fee', 'Uniform'),
+            ('is_book', 'Book'),
+            
+        ], default=''
+    )
     finance_line_ids = fields.One2many('ems.finance.enrollment.line', 'finance_id')
     finance_month_line_ids = fields.One2many('ems.finance.month.line', 'finance_id')
     finance_uniform_line_ids = fields.One2many('ems.finance.uniform.line', 'finance_id')
@@ -24,7 +29,7 @@ class EmsFinance(models.Model):
     fee_total = fields.Integer(readonly=True)
     uniform_total = fields.Integer(readonly=True)
     book_total = fields.Integer(readonly=True)
-
+    company_id = fields.Many2one('res.company' , default=lambda self: self.env.company.id)
     state = fields.Selection(
         [('draft', 'Draft'),
          ('approved', 'Approved'),
@@ -45,21 +50,21 @@ class EmsFinance(models.Model):
 
     def action_approved(self):
         for rec in self:
-            if rec.is_uniform_fee:
+            if rec.invoice_type == 'is_uniform_fee':
                 for line in rec.finance_uniform_line_ids:
                     current_onhand = line.uniform_id.on_hand_quantity
                     line.uniform_id.write({'on_hand_quantity': current_onhand - line.pices})
                     if line.uniform_id.on_hand_quantity < line.pices:
                         raise ValidationError(f"Sorry! you have not enough {line.uniform_id.name} to sale")
                 
-            if rec.is_book:
+            if rec.invoice_type == 'is_book':
                 for line in rec.finance_book_line_ids:
                     current_onhand = line.book_id.on_hand_quantity
                     line.book_id.write({'on_hand_quantity': current_onhand - line.quantity})
                     if line.book_id.on_hand_quantity < line.quantity:
                         raise ValidationError(f"Sorry! you have not enough {line.book_id.name} to sale")
 
-            if rec.is_enrollment:
+            if rec.invoice_type == 'is_enrollment':
                 for line in rec.finance_line_ids:
                     book_current_onhand = line.book_id.on_hand_quantity
                     uniform_current_onhand = line.uniform_id.on_hand_quantity
@@ -144,12 +149,20 @@ class EmsFinanceEnrollmentLine(models.Model):
     # books_fee = fields.Integer()
     total = fields.Integer(compute="_compute_enrollment_total")
     finance_id = fields.Many2one('ems.finance')
+    discount_amount = fields.Integer(related="finance_id.student_id.discount_id.discount_amount")
 
 
-    @api.depends('registration_fee', 'monthly_fee', 'uniform_pices', 'uniform_price', 'book_price', 'book_quantity')
+    @api.depends('registration_fee', 'monthly_fee', 'uniform_pices', 'uniform_price', 'book_price', 'book_quantity', 'discount_amount')
     def _compute_enrollment_total(self):
         for rec in self:
-            rec.total = (rec.registration_fee) + (rec.monthly_fee) + (rec.uniform_pices * rec.uniform_price) + (rec.book_quantity * rec.book_price)
+            total_before_discount = (rec.registration_fee) + (rec.monthly_fee) + (rec.uniform_pices * rec.uniform_price) + (rec.book_quantity * rec.book_price)
+            total_after_discount = total_before_discount - (total_before_discount * (rec.discount_amount / 100))
+            rec.total = total_after_discount
+
+    # @api.depends('registration_fee', 'monthly_fee', 'uniform_pices', 'uniform_price', 'book_price', 'book_quantity')
+    # def _compute_enrollment_total(self):
+    #     for rec in self:
+    #         rec.total = (rec.registration_fee) + (rec.monthly_fee) + (rec.uniform_pices * rec.uniform_price) + (rec.book_quantity * rec.book_price)
 
 
 class EmsFinanceMonthLine(models.Model):
@@ -158,16 +171,31 @@ class EmsFinanceMonthLine(models.Model):
 
 
     monthly_fee = fields.Integer()
-    month = fields.Char()
-    number_of_month = fields.Integer()
-    total = fields.Integer(compute="_compute_month_total")
+    month = fields.Selection([
+        ('1', 'January'),
+        ('2', 'February'),
+        ('3', 'March'),
+        ('4', 'April'),
+        ('5', 'May'),
+        ('6', 'June'),
+        ('7', 'July'),
+        ('8', 'August'),
+        ('9', 'September'),
+        ('10', 'October'),
+        ('11', 'November'),
+        ('12', 'December'),
+    ], string='Month')
+    # number_of_month = fields.Integer()
     finance_id = fields.Many2one('ems.finance')
-
-    @api.depends('monthly_fee','number_of_month')
+    discount_amount = fields.Integer(related="finance_id.student_id.discount_id.discount_amount")
+    total = fields.Integer(compute="_compute_month_total")
+   
+    @api.depends('monthly_fee',  'discount_amount')
     def _compute_month_total(self):
         for rec in self:
-            rec.total = rec.monthly_fee * rec.number_of_month
-
+            # total_before_discount = rec.monthly_fee * rec.number_of_month
+            total_after_discount = rec.monthly_fee  - (rec.monthly_fee  * (rec.discount_amount / 100))
+            rec.total = total_after_discount
 
 class EmsFinanceUniformLine(models.Model):
     _name = 'ems.finance.uniform.line'
@@ -181,8 +209,6 @@ class EmsFinanceUniformLine(models.Model):
     
     finance_id = fields.Many2one('ems.finance')
     uniform_id = fields.Many2one('product.template', domain=[('is_uniform', '=', True)])
-
-
     @api.depends('price', 'pices')
     def _compute_uniform_total(self):
         for rec in self:
@@ -201,8 +227,7 @@ class EmsFinanceBookLine(models.Model):
     price = fields.Integer()
     total = fields.Integer(compute="_compute_book_total")
     finance_id = fields.Many2one('ems.finance')
-
-
+    
     @api.depends('price', 'quantity')
     def _compute_book_total(self):
         for rec in self:
