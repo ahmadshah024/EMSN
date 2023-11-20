@@ -61,18 +61,22 @@ class EmsFinance(models.Model):
     def action_draft(self):
         for rec in self:
             rec.state = 'draft'
-   
+            
+        
+
     def action_approved(self):
         for rec in self:
             existing_record = self.search([
-                ('student_id', '=', rec.student_id.id),
-                ('date', '>=', rec.date.replace(day=1)),
-                ('date', '<', (datetime.combine(rec.date, datetime.min.time()) + relativedelta(months=1)).date()),
-                ('state', '=', 'approved'),
+            ('student_id', '=', rec.student_id.id),
+            ('date', '>=', rec.date.replace(day=1)),
+            ('date', '<', (datetime.combine(rec.date, datetime.min.time()) + relativedelta(months=1)).date()),
+            ('state', '=', 'approved'),
+            ('finance_month_line_ids.month', '=', rec.finance_month_line_ids.month),
             ])
             if existing_record:
                 existing_month_name = self.MONTH_NAMES.get(rec.finance_month_line_ids.month, 'Unknown')
-                raise ValidationError(f"The student {rec.student_id.name} has already paid the fee for the {existing_month_name} month.")
+                raise ValidationError(f"The student {rec.student_id.name} has already paid the fee for month {existing_month_name}.")
+
 
             if rec.invoice_type == 'is_uniform_fee':
                 for line in rec.finance_uniform_line_ids:
@@ -192,6 +196,10 @@ class EmsFinanceMonthLine(models.Model):
 
 
     monthly_fee = fields.Integer()
+    transport_fee = fields.Integer()
+    finance_id = fields.Many2one('ems.finance')
+    discount_amount = fields.Integer(related="finance_id.student_id.discount_id.discount_amount")
+    total = fields.Integer(compute="_compute_month_total")
     month = fields.Selection([
         ('1', 'January'),
         ('2', 'February'),
@@ -206,16 +214,16 @@ class EmsFinanceMonthLine(models.Model):
         ('11', 'November'),
         ('12', 'December'),
     ], string='Month')
-    finance_id = fields.Many2one('ems.finance')
-    discount_amount = fields.Integer(related="finance_id.student_id.discount_id.discount_amount")
-    total = fields.Integer(compute="_compute_month_total")
    
-    @api.depends('monthly_fee',  'discount_amount')
+    @api.depends('monthly_fee',  'discount_amount', 'transport_fee')
     def _compute_month_total(self):
         for rec in self:
-            total_after_discount = rec.monthly_fee  - (rec.monthly_fee  * (rec.discount_amount / 100))
-            rec.total = total_after_discount
-
+            if rec.finance_id.student_id.discount_id:
+                total_after_discount = (rec.monthly_fee + rec.transport_fee)  - ((rec.monthly_fee + rec.transport_fee)  * (rec.discount_amount / 100))
+                rec.total = total_after_discount
+            else:
+                rec.total = rec.monthly_fee + rec.transport_fee
+                
 class EmsFinanceUniformLine(models.Model):
     _name = 'ems.finance.uniform.line'
     _description = 'ems finance uniform description'

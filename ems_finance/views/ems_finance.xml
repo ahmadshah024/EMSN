@@ -71,7 +71,7 @@
                                 <tree editable='bottom'>
                                     <field name="monthly_fee" />
                                     <field name="month" />
-                                    <!-- <field name="number_of_month" /> -->
+                                    <field name="transport_fee" />
                                     <field name="total" />
                                 </tree>
                             </field>
