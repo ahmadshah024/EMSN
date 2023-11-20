@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="student_finance">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="o">
+                <div class="page" style="page-break-after: always;">
+                         <!-- Company Logo -->
+                         <div class="company-logo">
+                            <img t-if="o.company_id.logo" t-att-src="image_data_uri(o.company_id.logo)" alt="Company Logo" class="school-logo" style="width: 80px; height: 80px; margin: 0 auto; display: block;"/>
+                            <div style="border:1px solid black; width:100%; height:0px;"></div>
+                        </div>
+                    <!-- Company Address -->
+                    <div class="company-address">
+                        <p style="margin-top:10px;"><span t-field="o.company_id.name"/></p>
+                        <p style="margin-top:-20px;"><span t-field="o.company_id.street"/></p>
+                    </div>
+                    <!-- Invoice Header -->
+                    <h3 style="margin-top:100px;  text-align: center; font-size:55px;">Fee Reccepit</h3>
+                    <div class="student-header" style="display: flex; flex-direction: row; justify-content:start;">
+                        <p style="margin-right:100px;"><strong>Name: </strong><span t-field="o.student_id.name"/></p>
+                        <p style="margin-right:100px;"><strong>F-Name: </strong><span t-field="o.student_id.father_name"/></p>
+                        <p><strong>Class: </strong><span t-field="o.student_class.name"/></p>
+                    </div>
+                    <div class="invoice-header" style="display:flex; flex-direcation:row; justify-content:start; margin-bottom:60px; ">
+                        <p style="margin-right:90px;"><strong>Invoice #: </strong><span t-field="o.name"/></p>
+                        <p style="margin-right:100px;"><strong>Invoice Date: </strong><span t-field="o.date"/></p>
+                    </div>
+                    <!-- Invoice Details -->
+                    <t t-if="o.invoice_type == 'is_enrollment'">
+                        
+                        <div class="invoice-details">
+                            <h3>Invoice Details</h3>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Registration Fee</th>
+                                        <th>Monthly Fee</th>
+                                        <!-- <th>Month</th> -->
+                                        <th>Uniform</th>
+                                        <th>Uniform Price</th>
+                                        <!-- <th>Uniform Quantity</th> -->
+                                        <th>Book</th>
+                                        <th>Book Price</th>
+                                        <th>Book Quantity</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Finance Enrollment Lines -->
+                                    <t t-if="o.invoice_type == 'is_enrollment'">
+                                        <t t-foreach="o.finance_line_ids" t-as="line">
+                                            <tr>
+                                                <td><span t-field="line.registration_fee" /></td>
+                                                <td><span t-field="line.monthly_fee" /></td>
+                                                <td><span t-field="line.uniform_id.name" /></td>
+                                                <td><span t-field="line.uniform_pices" /></td>
+                                                <td><span t-field="line.book_id.name" /></td>
+                                                <td><span t-field="line.book_price" /></td>
+                                                <td><span t-field="line.book_quantity" /></td>
+                                                <td><span t-field="line.discount_amount" /></td>
+                                                <td><span t-field="line.total"/></td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Totals Section -->
+                    <div class="totals" style="float:right;">
+                        <h3>Total</h3>
+                        <p> Total:<strong> <span t-field="o.enrollment_total"/></strong></p>
+                    </div>
+
+                </t>
+                <t t-elif="o.invoice_type == 'is_monthly_fee'">
+                    <div class="invoice-details">
+                        <h3>Invoice Details</h3>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Monthly Fee</th>
+                                    <th>Month</th>
+                                    <th>Discount</th>
+                                    <th>total</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Finance Month Lines -->
+                                <t t-if="o.invoice_type == 'is_monthly_fee'">
+                                    <t t-foreach="o.finance_month_line_ids" t-as="line">
+                                        <tr>
+                                            <td><span t-field="line.monthly_fee" /></td>
+                                            <td><span t-field="line.month" /></td>
+                                            <td><span t-field="line.discount_amount" /></td>
+                                            <td><span t-field="line.total"/></td>
+                                        </tr>
+                                    </t>
+                                </t>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Totals Section -->
+                <div class="totals" style="float:right;">
+                    <h3>Total</h3>
+                    <p>Total:<strong> <span t-field="o.fee_total"/></strong></p>
+                </div>
+                </t>
+                <t t-elif="o.invoice_type == 'is_uniform_fee'">
+                    <div class="invoice-details">
+                        <h3>Invoice Details</h3>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Uniform</th>
+                                    <th>Price</th>
+                                    <th>Pices</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Finance Uniform Lines -->
+                            <t t-if="o.invoice_type == 'is_uniform_fee'">
+                                <t t-foreach="o.finance_uniform_line_ids" t-as="line">
+                                    <tr>
+                                        <td><span t-field="line.uniform_id.name"/></td>
+                                        <td><span t-field="line.price"/></td>
+                                        <td><span t-field="line.pices"/></td>
+                                        <td><span t-field="line.total"/></td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Totals Section -->
+                <div class="totals" style="float:right;">
+                    <h3>Total</h3>
+                    <p>Total:<strong><span t-field="o.uniform_total"/></strong> </p>
+                    <!-- <p>Book Total: <span t-field="o.book_total"/></p> -->
+                    <!-- <p><strong>Total Amount: <span t-field="o.enrollment_total + o.fee_total + o.uniform_total + o.book_total"/></strong></p> -->
+                </div>
+                </t>
+                <t t-elif="o.invoice_type == 'is_book'">
+                    <div class="invoice-details">
+                        <h3>Invoice Details</h3>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Book</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Finance Book Lines -->
+                            <t t-if="o.invoice_type == 'is_book'">
+                                <t t-foreach="o.finance_book_line_ids" t-as="line">
+                                    <tr>
+                                        <td><span t-field="line.book_id.name"/></td>
+                                        <td><span t-field="line.quantity"/></td>
+                                        <td><span t-field="line.price"/></td>
+                                        <td><span t-field="line.total"/></td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Totals Section -->
+                <div class="totals" style="float:right;">
+                    <h3>Total</h3>
+                    <p>Total:<strong> <span t-field="o.book_total"/></strong></p>
+                </div>
+                </t>
+                    <!-- Footer Section -->
+                    <div class="footer">
+                        <p>Thank you for your payment!</p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,41 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="ems_finance_discount_view_tree">
+      <field name="name">ems.finance.discount.view.tree</field>
+      <field name="model">ems.finance.discount</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="discount_amount"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="ems_finance_discount_view_form" model="ir.ui.view">
+        <field name="name">ems.finance.discount.view.form</field>
+        <field name="model">ems.finance.discount</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_students" type="object" class="oe_stat_button" icon="fa-users ">
+                            Students
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="discount_amount" />
+                            <field name="reason"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+  </data>
+</odoo>

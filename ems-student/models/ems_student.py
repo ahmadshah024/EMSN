@@ -11,6 +11,7 @@ from random import choice
 class EmsStudent(models.Model):
     _name = 'ems.student'
     _description = 'ems student description'
+    
 
     reference = fields.Char("Reference No", required=True,copy=False,readonly=True,default='New' )
     image = fields.Binary(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
@@ -20,7 +21,7 @@ class EmsStudent(models.Model):
     grand_father_name = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     address = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     phone = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
-    email = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
+    email = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]}, required=True)
     nic = fields.Char('Tazkira No', required=True, states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     dob = fields.Date(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     age = fields.Char(compute='_compute_age', store=True)
@@ -217,6 +218,11 @@ class EmsStudentCertificate(models.Model):
 
     certificate = fields.Binary()
     description = fields.Text()
+
+    student_id = fields.Many2one('ems.student')
+
+ 
+    
 
     student_id = fields.Many2one('ems.student')
 

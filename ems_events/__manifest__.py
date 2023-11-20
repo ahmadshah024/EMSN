@@ -25,6 +25,8 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'data/ems_event_student_template.xml',
+        'data/ems_event_teacher_template.xml',
         'views/ems_event_view.xml',
         'views/ems_student_view.xml',
     ],

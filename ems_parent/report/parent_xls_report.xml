@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="student_xls_report" model="ir.actions.report">
+        <field name="name">Parent Xlsx report</field>
+        <field name="model">ems.parent</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">ems_parent.parent_elsx_report</field>
+        <field name="report_file">ems_parent.parent_elsx_report</field>
+        <field name="print_report_name">'Print Partent XLSX - %s' % (object.name).replace('/', '')</field>
+        <field name="binding_model_id" ref="model_ems_parent"/>
+        <field name="binding_type">report</field>
+    </record>
+    
+</odoo>
