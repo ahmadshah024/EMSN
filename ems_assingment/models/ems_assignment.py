@@ -35,8 +35,12 @@ class EmsAassignment(models.Model):
 
     def check_due_date(self):
         today = fields.Date.today()
-        overdue_assignments = self.search([('state', '=', 'active'), ('due_date', '<', today)])
+        overdue_assignments = self.search([('state', '=', 'active'), ('due_date', '<=', today)])
         overdue_assignments.write({'state': 'done'})
+    # def check_due_date(self):
+    #     today = fields.Date.today()
+    #     overdue_assignments = self.search([('state', '=', 'active'), ('due_date', '<', today)])
+    #     overdue_assignments.write({'state': 'done'})
     
     
     @api.model

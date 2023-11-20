@@ -26,6 +26,7 @@
     'data': [
         'security/ir.model.access.csv',
         'data/sequences.xml',
+        'data/ir_cron_schedule.xml',
         'report/report.xml',
         'report/student_finance.xml',
         'views/ems_finance.xml',

@@ -15,30 +15,28 @@
                         <p style="margin-top:-20px;"><span t-field="o.company_id.street"/></p>
                     </div>
                     <!-- Invoice Header -->
-                    <h3 style="margin-top:100px;  text-align: center; font-size:55px;">Fee Reccepit</h3>
+                    <h3 style="margin-top:100px;  text-align: center; font-size:55px;">Reccepit</h3>
                     <div class="student-header" style="display: flex; flex-direction: row; justify-content:start;">
                         <p style="margin-right:100px;"><strong>Name: </strong><span t-field="o.student_id.name"/></p>
                         <p style="margin-right:100px;"><strong>F-Name: </strong><span t-field="o.student_id.father_name"/></p>
                         <p><strong>Class: </strong><span t-field="o.student_class.name"/></p>
                     </div>
                     <div class="invoice-header" style="display:flex; flex-direcation:row; justify-content:start; margin-bottom:60px; ">
-                        <p style="margin-right:90px;"><strong>Invoice #: </strong><span t-field="o.name"/></p>
-                        <p style="margin-right:100px;"><strong>Invoice Date: </strong><span t-field="o.date"/></p>
+                        <p style="margin-right:90px;"><strong>Bill #: </strong><span t-field="o.name"/></p>
+                        <p style="margin-right:100px;"><strong>Bill Date: </strong><span t-field="o.date"/></p>
                     </div>
                     <!-- Invoice Details -->
                     <t t-if="o.invoice_type == 'is_enrollment'">
                         
                         <div class="invoice-details">
-                            <h3>Invoice Details</h3>
+                            <h3>Bill Details</h3>
                             <table class="table table-condensed">
                                 <thead>
                                     <tr>
                                         <th>Registration Fee</th>
                                         <th>Monthly Fee</th>
-                                        <!-- <th>Month</th> -->
                                         <th>Uniform</th>
                                         <th>Uniform Price</th>
-                                        <!-- <th>Uniform Quantity</th> -->
                                         <th>Book</th>
                                         <th>Book Price</th>
                                         <th>Book Quantity</th>
