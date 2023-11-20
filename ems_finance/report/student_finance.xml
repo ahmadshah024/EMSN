@@ -80,6 +80,7 @@
                                 <tr>
                                     <th>Monthly Fee</th>
                                     <th>Month</th>
+                                    <th>Transport Fee</th>
                                     <th>Discount</th>
                                     <th>total</th>
                                     
@@ -92,6 +93,7 @@
                                         <tr>
                                             <td><span t-field="line.monthly_fee" /></td>
                                             <td><span t-field="line.month" /></td>
+                                            <td><span t-field="line.transport_fee" /></td>
                                             <td><span t-field="line.discount_amount" /></td>
                                             <td><span t-field="line.total"/></td>
                                         </tr>
