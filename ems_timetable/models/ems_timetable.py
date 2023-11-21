@@ -32,179 +32,136 @@ class EmsTimetable(models.Model):
             rec.state = 'cancel'
     
 
+    MAX_PERIODS_PER_WEEK = 36  # Maximum periods a teacher can teach in a week
 
     def generate_timetable(self):
-        # if self.state != 'draft':
-        #     raise UserError('Timetable can only be generated in draft state.')
+        # Clear existing timetable lines
+        self.env['ems.timetable.line'].search([]).unlink()
 
-        self.timetable_line_ids.unlink()  # Clear existing lines
+        # Get teachers and classes
+        teachers = self.env['hr.employee'].search([('is_teacher','=', True)])
+        classes = self.env['ems.class.room'].search([])
 
-        # Get all necessary data
-        all_teachers = self.teacher_ids
-        all_classes = self.class_ids
-        all_subjects = self.subject_ids
-        all_days = self.day_ids
+        # Define a list of days
+        days = ['saturday', 'sunday', 'monday', 'tuesday', 'wednesday', 'thursday']
 
-        # Generate teacher subject-class combinations
-        teacher_combinations = self._get_teacher_subject_class_combinations(all_teachers, all_classes, all_subjects)
 
-        # Schedule the classes
-        self._schedule_classes(all_days, all_classes, teacher_combinations)
+        # Get the teaching periods from ems.timetable.period.line
+        teaching_periods = self.env['ems.timetable.period.line'].search([])
 
-        # Change the state to 'done'
-        self.write({'state': 'done'})
+        # Initialize a dictionary to track the number of periods assigned to each teacher
+        teacher_periods_count = {}
 
-    def _get_teacher_subject_class_combinations(self, all_teachers, all_classes, all_subjects):
-        combinations = []
-        for teacher in all_teachers:
-            # Let's assume each teacher has a 'subject_lines' field which tells us what they teach
-            for line in teacher.teacher_line_ids:
-                if line.subject_id in all_subjects and line.class_id in all_classes:
-                    # Each line would tell us how many periods per week and to which class
-                    for _ in range(line.period_count):
-                        combinations.append({
-                            'teacher': teacher,
-                            'subject': line.subject_id,
-                            'class': line.class_id,
-                        })
-        return combinations
+        # Loop through days, teaching periods, teachers, and classes to create timetable lines
+        for day in days:
+            for period in teaching_periods:
+                for teacher in teachers:
+                    for class_obj in classes:
+                        # Check if the teacher is available at this time
+                        if self.is_teacher_available(teacher, day, period):
+                            # Check if the classroom is available at this time
+                            if self.is_classroom_available(class_obj, day, period):
+                                # Select a subject for this slot (ensure not back-to-back)
+                                subject = self.select_subject(teacher, class_obj, day, period)
 
-    def _schedule_classes(self, all_days, all_classes, teacher_combinations):
-    # Schedule each class for each day
-        for day in all_days:
-            for class_group in all_classes:
-                # Assuming that 'periods_per_day' is the field that holds the number of periods per day
-                for period in range(1, self.period_count + 1):
-                    # This logic assumes that you have to go through each teacher_combination to find one that can be scheduled
-                    # for the current class_group and period. You will need a more sophisticated algorithm for complex scheduling.
-                    for combination in list(teacher_combinations):  # Make a copy of the list for safe iteration
-                        if self._can_schedule(combination, day, class_group):
-                            # Create a timetable line record with the scheduled class details
-                            self.env['ems.timetable.line'].create({
-                                'timetable_id': self.id,
-                                'day_id': day.id,
-                                'period_number': period,  # Assuming you have a field to store the period number
-                                'teacher_id': combination['teacher'].id,
-                                'class_id': class_group.id,
-                                'subject_id': combination['subject'].id,
-                            })
-                            # Once a teacher is scheduled for a class in a period, they cannot be scheduled again in the same period
-                            teacher_combinations.remove(combination)
-                            break
-    def _can_schedule(self, combination, day, class_group):
-    # Check if the teacher is already scheduled for this day and period
-        teacher_scheduled = self.env['ems.timetable.line'].search([
-            ('day_id', '=', day.id),
-            ('teacher_id', '=', combination['teacher'].id),
-            # You might have a 'period' field to check here
-        ], limit=1)
+                                if subject:
+                                    # Update the teacher's period count
+                                    teacher_periods_count[teacher] = teacher_periods_count.get(teacher, 0) + 1
 
-        # Check if the class has reached its maximum number of periods for the subject this week
-        subject_period_count = self.env['ems.timetable.line'].search_count([
-            ('class_id', '=', class_group.id),
-            ('subject_id', '=', combination['subject'].id),
-            # Assuming there is a relation to the whole week, not just a single day
+                                    if teacher_periods_count[teacher] <= self.MAX_PERIODS_PER_WEEK:
+                                        # Create a timetable line
+                                        timetable_line_ids = self.env['ems.timetable.line'].create({
+                                            'teacher_id': teacher.id,
+                                            'class_id': class_obj.id,
+                                            'subject_id': subject.id,
+                                            'day': day,
+                                            'start_time': period.start_time,
+                                            'end_time': period.end_time,
+                                        })
+
+    def is_teacher_available(self, teacher, day, period):
+    # Implement logic to check teacher availability
+    # This might involve querying the teacher's schedule or availability model
+    # Return True if the teacher is available, otherwise return False
+    # You should check that the teacher is not scheduled for another class at this time
+    # If the teacher is available, return True; otherwise, return False
+    # For example, check if the teacher has no existing class at this time
+        is_teacher_scheduled = self.env['ems.timetable.line'].search([
+            ('teacher_id', '=', teacher.id),
+            ('day', '=', day),
+            # ('start_time', '<', period.end_time),
+            # ('end_time', '>', period.start_time),
         ])
+        return not is_teacher_scheduled
 
-        # Assuming each 'subject_line' has a 'period_count' field indicating the max periods per week
-        # max_periods_for_subject = combination['subject'].subject_lines.filtered(
-        #     lambda l: l.class_id == class_group).period_count
-        # max_periods_for_subject = self._get_period_count_for_class_subject(class_group, combination['subject'])
-        # The teacher is available if they are not already scheduled for this day and period
-        teacher_available = not teacher_scheduled
+    def is_classroom_available(self, class_obj, day, period):
+        # Implement logic to check classroom availability
+        # This might involve querying the classroom's schedule or availability model
+        # Return True if the classroom is available, otherwise return False
+        # You should check that the classroom is not scheduled for another class at this time
+        # If the classroom is available, return True; otherwise, return False
+        # For example, check if the classroom has no existing class at this time
+        is_classroom_scheduled = self.env['ems.timetable.line'].search([
+            ('class_id', '=', class_obj.id),
+            ('day', '=', day),
+            # ('start_time', '<', period.end_time),
+            # ('end_time', '>', period.start_time),
+        ])
+        return not is_classroom_scheduled
 
-        # The class has not exceeded its maximum number of periods for this subject
-        # class_has_room = subject_period_count < max_periods_for_subject
+    def select_subject(self, teacher, class_obj, day, period):
+    # Your logic for selecting a subject that is not back-to-back
+    # Implement this logic based on your specific constraints
+    # Return the selected subject or None if no subject is available
 
-        # return teacher_available and class_has_room
+    # For example, you might query available subjects for the given teacher and class
+        available_subjects = self.get_available_subjects(teacher, class_obj, day, period)
 
-    # def _get_period_count_for_class_subject(self, class_group, subject):
-    # # This is a pseudo-code. You should replace 'class.subject.relation' with the actual name of your relationship model
-    # # and adjust the domain accordingly to match your model's fields and logic.
-    #     relation = self.env['class.subject.relation'].search([
-    #         ('class_id', '=', class_group.id),
-    #         ('subject_id', '=', subject.id),
-    #     ], limit=1)
-    #     return relation.period_count if relation else 0
-    # def generate_timetable(self):
-    #     if self.state != 'draft':
-    #         raise UserError('Timetable can only be generated in draft state.')
+        # Implement your selection logic here (e.g., random selection, prioritizing subjects, etc.)
+        if available_subjects:
+            selected_subject = available_subjects[0]  # Example: Select the first available subject
+            return selected_subject
 
-    #     self.timetable_line_ids.unlink()  # Clear existing lines
+        return None  # Return None if no subject is available
 
-    #     # Get all necessary data
-    #     all_teachers = self.teacher_ids
-    #     all_classes = self.class_ids
-    #     all_subjects = self.subject_ids
-    #     all_days = self.day_ids
-    #     # ... your existing code ...
-
-    #     # Generate teacher subject-class combinations
-    #     teacher_combinations = self._get_teacher_subject_class_combinations(all_teachers, all_classes, all_subjects)
-
-    #     # Schedule the classes
-    #     self._schedule_classes(all_days, all_classes, teacher_combinations)
-
-    #     # Change the state to done
-    #     self.action_done()
-
-    # def _get_teacher_subject_class_combinations(self, all_teachers, all_classes, all_subjects):
-    #     # This is a placeholder. You will need to fetch and return all valid
-    #     # combinations of teachers, subjects, and classes.
-    #     combinations = [
-    #         # Assuming each combination is a dictionary like:
-    #         # {'teacher': teacher_record, 'subject': subject_record, 'class': class_record}
-    #         # You need to populate this list with actual records from your system.
-    #     ]
-    #     return combinations
-
-    # def _schedule_classes(self,all_days, all_classes, teacher_combinations):
-    #     for class_group in self.class_ids:
-    #         for day in self.day_ids:
-    #             # You could sort or filter teacher_combinations here based on some criteria.
-    #             for combination in teacher_combinations:
-    #                 # This is a very naive approach, just to illustrate:
-    #                 # You need to add logic here to check if the teacher is available
-    #                 # for this class_group and day, and if the period_count allows for it.
-    #                 if self._can_schedule(combination, day, class_group):
-    #                     self.env['ems.timetable.line'].create({
-    #                         'timetable_id': self.id,
-    #                         # Assign the fields from the combination to the timetable line
-    #                         'teacher_id': combination['teacher'].id,
-    #                         'subject_id': combination['subject'].id,
-    #                         'class_id': combination['class'].id,
-    #                         'day_id': day.id,
-    #                     })
-
+    def get_available_subjects(self, teacher, class_obj, day, period):
+        # Query available subjects based on teacher, class, day, and period
+        # Implement your specific query logic here to retrieve available subjects
+        # You may need to consider teacher and class preferences, curriculum, and other constraints
+        available_subjects = self.env['ems.subject'].search([
+            ('teacher_ids', 'in', [teacher.id]),  # Example: Subjects taught by the teacher
+            ('class_line_ids', 'in', [class_obj.id]),  # Example: Subjects assigned to the class
+        ])
+        return available_subjects
     
     
 class EmsTimetableLine(models.Model):
     _name = 'ems.timetable.line'
     _description = 'ems timetable line description'
 
+    day = fields.Selection([
+        ('saturday','Saturday'),
+        ('sunday','Sunday'),
+        ('monday','Monday'),
+        ('tuesday','Tuesday'),
+        ('wednesday','Wednesday'),
+        ('thursday','Thursday'),
+    ])
+    teacher_id = fields.Many2one('hr.employee', domain=[('is_teacher', '=', True)])
+    class_id = fields.Many2one('ems.class.room')
+    subject_id = fields.Many2one('ems.subject')
 
 
-
-    day_id = fields.Many2one('ems.day', string='Day', required=True)
-    # period_id = fields.Many2one('ems.period', string='Period', required=True)
-    period = fields.Integer()
-    teacher_id = fields.Many2one('hr.employee', domain=[('is_teacher', '=', True)], required=True)
-    class_id = fields.Many2one('ems.class.room', required=True)
-    subject_id = fields.Many2one('ems.subject', required=True)
-    timetable_id = fields.Many2one('ems.timetable', ondelete='cascade', required=True)
-    # day = fields.Selection([
-    #     ('saturday','Saturday'),
-    #     ('sunday','Sunday'),
-    #     ('monday','Monday'),
-    #     ('tuesday','Tuesday'),
-    #     ('wednesday','Wednesday'),
-    #     ('thursday','Thursday'),
-    # ])
-    # teacher_id = fields.Many2one('hr.employee', domain=[('is_teacher', '=', True)])
-    # class_id = fields.Many2one('ems.class.room')
-    # subject_id = fields.Many2one('ems.subject')
-
- 
+    # subject_id1 = fields.Many2one('ems.subject')
+    # subject_id2 = fields.Many2one('ems.subject')
+    # subject_id3 = fields.Many2one('ems.subject')
+    # subject_id4 = fields.Many2one('ems.subject')
+    # subject_id5 = fields.Many2one('ems.subject')
+    # subject_id6 = fields.Many2one('ems.subject')
+    # subject_id7 = fields.Many2one('ems.subject')
+    # subject_id8 = fields.Many2one('ems.subject')
+    # subject_id9 = fields.Many2one('ems.subject')
+    
     
     timetable_id = fields.Many2one('ems.timetable')
 

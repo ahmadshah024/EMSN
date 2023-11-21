@@ -15,7 +15,7 @@
                                 <h2><t t-esc="o.company_id.name"/></h2>
                             </div>
                             
-                            <h1>Timetable For Class<t t-esc="o.class_id.name"/></h1>
+                            <h1>Timetable For Class <t t-esc="o.class_id.name"/></h1>
                             <h2>For <t t-esc="o.academic_year"/> Year</h2>
                         </div>
                         <div class="row">
@@ -34,7 +34,7 @@
                                 </thead>
                                 <tbody>
                                     <tr t-foreach="o.timetable_line_ids" t-as="line">
-                                        <td class="day" t-esc="line.week_days" />
+                                        <td class="day" t-esc="line.day" />
                                         <td t-esc="line.subject_id1.name" />
                                         <td t-esc="line.subject_id2.name" />
                                         <td t-esc="line.subject_id3.name" />
