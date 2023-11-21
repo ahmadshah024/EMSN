@@ -59,7 +59,6 @@
                 <field name="father_name"/>
                 <field name="grand_father_name"/>
                 <field name="nic"/>
-                
             </group>
             <group name="educational_info" string="Educatinal Information">
                 <field name="school" />
