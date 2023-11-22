@@ -86,8 +86,12 @@
                                     <t t-if="o.student_id.gender == 'male'">
                                         <t t-esc="o.student_id.name" /> Son of <t t-esc="o.student_id.father_name" />
                                     </t>
-                                    <t t-else="">
+                                    <t t-elif="o.student_id.gender == 'female'">
                                         <t t-esc="o.student_id.name" /> Daughter of <t t-esc="o.student_id.father_name" />
+
+                                    </t>
+                                    <t t-else="">
+                                        <t t-esc="o.student_id.name" /> Son of <t t-esc="o.student_id.father_name" />
                                     </t>
                                 </span><br></br>
                                 <span style="color: #B2533E; font-size:42px;">Student of Class <t t-esc="o.class_id.name" /></span><br></br>
