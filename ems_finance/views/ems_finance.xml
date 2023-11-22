@@ -11,6 +11,7 @@
           <field name="student_id"/>
           <field name="student_class"/>
           <field name="date" />
+          <field name="state" />
         </tree>
       </field>
     </record>
@@ -45,9 +46,6 @@
                         </group>
                         <group>
                             <field name="invoice_type" />
-                            <!-- <field name="is_monthly_fee" />
-                            <field name="is_uniform_fee" />
-                            <field name="is_book" /> -->
                         </group>
                     </group>
                     <notebook>
@@ -108,6 +106,7 @@
             <search string="">
                 <field name="student_id" string="Student Name" />
                 <field name="name" string="Bill No" />
+                <field name="student_class" string="Class" />
                 <group expand="1" string="Group By">
                     <filter string="State" name='state' context="{'group_by':'state'}"/>
                 </group>

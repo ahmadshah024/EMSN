@@ -9,6 +9,10 @@ class EmsStock(models.Model):
 
     is_uniform = fields.Boolean()
     is_book = fields.Boolean()
+    product_type = fields.Selection([
+        ('is_uniform','Uniform'),
+        ('is_book','Book'),
+    ])
     price = fields.Integer()
 
 

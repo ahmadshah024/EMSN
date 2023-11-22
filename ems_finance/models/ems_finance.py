@@ -98,7 +98,6 @@ class EmsFinance(models.Model):
                     uniform_current_onhand = line.uniform_id.on_hand_quantity
                     line.book_id.write({'on_hand_quantity': book_current_onhand - line.book_quantity})
                     line.uniform_id.write({'on_hand_quantity': uniform_current_onhand - line.uniform_pices})
-                    
                     if line.book_id.on_hand_quantity < line.book_quantity:
                         raise ValidationError(f"Sorry! you have not enough {line.book_id.name} to sale")
                     if  line.uniform_id.on_hand_quantity < line.uniform_pices :
@@ -162,8 +161,8 @@ class EmsFinance(models.Model):
                 self.env['ems.finance'].create(invoice_vals)
         return True
 
-
- 
+    
+    
 
 class EmsFinanceEnrollmentLine(models.Model):
     _name = 'ems.finance.enrollment.line'

@@ -16,7 +16,6 @@ class EmsStudent(models.Model):
     reference = fields.Char("Reference No", required=True,copy=False,readonly=True,default='New' )
     image = fields.Binary(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     name = fields.Char(states={'done': [('readonly', True)],'graduate': [('readonly', True)], 'change': [('readonly', True)]}, required=True)
-
     father_name = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     grand_father_name = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
     address = fields.Char(states={'done': [('readonly', True)], 'graduate': [('readonly', True)], 'change': [('readonly', True)]})
@@ -63,9 +62,6 @@ class EmsStudent(models.Model):
         help="PIN used to Check In/Out in the Kiosk Mode of the Attendance application (if enabled in Configuration) and to change the cashier in the Point of Sale application.")
     
     discipline_reason = fields.Text(readonly=True)
-    # is_persent = fields.Boolean(default=False)
-    # is_absent = fields.Boolean(default=False)
-    # is_leave = fields.Boolean(default=False)
     
     _sql_constraints = [
         ('barcode_uniq', 'unique (barcode)', "The Badge ID must be unique, this one is already assigned to another employee."),
@@ -187,18 +183,7 @@ class EmsStudent(models.Model):
                 self.env.ref('ems-student.group_student_user').users = [(4, new_user_id.id)]
 
         return True
-    # def create_user_server_action(self):
-    #     if not self.env.user.has_group('ems-student.group_student_administrator'):
-    #         raise ValidationError("You cannot access this action.")
-    #     for student in self.browse(self.env.context['active_ids']):
-    #         if not student.user_id:
-    #             new_user_id = self.env['res.users'].create({
-    #                 'partner_id': student.partner_id.id,
-    #                 'login': student.email if student.email else student.name,
-    #             })
-    #             student.user_id = new_user_id.id 
-    #             self.env.ref('ems-student.group_student_user').users = [(4, student.user_id.id)]
-
+   
 
 
 class EmsStudentAward(models.Model):
@@ -211,6 +196,7 @@ class EmsStudentAward(models.Model):
 
     student_id = fields.Many2one('ems.student')
 
+
 class EmsStudentCertificate(models.Model):
     _name = 'ems.student.certificate'
     _description = 'ems student certificate description'
@@ -221,10 +207,6 @@ class EmsStudentCertificate(models.Model):
 
     student_id = fields.Many2one('ems.student')
 
- 
-    
-
-    student_id = fields.Many2one('ems.student')
 
 class EmsClassRoom(models.Model):
     _name = 'ems.class.room'
@@ -235,7 +217,6 @@ class EmsClassRoom(models.Model):
     block = fields.Char('Block')
     room_number = fields.Char('Room Number')
     class_line_ids = fields.One2many('ems.class.room.line', 'class_id')
-
     student_ids = fields.One2many('ems.student', 'class_id')
     student_count = fields.Integer(compute="_compute_student_count")
 
@@ -261,9 +242,4 @@ class EmsClassRoomline(models.Model):
     _description = 'ems class room line description'
 
 
-    # subject_id = fields.Many2one('ems.subject')
-    # book_id = fields.Many2one('ems.book')
     class_id = fields.Many2one('ems.class.room')
-    # max_mark = fields.Integer(related='subject_id.maximum_mark')
-    # min_mark = fields.Integer(related='subject_id.minimum_mark')
-    # teacher_id = fields.Char()
