@@ -7,8 +7,9 @@
       <field name="inherit_id" ref="product.product_template_only_form_view"/>
       <field name="arch" type="xml">
             <xpath expr="//field[@name='detailed_type']" position="before">
-                <field name="is_uniform"  />
-                <field name="is_book" />
+                <!-- <field name="is_uniform"  />
+                <field name="is_book" /> -->
+                <field name="product_type" />
             </xpath>
             <xpath expr="//field[@name='barcode']" position="after">
                 <field name="price"  />
@@ -34,7 +35,7 @@
             <xpath expr="//field[@name='product_tag_ids']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
-            <xpath expr="//field[@name='is_book']" position="after">
+            <xpath expr="//field[@name='product_type']" position="after">
                 <field name="on_hand_quantity"  />
             </xpath>
             
@@ -51,16 +52,16 @@
         <field name="name">Uniform</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="res_model">product.template</field>
-        <field name="domain">[('is_uniform', '=', True)]</field>
-        <field name="context">{'default_is_uniform': True}</field>
+        <field name="domain">[('product_type', '=', 'is_uniform')]</field>
+        <!-- <field name="context">{'default_': True}</field> -->
     </record>
 
     <record model="ir.actions.act_window" id="ems_stock_book_view_action_window">
         <field name="name">Uniform</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="res_model">product.template</field>
-        <field name="domain">[('is_book', '=', True)]</field>
-        <field name="context">{'default_is_book': True}</field>
+        <field name="domain">[('product_type', '=', 'is_book')]</field>
+        <!-- <field name="context">{'default_is_book': True}</field> -->
     </record>
 
      
