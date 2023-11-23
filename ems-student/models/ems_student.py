@@ -60,7 +60,6 @@ class EmsStudent(models.Model):
     barcode = fields.Char(string="Badge ID", help="ID used for employee identification.", copy=False)
     pin = fields.Char(string="PIN", groups="hr.group_hr_user", copy=False,
         help="PIN used to Check In/Out in the Kiosk Mode of the Attendance application (if enabled in Configuration) and to change the cashier in the Point of Sale application.")
-    
     discipline_reason = fields.Text(readonly=True)
     
     _sql_constraints = [
